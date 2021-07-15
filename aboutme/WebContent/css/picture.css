@@ -15,6 +15,11 @@ body .top ul li{
     box-shadow: 3px 3px 3px 3px;
 }
 
+body .top ul li a{
+    display: inline-block;
+    line-height: 30px;
+}
+
 body .top ul li a:hover{
     color:blue;
 }

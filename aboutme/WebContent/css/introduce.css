@@ -17,6 +17,11 @@ body .top ul li{
     list-style: none;
 }
 
+body .top ul li a{
+    display: inline-block;
+    line-height: 30px;
+}
+
 body .top ul li a:hover{
     color:blue;
 }
@@ -30,12 +35,17 @@ body .center{
 
 body .center p{
     font-size: 12px;
-    /*margin-bottom: 4%;*/
+    margin-bottom: 4%;
 }
 
 body .center h2{
-    margin-top: 4%;
+    margin-top:2%;
 }
+
+body .center p:last-child{
+    margin-bottom: 2%;
+}
+
 
 footer{
     border:8px solid aquamarine;
