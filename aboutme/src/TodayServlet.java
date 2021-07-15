@@ -1,4 +1,4 @@
-package aboutme;
+
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,8 +33,7 @@ public class TodayServlet extends HttpServlet {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
 		String formattedTime = nowTime.format(format);
 		
-		out.println("<h2>현재 시간 : ");
-		out.println(formattedTime+"</h2>");
+		out.println("<h2>현재 시간 : "+formattedTime+"</h2>");
 		
 		out.println("<a href=\"index.html\">메인 화면</a>");
 		
