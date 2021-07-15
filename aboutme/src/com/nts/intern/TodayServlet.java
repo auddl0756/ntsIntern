@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/today")
 public class TodayServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+	private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -31,7 +31,7 @@ public class TodayServlet extends HttpServlet {
 
 		LocalDateTime nowTime = LocalDateTime.now();
 
-		String formattedTime = nowTime.format(format);
+		String formattedTime = nowTime.format(FORMAT);
 
 		out.println("<h2>현재 시간 <br/> " + formattedTime + "</h2>");
 
