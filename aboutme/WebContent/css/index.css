@@ -26,9 +26,6 @@ body .top ul li {
 body .center {
 	border: 8px solid aquamarine;
 	text-align: center;
-
-	/* overflow: auto;
-    height: auto; */
 }
 
 body .center ul {
@@ -92,5 +89,4 @@ li {
 
 a {
 	text-decoration: none;
-	/* cursor:pointer; */
 }
