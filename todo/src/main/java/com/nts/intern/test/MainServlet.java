@@ -25,10 +25,8 @@ public class MainServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 
 		List<TodoResponseDto> list = dao.getAll();
-
-		String json = objectMapper.writeValueAsString(list);
 		
-		request.setAttribute("response", json);
+		request.setAttribute("response", list);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main.jsp");
 		requestDispatcher.forward(request, response);
 	}

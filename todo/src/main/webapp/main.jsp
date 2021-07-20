@@ -4,10 +4,12 @@
 <%@page import="com.fasterxml.jackson.databind.type.TypeFactory" %>
 <%@page import="com.fasterxml.jackson.core.type.TypeReference"%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%--
 <%!
 	private static final ObjectMapper mapper = new ObjectMapper();
 %>
@@ -15,19 +17,13 @@
 <%
 	String jsonString= (String)request.getAttribute("response");
 	List<TodoResponseDto> list = mapper.readValue(jsonString, new TypeReference<List<TodoResponseDto>>() {});
+	request.setAttribute("list", list);
 %>
- 
-<%
-	for(int i=0;i<list.size();i++){
-%>
-	<%=list.get(i).getId() %>
-	<%=list.get(i).getTitle() %>
-	<%=list.get(i).getName() %>
-	<%=list.get(i).getSequence() %>
-	<%=list.get(i).getType() %>
-	<%=list.get(i).getRegDate() %>
-	 <br/>
-<%} %>
+  --%>
+  
+<c:forEach var="item" items="${response}">
+	${item}<br/>
+</c:forEach>
 
 
 <!DOCTYPE html>
