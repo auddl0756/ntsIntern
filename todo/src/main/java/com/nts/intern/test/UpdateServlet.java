@@ -13,7 +13,7 @@ import com.nts.intern.dto.TodoDto;
 import com.nts.intern.security.Security;
 
 @WebServlet("/update")
-public class updateServlet extends HttpServlet {
+public class UpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

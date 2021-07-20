@@ -2,13 +2,13 @@ package com.nts.intern.dto;
 
 import java.time.LocalDateTime;
 
-public class TodoDto {
+public class TodoResponseDto {
 	private Long id;
 	private String title;
 	private String name;
 	private Integer sequence;
 	private String type;
-	private LocalDateTime regDate;
+	private String regDate;
 	
 	public Long getId() {
 		return id;
@@ -50,17 +50,17 @@ public class TodoDto {
 		this.type = type;
 	}
 
-	public LocalDateTime getRegDate() {
+	public String getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDateTime(LocalDateTime regDate) {
+	public void setRegDateTime(String regDate) {
 		this.regDate = regDate;
 	}
 
 	@Override
 	public String toString() {
 		return "TodoDto [id=" + id + ", title=" + title + ", name=" + name + ", sequence=" + sequence + ", type=" + type
-				+ ", regDate=" + regDate.getYear() + " " + regDate.getMonth() + " " + regDate.getDayOfMonth() + "]";
+				+"reddate =" + regDate+ "]";
 	}
 }

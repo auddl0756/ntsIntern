@@ -1,9 +1,9 @@
 package com.nts.intern.test;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nts.intern.dao.TodoDao;
-import com.nts.intern.dto.TodoDto;
+import com.nts.intern.dto.TodoResponseDto;
 
 @WebServlet("/main")
 public class MainServlet extends HttpServlet {
@@ -24,20 +24,14 @@ public class MainServlet extends HttpServlet {
 		
 		TodoDao dao = new TodoDao();
 		
-		List<TodoDto> list = dao.getAll();
+		List<TodoResponseDto> list = dao.getAll();
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json =objectMapper.writeValueAsString(list);
 		
-		PrintWriter out = response.getWriter();
-		out.println(json);
-		out.close();
+		request.setAttribute("data", json);
+    	RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main.jsp");
+    	requestDispatcher.forward(request, response);
 		
 	}
-
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
 }

@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 import com.nts.intern.dto.TodoDto;
+import com.nts.intern.dto.TodoResponseDto;
 import com.nts.intern.security.Security;
 
 public class TodoDao {
@@ -17,9 +17,9 @@ public class TodoDao {
 	private static final String USER = Security.USER;
 	private static final String PASSWD = Security.PASSWD;
 	
-	public List<TodoDto> getAll() {
+	public List<TodoResponseDto> getAll() {
 		ResultSet resultSet = null;
-		List<TodoDto> result = new ArrayList<>();
+		List<TodoResponseDto> result = new ArrayList<>();
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -43,21 +43,14 @@ public class TodoDao {
 
 				StringTokenizer st = new StringTokenizer(tmpLocalDateTime, " ");
 				String dateStr = st.nextToken();
-				st = new StringTokenizer(dateStr, "-");
 
-				int year = Integer.parseInt(st.nextToken());
-				int month = Integer.parseInt(st.nextToken());
-				int date = Integer.parseInt(st.nextToken());
-
-				LocalDateTime regDate = LocalDateTime.of(year, month, date, 0, 0, 0);
-
-				TodoDto dto = new TodoDto();
+				TodoResponseDto dto = new TodoResponseDto();
 				dto.setId(id);
 				dto.setTitle(title);
 				dto.setName(name);
 				dto.setSequence(sequence);
 				dto.setType(type);
-				dto.setRegDateTime(regDate);
+				dto.setRegDateTime(dateStr);
 
 				result.add(dto);
 			}
