@@ -16,7 +16,6 @@ import com.nts.intern.dto.TodoResponseDto;
 
 @WebServlet("/main")
 public class MainServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 	private static final TodoDao dao = new TodoDao();
 	private static final ObjectMapper objectMapper = new ObjectMapper();
 

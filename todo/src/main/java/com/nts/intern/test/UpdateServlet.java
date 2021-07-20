@@ -14,7 +14,6 @@ import com.nts.intern.security.Security;
 
 @WebServlet("/update")
 public class UpdateServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 	private static final TodoDao dao = new TodoDao();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
