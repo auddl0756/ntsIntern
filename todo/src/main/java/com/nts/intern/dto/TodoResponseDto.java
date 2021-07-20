@@ -1,7 +1,5 @@
 package com.nts.intern.dto;
 
-import java.time.LocalDateTime;
-
 public class TodoResponseDto {
 	private Long id;
 	private String title;
@@ -54,13 +52,13 @@ public class TodoResponseDto {
 		return regDate;
 	}
 
-	public void setRegDateTime(String regDate) {
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
 
 	@Override
 	public String toString() {
-		return "TodoDto [id=" + id + ", title=" + title + ", name=" + name + ", sequence=" + sequence + ", type=" + type
+		return "TodoResponseDto [id=" + id + ", title=" + title + ", name=" + name + ", sequence=" + sequence + ", type=" + type
 				+"reddate =" + regDate+ "]";
 	}
 }

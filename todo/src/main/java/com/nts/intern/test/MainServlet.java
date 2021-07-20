@@ -17,21 +17,20 @@ import com.nts.intern.dto.TodoResponseDto;
 @WebServlet("/main")
 public class MainServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final TodoDao dao = new TodoDao();
+	private static final ObjectMapper objectMapper = new ObjectMapper();
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
-		
-		TodoDao dao = new TodoDao();
-		
+
 		List<TodoResponseDto> list = dao.getAll();
+
+		String json = objectMapper.writeValueAsString(list);
 		
-		ObjectMapper objectMapper = new ObjectMapper();
-		String json =objectMapper.writeValueAsString(list);
-		
-		request.setAttribute("data", json);
-    	RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main.jsp");
-    	requestDispatcher.forward(request, response);
-		
+		request.setAttribute("response", json);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main.jsp");
+		requestDispatcher.forward(request, response);
 	}
 }

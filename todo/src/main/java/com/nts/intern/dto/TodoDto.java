@@ -3,18 +3,18 @@ package com.nts.intern.dto;
 import java.time.LocalDateTime;
 
 public class TodoDto {
-	private Long id;
+	private long id;
 	private String title;
 	private String name;
-	private Integer sequence;
+	private int sequence;
 	private String type;
 	private LocalDateTime regDate;
-	
-	public Long getId() {
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -34,11 +34,11 @@ public class TodoDto {
 		this.name = name;
 	}
 
-	public Integer getSequence() {
+	public int getSequence() {
 		return sequence;
 	}
 
-	public void setSequence(Integer sequence) {
+	public void setSequence(int sequence) {
 		this.sequence = sequence;
 	}
 

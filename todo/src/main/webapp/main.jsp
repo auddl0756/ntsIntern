@@ -1,5 +1,4 @@
 <%@page import="com.nts.intern.dto.TodoResponseDto"%>
-<%@page import="com.nts.intern.dto.TodoDto"%>
 <%@page import="java.util.*" %>
 <%@page import="com.fasterxml.jackson.databind.ObjectMapper" %>
 <%@page import="com.fasterxml.jackson.databind.type.TypeFactory" %>
@@ -9,50 +8,70 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%
-	String jsonString= (String)request.getAttribute("data");
+<%!
+	private static final ObjectMapper mapper = new ObjectMapper();
+%>
 
-	ObjectMapper mapper = new ObjectMapper();
-		
+<%
+	String jsonString= (String)request.getAttribute("response");
 	List<TodoResponseDto> list = mapper.readValue(jsonString, new TypeReference<List<TodoResponseDto>>() {});
-	
 %>
  
-<%=jsonString %>
+<%
+	for(int i=0;i<list.size();i++){
+%>
+	<%=list.get(i).getId() %>
+	<%=list.get(i).getTitle() %>
+	<%=list.get(i).getName() %>
+	<%=list.get(i).getSequence() %>
+	<%=list.get(i).getType() %>
+	<%=list.get(i).getRegDate() %>
+	 <br/>
+<%} %>
+
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/todoList.css">
 </head>
 <body>
+ 
+ <nav class="top">
+        <h1>나의 해야할 일들</h1>
+		<ul>
+			<li><a href="enroll.html">새로운 TODO 등록</a></li>
+		</ul>
+	</nav>
 
-<!--  
-<c:if test="${ number==10}">
-	number는10과 같다
-</c:if>
+	<nav class="center-nav">
+        <ul class="todo">
+			TODO
+		</ul>
 
-<br/>
+        <ul class="doing">
+            DOING
+        </ul>
 
-<c:choose>
-	<c:when test="${number2==0 }">
-		number2는 0과 같다
-	</c:when>
-	<c:when test="${number2==1 }">
-		number2는 1과 같다
-	</c:when>
-	<c:otherwise>
-		number2는 0,1 이외의 수다
-	</c:otherwise>
-</c:choose>
--->
+        <ul class="done">
+            DONE
+        </ul>
+	</nav>
 
-<!-- 
-<c:forEach var="item" items="${data}">
-	${item[type]}
-</c:forEach>
- -->
+    <article class="center">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            
+        </ul>
+    </article>
+ 
  
  
 </body>

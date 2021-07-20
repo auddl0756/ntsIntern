@@ -16,6 +16,7 @@ import com.nts.intern.security.Security;
 @WebServlet("/add")
 public class AddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final TodoDao dao = new TodoDao();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -28,17 +29,16 @@ public class AddServlet extends HttpServlet {
 			throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 
-		TodoDao dao = new TodoDao();
+		for (int i = 1; i <= 10; i++) {
+			TodoDto dto = new TodoDto();
+			dto.setId(10L + i);
+			dto.setTitle("title1");
+			dto.setName("name1");
+			dto.setSequence(1);
+			dto.setType("doing");
+			dto.setRegDateTime(LocalDateTime.now());
 
-		TodoDto dto = new TodoDto();
-		dto.setId(5L);
-		dto.setTitle("title1");
-		dto.setName("name1");
-		dto.setSequence(1);
-		dto.setType("doing");
-		dto.setRegDateTime(LocalDateTime.now());
-		
-		dao.addTodo(dto);
+			dao.addTodo(dto);
+		}
 	}
-
 }
