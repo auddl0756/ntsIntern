@@ -15,6 +15,9 @@ local.properties
 .loadpath
 .recommenders
 
+#내가 추가한 것
+**/security/**
+
 # External tool builders
 .externalToolBuilders/
 

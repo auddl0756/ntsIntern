@@ -1,6 +1,5 @@
 package com.nts.intern.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class TodoDto {
