@@ -34,11 +34,7 @@ public class UpdateServlet extends HttpServlet {
 		
 		long id=Long.parseLong((String)request.getAttribute("id"));
 		
-		System.out.println("id in doPost = "+id);
-		
 		TodoDto dto = dao.findById(id);
-		
-		System.out.println(dto);
 		
 		dao.updateTodo(dto);
 
