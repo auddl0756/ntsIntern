@@ -1,0 +1,44 @@
+@charset "UTF-8";
+
+body h1 {
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+body form {
+	margin-left: 40%;
+}
+
+body form .work {
+	width: 450px;
+	height: 30px;
+}
+
+body form .who {
+	width: 250px;
+	height: 30px;
+}
+
+body form a {
+	display: inline-block;
+	line-height: 30px;
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	box-sizing: border-box;
+	box-shadow: 3px 3px 3px 3px black;
+}
+
+body form .others {
+	background-color: blue;
+	color: white;
+	margin-right: 1%;
+	text-decoration: none;
+}
+
+body form .before {
+	background-color: white;
+	color: black;
+	margin-right: 10%;
+}

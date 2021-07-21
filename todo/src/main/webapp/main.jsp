@@ -1,59 +1,58 @@
-<%@page import="com.nts.intern.dto.TodoResponseDto"%>
-<%@page import="com.nts.intern.dto.TodoDto"%>
-<%@page import="java.util.*" %>
-<%@page import="com.fasterxml.jackson.databind.ObjectMapper" %>
-<%@page import="com.fasterxml.jackson.databind.type.TypeFactory" %>
-<%@page import="com.fasterxml.jackson.core.type.TypeReference"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%
-	String jsonString= (String)request.getAttribute("data");
-
-	ObjectMapper mapper = new ObjectMapper();
-		
-	List<TodoResponseDto> list = mapper.readValue(jsonString, new TypeReference<List<TodoResponseDto>>() {});
-	
-%>
- 
-<%=jsonString %>
+	pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/todoList.css">
 </head>
 <body>
 
-<!--  
-<c:if test="${ number==10}">
-	number는10과 같다
-</c:if>
+	<nav class="top">
+		<h1>나의 해야할 일들</h1>
+		<ul>
+			<li><a href="enroll.html">새로운 TODO 등록</a></li>
+		</ul>
+	</nav>
 
-<br/>
+	<nav class="center-nav">
+		<ul class="todo">TODO
+		</ul>
 
-<c:choose>
-	<c:when test="${number2==0 }">
-		number2는 0과 같다
-	</c:when>
-	<c:when test="${number2==1 }">
-		number2는 1과 같다
-	</c:when>
-	<c:otherwise>
-		number2는 0,1 이외의 수다
-	</c:otherwise>
-</c:choose>
--->
+		<ul class="doing">DOING
+		</ul>
 
-<!-- 
-<c:forEach var="item" items="${data}">
-	${item[type]}
-</c:forEach>
- -->
- 
- 
+		<ul class="done">DONE
+		</ul>
+	</nav>
+	
+	<article class="center">
+		<div class="todo">
+			<ul>
+				<c:forEach var="item" items="${response}">
+					<c:choose>
+							<c:when test="${item.type eq'TODO'}">
+								<li>
+									${item.title}<br/>
+									등록 날짜 : ${item.regDate } 
+									${item.name }
+									${item.type }
+									<button> =></button>
+								</li>
+							</c:when>	
+						
+						<c:otherwise>
+							never!
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</ul>
+		</div>
+	</article>
+
 </body>
 </html>
