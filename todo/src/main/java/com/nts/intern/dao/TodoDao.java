@@ -7,9 +7,7 @@ import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.nts.intern.dto.TodoDto;
-import com.nts.intern.dto.TodoResponseDto;
 import com.nts.intern.security.Security;
 
 public class TodoDao {
@@ -25,8 +23,8 @@ public class TodoDao {
 		}
 	}
 
-	public List<TodoResponseDto> getAll() {
-		List<TodoResponseDto> result = new ArrayList<>();
+	public List<TodoDto> getAll() {
+		List<TodoDto> result = new ArrayList<>();
 
 		String query = "select * from todo";
 		try (Connection connection = DriverManager.getConnection(URL, USER, PASSWD);
@@ -37,26 +35,18 @@ public class TodoDao {
 			while (resultSet.next()) {
 				LocalDateTime regDateTime = resultSet.getObject("regdate", LocalDateTime.class);
 
-				StringBuilder regDate = new StringBuilder();
-
-				regDate.append(regDateTime.getYear());
-				regDate.append(".");
-				regDate.append(regDateTime.getMonth());
-				regDate.append(".");
-				regDate.append(regDateTime.getDayOfMonth());
-
-				TodoResponseDto dto = new TodoResponseDto();
+				TodoDto dto = new TodoDto();
 				dto.setId(resultSet.getLong("id"));
 				dto.setTitle(resultSet.getString("title"));
 				dto.setName(resultSet.getString("name"));
 				dto.setSequence(resultSet.getInt("sequence"));
 				dto.setType(resultSet.getString("type"));
-				dto.setRegDate(regDate.toString());
+				dto.setRegDateTime(regDateTime);
 
 				result.add(dto);
 			}
 		} catch (Exception exception) {
-			System.err.println("getAll()"+" "+exception);
+			System.err.println("getAll()" + " " + exception);
 		}
 
 		return result;
@@ -78,7 +68,7 @@ public class TodoDao {
 
 			insertedCount = preparedStatement.executeUpdate();
 		} catch (Exception exception) {
-			System.err.println("insert "+dto+" "+exception);
+			System.err.println("insert " + dto + " " + exception);
 		}
 		return insertedCount;
 	}
@@ -95,7 +85,7 @@ public class TodoDao {
 
 			updatedCount = preparedStatement.executeUpdate();
 		} catch (Exception exception) {
-			System.err.println("update "+ dto+" "+exception);
+			System.err.println("update " + dto + " " + exception);
 		}
 		return updatedCount;
 	}
