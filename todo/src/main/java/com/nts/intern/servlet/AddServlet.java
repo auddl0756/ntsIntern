@@ -1,4 +1,4 @@
-package com.nts.intern.test;
+package com.nts.intern.servlet;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -27,17 +27,8 @@ public class AddServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
+		
 
-		for (int i = 1; i <= 10; i++) {
-			TodoDto dto = new TodoDto();
-			dto.setId(10L + i);
-			dto.setTitle("title1");
-			dto.setName("name1");
-			dto.setSequence(1);
-			dto.setType("DOING");
-			dto.setRegDateTime(LocalDateTime.now());
-
-			dao.addTodo(dto);
-		}
 	}
+
 }

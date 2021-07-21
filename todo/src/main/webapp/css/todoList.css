@@ -40,7 +40,7 @@ body .center-nav ul {
 	height: 80px;
 	margin-left: 1%;
 	margin-right: 1%;
-	margin-bottom: 0%;
+	margin-bottom: 0.6%;
 	box-sizing: border-box;
 	box-shadow: 3px 3px 3px 3px black;
 	background-color: teal;
@@ -50,26 +50,57 @@ body .center-nav ul {
 	color: white;
 }
 
-.todo , .doing , .done{
+#todo {
+	clear:both;
+	float: left;
+	width: 18.5%;
+	text-align:center;
+	/*left : 5%;*/
+	margin-left:160px;
+	
+}
+
+#doing {
 	float:left;
-	text-align:center; 
+	width: 19%;
+	margin-bottom:5%;
 }
 
-.todo {
-	  width:30%;
+#done {
+	float:left;
+	width: 19%;
+	margin-bottom:5%;
 }
 
-.doing{
-	  width:50%;
-}
 
-.done{
-	  width:30%;
-}
-
-body .center .todo ul li{
-	width:250px;
+body .center #todo  ul li {
+	clear:both;
+	float: left;
+	width: 250px;
 	height:100px;
+	text-align:center;
+	left : 15%;
+	
+	box-sizing: border-box;
+	box-shadow: 3px 3px 3px 3px black;
+	background-color: skyblue;
+	text-align: left;
+	padding-top: 25px;
+	font-size: 16px;
+	color: white;
+	
+	margin-bottom:10%;
+}
+
+
+body .center #doing  ul li {
+	clear:both;
+	float: left;
+	width: 250px;
+	height:100px;
+	text-align:center;
+	left : 15%;
+	
 	box-sizing: border-box;
 	box-shadow: 3px 3px 3px 3px black;
 	background-color: skyblue;
@@ -78,6 +109,29 @@ body .center .todo ul li{
 	padding-left: 1.5%;
 	font-size: 16px;
 	color: white;
+	
+	margin-bottom:10%;
+}
+
+
+body .center #done  ul li {
+	clear:both;
+	float: left;
+	width: 250px;
+	height:100px;
+	text-align:center;
+	left : 15%;
+	
+	box-sizing: border-box;
+	box-shadow: 3px 3px 3px 3px black;
+	background-color: skyblue;
+	text-align: left;
+	padding-top: 25px;
+	padding-left: 1.5%;
+	font-size: 16px;
+	color: white;
+	
+	margin-bottom:10%;
 }
 
 

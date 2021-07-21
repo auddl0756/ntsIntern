@@ -22,8 +22,39 @@ public class TodoDao {
 			System.err.println(classNotFoundException);
 		}
 	}
+	
+	public TodoDto findById(long id) {
+		String query = "select * from todo where id=?";
+	
+		try (Connection connection = DriverManager.getConnection(URL, USER, PASSWD);
+				PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+			
+			preparedStatement.setLong(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if(resultSet.next()) {
+				TodoDto dto = new TodoDto();
+				dto.setId(resultSet.getLong("id"));
+				dto.setTitle(resultSet.getString("title"));
+				dto.setName(resultSet.getString("name"));
+				dto.setSequence(resultSet.getInt("sequence"));
+				dto.setType(resultSet.getString("type"));
+				
+				LocalDateTime regDateTime = resultSet.getObject("regdate", LocalDateTime.class);
+				dto.setRegDateTime(regDateTime);
+				
+				return dto;
+			}else {
+				return null;
+			}
+		} catch (Exception exception) {
+			System.err.println("getAll()" + " " + exception);
+		}
 
-	public List<TodoDto> getAll() {
+		return null;
+	}
+
+	public List<TodoDto> findAll() {
 		List<TodoDto> result = new ArrayList<>();
 
 		String query = "select * from todo";
@@ -79,11 +110,16 @@ public class TodoDao {
 		String query = "update todo set type=? where id =?";
 		try (Connection connection = DriverManager.getConnection(URL, USER, PASSWD);
 				PreparedStatement preparedStatement = connection.prepareStatement(query);) {
-
-			preparedStatement.setString(1, dto.getType());
+			
+			if(dto.getType().equals("TODO")) {
+				preparedStatement.setString(1, "DOING");	
+			}else if(dto.getType().equals("DOING")) {
+				preparedStatement.setString(1, "DONE");
+			}
+			
 			preparedStatement.setLong(2, dto.getId());
-
 			updatedCount = preparedStatement.executeUpdate();
+			
 		} catch (Exception exception) {
 			System.err.println("update " + dto + " " + exception);
 		}

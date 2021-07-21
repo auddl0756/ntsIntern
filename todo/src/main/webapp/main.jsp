@@ -9,6 +9,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/todoList.css">
+
+<script src="js/update.js"></script>
+
 </head>
 <body>
 
@@ -20,39 +23,66 @@
 	</nav>
 
 	<nav class="center-nav">
-		<ul class="todo">TODO
+		<ul>TODO
 		</ul>
 
-		<ul class="doing">DOING
+		<ul>DOING
 		</ul>
 
-		<ul class="done">DONE
+		<ul>DONE
 		</ul>
 	</nav>
-	
+
 	<article class="center">
-		<div class="todo">
+		<div id="todo">
 			<ul>
-				<c:forEach var="item" items="${response}">
+				<c:forEach var="item" items="${todoList}">
 					<c:choose>
-							<c:when test="${item.type eq'TODO'}">
-								<li>
-									${item.title}<br/>
-									등록 날짜 : ${item.regDate } 
-									${item.name }
-									${item.type }
-									<button> =></button>
-								</li>
-							</c:when>	
-						
-						<c:otherwise>
-							never!
-						</c:otherwise>
+						<c:when test="${item.type eq'TODO'}">
+							<li>${item.title}<br /> 등록 날짜 : ${item.regDate } ${item.name }
+								${item.type }
+								
+								<button onclick="updateState( ${item.id })"> =></button >
+							</li>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+			</ul>
+		</div>
+		
+		<div id="doing">
+			<ul>
+				<c:forEach var="item" items="${todoList}">
+					<c:choose>
+						<c:when test="${item.type eq'DOING'}">
+							<li>${item.title}<br /> 등록 날짜 : ${item.regDate } ${item.name }
+								${item.type }
+								<button onclick="updateState( ${item.id })"> =></button >
+							</li>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+			</ul>
+		</div>
+		
+		
+		<div id="done">
+			<ul>
+				<c:forEach var="item" items="${todoList}">
+					<c:choose>
+						<c:when test="${item.type eq'DONE'}">
+							<li>${item.title}<br /> 등록 날짜 : ${item.regDate } ${item.name }
+								${item.type }
+							</li>
+						</c:when>
+
 					</c:choose>
 				</c:forEach>
 			</ul>
 		</div>
 	</article>
+	
+	
 
 </body>
 </html>

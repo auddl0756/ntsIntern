@@ -1,4 +1,4 @@
-package com.nts.intern.test;
+package com.nts.intern.servlet;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,11 +22,12 @@ public class MainServlet extends HttpServlet {
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
 
-		List<TodoDto> list = dao.getAll();
+		List<TodoDto> list = dao.findAll();
 
 		list.sort((dto1, dto2) -> dto1.getSequence() - dto2.getSequence());
 
-		request.setAttribute("response", list);
+		request.setAttribute("todoList", list);
+		
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main.jsp");
 		requestDispatcher.forward(request, response);
 	}
