@@ -27,7 +27,7 @@ public class MainServlet extends HttpServlet {
 		list.sort((dto1, dto2) -> dto1.getSequence() - dto2.getSequence());
 
 		request.setAttribute("todoList", list);
-		
+
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main.jsp");
 		requestDispatcher.forward(request, response);
 	}

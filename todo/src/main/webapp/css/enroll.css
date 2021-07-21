@@ -10,12 +10,12 @@ body form {
 	margin-left: 40%;
 }
 
-body form .work {
+body form #title {
 	width: 450px;
 	height: 30px;
 }
 
-body form .who {
+body form #name {
 	width: 250px;
 	height: 30px;
 }
@@ -31,6 +31,11 @@ body form a {
 }
 
 body form .others {
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	box-sizing: border-box;
+	box-shadow: 3px 3px 3px 3px black;
 	background-color: blue;
 	color: white;
 	margin-right: 1%;

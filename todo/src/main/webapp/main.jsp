@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -39,50 +39,48 @@
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'TODO'}">
-							<li>${item.title}<br /> 등록 날짜 : ${item.regDate } ${item.name }
-								${item.type }
-								
-								<button onclick="updateState( ${item.id })"> =></button >
-							</li>
+							<li><b>${item.title}</b><br /> <sub> 등록 날짜 :
+									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
+									${item.sequence } </sub>
+								<button onclick="updateState( ${item.id })">=></button></li>
 						</c:when>
 					</c:choose>
 				</c:forEach>
 			</ul>
 		</div>
-		
+
 		<div id="doing">
 			<ul>
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'DOING'}">
-							<li>${item.title}<br /> 등록 날짜 : ${item.regDate } ${item.name }
-								${item.type }
-								<button onclick="updateState( ${item.id })"> =></button >
-							</li>
+							<li><b>${item.title}</b><br /> <sub> 등록 날짜 :
+									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
+									${item.sequence } </sub>
+								<button onclick="updateState( ${item.id })">=></button></li>
 						</c:when>
 					</c:choose>
 				</c:forEach>
 			</ul>
 		</div>
-		
-		
+
+
 		<div id="done">
 			<ul>
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'DONE'}">
-							<li>${item.title}<br /> 등록 날짜 : ${item.regDate } ${item.name }
-								${item.type }
-							</li>
+							<li><b>${item.title}</b><br /> <sub> 등록 날짜 :
+									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
+									${item.sequence } </sub></li>
 						</c:when>
-
 					</c:choose>
 				</c:forEach>
 			</ul>
 		</div>
 	</article>
-	
-	
+
+
 
 </body>
 </html>

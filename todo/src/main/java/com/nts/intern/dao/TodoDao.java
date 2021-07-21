@@ -22,29 +22,29 @@ public class TodoDao {
 			System.err.println(classNotFoundException);
 		}
 	}
-	
+
 	public TodoDto findById(long id) {
 		String query = "select * from todo where id=?";
-	
+
 		try (Connection connection = DriverManager.getConnection(URL, USER, PASSWD);
 				PreparedStatement preparedStatement = connection.prepareStatement(query);) {
-			
+
 			preparedStatement.setLong(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
-			
-			if(resultSet.next()) {
+
+			if (resultSet.next()) {
 				TodoDto dto = new TodoDto();
 				dto.setId(resultSet.getLong("id"));
 				dto.setTitle(resultSet.getString("title"));
 				dto.setName(resultSet.getString("name"));
 				dto.setSequence(resultSet.getInt("sequence"));
 				dto.setType(resultSet.getString("type"));
-				
+
 				LocalDateTime regDateTime = resultSet.getObject("regdate", LocalDateTime.class);
 				dto.setRegDateTime(regDateTime);
-				
+
 				return dto;
-			}else {
+			} else {
 				return null;
 			}
 		} catch (Exception exception) {
@@ -86,16 +86,14 @@ public class TodoDao {
 	public int addTodo(TodoDto dto) {
 		int insertedCount = 0;
 
-		String query = "insert into todo values(?,?,?,?,?,?)";
+		String query = "insert into todo(title,name,sequence,type) values(?,?,?,?)";
 		try (Connection connection = DriverManager.getConnection(URL, USER, PASSWD);
 				PreparedStatement preparedStatement = connection.prepareStatement(query);) {
 
-			preparedStatement.setLong(1, dto.getId());
-			preparedStatement.setString(2, dto.getTitle());
-			preparedStatement.setString(3, dto.getName());
-			preparedStatement.setInt(4, dto.getSequence());
-			preparedStatement.setString(5, dto.getType());
-			preparedStatement.setString(6, dto.getRegDate().toString());
+			preparedStatement.setString(1, dto.getTitle());
+			preparedStatement.setString(2, dto.getName());
+			preparedStatement.setInt(3, dto.getSequence());
+			preparedStatement.setString(4, dto.getType());
 
 			insertedCount = preparedStatement.executeUpdate();
 		} catch (Exception exception) {
@@ -110,16 +108,16 @@ public class TodoDao {
 		String query = "update todo set type=? where id =?";
 		try (Connection connection = DriverManager.getConnection(URL, USER, PASSWD);
 				PreparedStatement preparedStatement = connection.prepareStatement(query);) {
-			
-			if(dto.getType().equals("TODO")) {
-				preparedStatement.setString(1, "DOING");	
-			}else if(dto.getType().equals("DOING")) {
+
+			if (dto.getType().equals("TODO")) {
+				preparedStatement.setString(1, "DOING");
+			} else if (dto.getType().equals("DOING")) {
 				preparedStatement.setString(1, "DONE");
 			}
-			
+
 			preparedStatement.setLong(2, dto.getId());
 			updatedCount = preparedStatement.executeUpdate();
-			
+
 		} catch (Exception exception) {
 			System.err.println("update " + dto + " " + exception);
 		}

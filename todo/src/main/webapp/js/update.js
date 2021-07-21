@@ -3,11 +3,12 @@ function updateState(id) {
 	
 	request.addEventListener("load",function(){
 		if (request.status === 200) {
-    		// 이상 없음!
 			console.log("ok");
 		} else {
-			alert("updated failed");
+			console.log("updated failed");
 		}
+		
+		location.reload();
 	});
 	
 	var url  = "http://localhost:8080/todo/update?id="+id;

@@ -19,16 +19,24 @@ public class AddServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doPost(request, response);
 
-		response.sendRedirect(Security.MAIN_URL);
+		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-		
 
+		TodoDto dto = new TodoDto();
+		dto.setTitle(request.getParameterValues("title")[0]);
+		dto.setName(request.getParameterValues("name")[0]);
+		dto.setSequence(Integer.parseInt(request.getParameterValues("sequence")[0]));
+		dto.setType("TODO");
+
+		dao.addTodo(dto);
+
+		response.sendRedirect(Security.MAIN_URL);
 	}
 
 }
