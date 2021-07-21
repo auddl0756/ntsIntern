@@ -50,26 +50,36 @@ body .center-nav ul {
 	color: white;
 }
 
-body .center ul {
-	float: left;
-	margin-left: 10%;
+.todo , .doing , .done{
+	float:left;
+	text-align:center; 
 }
 
-body .center ul li {
-	float: left;
-	width: 250px;
-	height: 100px;
-	margin: 1%;
-	margin-right: 2%;
+.todo {
+	  width:30%;
+}
+
+.doing{
+	  width:50%;
+}
+
+.done{
+	  width:30%;
+}
+
+body .center .todo ul li{
+	width:250px;
+	height:100px;
 	box-sizing: border-box;
 	box-shadow: 3px 3px 3px 3px black;
 	background-color: skyblue;
 	text-align: left;
 	padding-top: 25px;
 	padding-left: 1.5%;
-	font-size: 1.5em;
+	font-size: 16px;
 	color: white;
 }
+
 
 li {
 	list-style: none;

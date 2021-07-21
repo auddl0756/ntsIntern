@@ -34,7 +34,7 @@ public class AddServlet extends HttpServlet {
 			dto.setTitle("title1");
 			dto.setName("name1");
 			dto.setSequence(1);
-			dto.setType("doing");
+			dto.setType("DOING");
 			dto.setRegDateTime(LocalDateTime.now());
 
 			dao.addTodo(dto);
