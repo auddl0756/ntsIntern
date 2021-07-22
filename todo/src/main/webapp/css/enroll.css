@@ -24,15 +24,16 @@ body form a {
 	display: inline-block;
 	line-height: 30px;
 	width: 100px;
-	height: 30px;
+	height: 40px;
 	text-align: center;
 	box-sizing: border-box;
 	box-shadow: 3px 3px 3px 3px black;
+	padding-top:5px;
 }
 
 body form .others {
 	width: 100px;
-	height: 30px;
+	height: 40px;
 	text-align: center;
 	box-sizing: border-box;
 	box-shadow: 3px 3px 3px 3px black;
