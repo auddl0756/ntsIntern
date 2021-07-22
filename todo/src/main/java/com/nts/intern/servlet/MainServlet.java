@@ -23,9 +23,9 @@ public class MainServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 
 		List<TodoDto> list = dao.findAll();
-
-		list.sort((dto1, dto2) -> dto1.getSequence() - dto2.getSequence());
-
+		
+		list.sort((dto1,dto2)->dto1.getRegDate().compareTo(dto2.getRegDate()));
+		
 		request.setAttribute("todoList", list);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main.jsp");
