@@ -1,4 +1,4 @@
-function updateState(id) {	
+function updateState(id,type) {	
 	var request =new XMLHttpRequest();
 	
 	request.addEventListener("load",function(){
@@ -11,7 +11,7 @@ function updateState(id) {
 		location.reload();
 	});
 	
-	var url  = "http://localhost:8080/todo/update?id="+id;
+	var url  = "http://localhost:8080/todo/update?id="+id+"&type="+type;
 	
 	request.open("GET", url,true);
 	request.send();

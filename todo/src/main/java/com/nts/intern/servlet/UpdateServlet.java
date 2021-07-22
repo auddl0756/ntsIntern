@@ -20,23 +20,25 @@ public class UpdateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		
 		String id = request.getParameterValues("id")[0];
+		String type= request.getParameterValues("type")[0];
+		
 		request.setAttribute("id", id);
-
+		request.setAttribute("type", type);
+		
 		doPost(request, response);
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
-
+		
 		long id = Long.parseLong((String) request.getAttribute("id"));
+		String type= (String)request.getAttribute("type");
 
-		TodoDto dto = dao.findById(id);
-
-		dao.updateTodo(dto);
-
+		dao.updateTodo(id,type);
+		
 		response.sendRedirect(Security.MAIN_URL);
 	}
 }

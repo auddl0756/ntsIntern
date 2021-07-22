@@ -102,24 +102,24 @@ public class TodoDao {
 		return insertedCount;
 	}
 
-	public int updateTodo(TodoDto dto) {
+	public int updateTodo(long id,String type) {
 		int updatedCount = 0;
 
 		String query = "update todo set type=? where id =?";
 		try (Connection connection = DriverManager.getConnection(URL, USER, PASSWD);
 				PreparedStatement preparedStatement = connection.prepareStatement(query);) {
 
-			if (dto.getType().equals("TODO")) {
+			if (type.equals("TODO")) {
 				preparedStatement.setString(1, "DOING");
-			} else if (dto.getType().equals("DOING")) {
+			} else if (type.equals("DOING")) {
 				preparedStatement.setString(1, "DONE");
 			}
 
-			preparedStatement.setLong(2, dto.getId());
+			preparedStatement.setLong(2, id);
 			updatedCount = preparedStatement.executeUpdate();
 
 		} catch (Exception exception) {
-			System.err.println("update " + dto + " " + exception);
+			System.err.println("update " + "id="+id+"type="+type+ " " + exception);
 		}
 		return updatedCount;
 	}

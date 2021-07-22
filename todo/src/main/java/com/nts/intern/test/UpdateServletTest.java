@@ -25,17 +25,8 @@ public class UpdateServletTest extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
-
-		TodoDto dto = new TodoDto();
-
-		dto.setId(5L);
-		dto.setTitle("updated_title1");
-		dto.setName("updated_name1");
-		dto.setSequence(1);
-		dto.setType("updated_doing");
-		dto.setRegDateTime(LocalDateTime.now());
-
-		dao.updateTodo(dto);
+		
+		dao.updateTodo(5L,"DOING");
 	}
 	
 }
