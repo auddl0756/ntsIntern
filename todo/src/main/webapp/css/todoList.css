@@ -36,11 +36,11 @@ body .top ul li {
 body .center-nav ul {
 	float: left;
 	padding-top: 25px;
-	width: 250px;
+	width: 300px;
 	height: 80px;
 	margin-left: 1%;
 	margin-right: 1%;
-	margin-bottom: 0%;
+	margin-bottom: 0.6%;
 	box-sizing: border-box;
 	box-shadow: 3px 3px 3px 3px black;
 	background-color: teal;
@@ -50,26 +50,53 @@ body .center-nav ul {
 	color: white;
 }
 
-.todo , .doing , .done{
-	float:left;
-	text-align:center; 
+#todo {
+	clear: both;
+	float: left;
+	width: 22%;
+	text-align: center;
+	/*left : 5%;*/
+	margin-left: 160px;
 }
 
-.todo {
-	  width:30%;
+#doing {
+	float: left;
+	width: 22%;
+	margin-bottom: 5%;
 }
 
-.doing{
-	  width:50%;
+#done {
+	float: left;
+	width: 22%;
+	margin-bottom: 5%;
 }
 
-.done{
-	  width:30%;
+body .center #todo  ul li {
+	clear: both;
+	float: left;
+	width: 300px;
+	height: 120px;
+	text-align: center;
+	left: 15%;
+	box-sizing: border-box;
+	box-shadow: 3px 3px 3px 3px black;
+	background-color: skyblue;
+	text-align: left;
+	padding-top: 25px;
+	font-size: 16px;
+	color: black;
+	margin-bottom: 10%;
+	
+	opacity:0.8; 
 }
 
-body .center .todo ul li{
-	width:250px;
-	height:100px;
+body .center #doing  ul li {
+	clear: both;
+	float: left;
+	width: 300px;
+	height: 120px;
+	text-align: center;
+	left: 15%;
 	box-sizing: border-box;
 	box-shadow: 3px 3px 3px 3px black;
 	background-color: skyblue;
@@ -77,9 +104,47 @@ body .center .todo ul li{
 	padding-top: 25px;
 	padding-left: 1.5%;
 	font-size: 16px;
-	color: white;
+	color: black;
+	margin-bottom: 10%;
+	
+	opacity:0.8; 
 }
 
+body .center #done ul li {
+	clear: both;
+	float: left;
+	width: 300px;
+	height: 120px;
+	text-align: center;
+	left: 15%;
+	box-sizing: border-box;
+	box-shadow: 3px 3px 3px 3px black;
+	background-color: skyblue;
+	text-align: left;
+	padding-top: 25px;
+	padding-left: 1.5%;
+	font-size: 16px;
+	color: black;
+	margin-bottom: 10%;
+	
+	opacity:0.8; 
+}
+
+body .center div ul li button {
+	float: right;
+	margin-right: 15px;
+	padding:4px;
+}
+
+body .center div ul li b {
+	padding: 15px;
+	font-size: 1.2em;
+}
+
+body .center div ul li sub {
+	padding: 15px;
+	font-size: 0.8em;
+}
 
 li {
 	list-style: none;

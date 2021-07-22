@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="css/todoList.css">
 </head>
 <body>
-
 	<nav class="top">
 		<h1>나의 해야할 일들</h1>
 		<ul>
@@ -20,39 +19,75 @@
 	</nav>
 
 	<nav class="center-nav">
-		<ul class="todo">TODO
+		<ul>TODO
 		</ul>
 
-		<ul class="doing">DOING
+		<ul>DOING
 		</ul>
 
-		<ul class="done">DONE
+		<ul>DONE
 		</ul>
 	</nav>
-	
+
 	<article class="center">
-		<div class="todo">
+		<div id="todo">
 			<ul>
-				<c:forEach var="item" items="${response}">
+				<c:forEach var="item" items="${todoList}">
 					<c:choose>
-							<c:when test="${item.type eq'TODO'}">
-								<li>
-									${item.title}<br/>
-									등록 날짜 : ${item.regDate } 
-									${item.name }
-									${item.type }
-									<button> =></button>
-								</li>
-							</c:when>	
-						
-						<c:otherwise>
-							never!
-						</c:otherwise>
+						<c:when test="${item.type eq'TODO'}">
+							<li id="todoList_${item.id}"><b>${item.title}</b><br /> 
+								<sub> 등록 날짜 :
+									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
+									${item.sequence } 
+								</sub>
+								<button onclick="updateState( ${item.id} , '${item.type}' )"> ➔ </button>
+								<button onclick="deleteTodo(${item.id} , '${item.type}')"> 삭제 </button>
+							</li>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+			</ul>
+		</div>
+
+		<div id="doing">
+			<ul>
+				<c:forEach var="item" items="${todoList}">
+					<c:choose>
+						<c:when test="${item.type eq'DOING'}">
+							<li id="todoList_${item.id}"><b>${item.title}</b><br /> 
+								<sub> 등록 날짜 :
+									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
+									${item.sequence } 
+								</sub>
+								<button id="doingListButton_${item.id}"  onclick="updateState( ${item.id} , '${item.type}' )"> ➔ </button>
+								<button onclick="deleteTodo(${item.id} , '${item.type}')"> 삭제 </button>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+			</ul>
+		</div>
+
+
+		<div id="done">
+			<ul>
+				<c:forEach var="item" items="${todoList}">
+					<c:choose>
+						<c:when test="${item.type eq'DONE'}">
+							<li id="doneList_${item.id}"><b>${item.title}</b><br /> 
+								<sub> 등록 날짜 :
+									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
+									${item.sequence } 
+								</sub>
+								<button onclick="deleteTodo(${item.id} , '${item.type}')"> 삭제 </button>
+							</li>
+						</c:when>
 					</c:choose>
 				</c:forEach>
 			</ul>
 		</div>
 	</article>
 
+
+	<script src="js/update.js"></script>
 </body>
 </html>
