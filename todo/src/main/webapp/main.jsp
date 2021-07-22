@@ -35,10 +35,13 @@
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'TODO'}">
-							<li id="todoList_${item.id}"><b>${item.title}</b><br /> <sub> 등록 날짜 :
+							<li id="todoList_${item.id}"><b>${item.title}</b><br /> 
+								<sub> 등록 날짜 :
 									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
-									${item.sequence } </sub>
-									<button onclick="updateState( ${item.id} , '${item.type}' )"> ➔ </button>
+									${item.sequence } 
+								</sub>
+								<button onclick="updateState( ${item.id} , '${item.type}' )"> ➔ </button>
+								<button onclick="deleteTodo(${item.id} , '${item.type}')"> 삭제 </button>
 							</li>
 						</c:when>
 					</c:choose>
@@ -51,10 +54,13 @@
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'DOING'}">
-							<li id="doingList_${item.id}"><b>${item.title}</b><br /> <sub> 등록 날짜 :
+							<li id="todoList_${item.id}"><b>${item.title}</b><br /> 
+								<sub> 등록 날짜 :
 									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
-									${item.sequence } </sub>
-									<button id="doingListButton_${item.id}"  onclick="updateState( ${item.id} , '${item.type}' )"> ➔ </button>
+									${item.sequence } 
+								</sub>
+								<button id="doingListButton_${item.id}"  onclick="updateState( ${item.id} , '${item.type}' )"> ➔ </button>
+								<button onclick="deleteTodo(${item.id} , '${item.type}')"> 삭제 </button>
 						</c:when>
 					</c:choose>
 				</c:forEach>
@@ -67,9 +73,13 @@
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'DONE'}">
-							<li id="doneList_${item.id}"><b>${item.title}</b><br /> <sub> 등록 날짜 :
+							<li id="doneList_${item.id}"><b>${item.title}</b><br /> 
+								<sub> 등록 날짜 :
 									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
-									${item.sequence } </sub></li>
+									${item.sequence } 
+								</sub>
+								<button onclick="deleteTodo(${item.id} , '${item.type}')"> 삭제 </button>
+							</li>
 						</c:when>
 					</c:choose>
 				</c:forEach>

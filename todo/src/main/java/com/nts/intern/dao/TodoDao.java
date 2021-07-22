@@ -97,7 +97,7 @@ public class TodoDao {
 
 			insertedCount = preparedStatement.executeUpdate();
 		} catch (Exception exception) {
-			System.err.println("insert " + dto + " " + exception);
+			System.err.println("while inserting... " + dto + " " + exception);
 		}
 		return insertedCount;
 	}
@@ -119,8 +119,25 @@ public class TodoDao {
 			updatedCount = preparedStatement.executeUpdate();
 
 		} catch (Exception exception) {
-			System.err.println("update " + "id="+id+"type="+type+ " " + exception);
+			System.err.println("while updating... " + "id="+id+"type="+type+ " " + exception);
 		}
 		return updatedCount;
+	}
+	
+	public int deleteTodo(long id) {
+		int deletedCount = 0;
+		
+		String query = "delete from todo where id=?";
+		try (Connection connection = DriverManager.getConnection(URL, USER, PASSWD);
+				PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+
+			preparedStatement.setLong(1, id);
+			deletedCount= preparedStatement.executeUpdate();
+
+		} catch (Exception exception) {
+			System.err.println("while deleting... " + "id="+id+" " + exception);
+		}
+		
+		return deletedCount;
 	}
 }
