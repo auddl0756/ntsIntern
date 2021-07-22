@@ -3,12 +3,23 @@ function updateState(id,type) {
 	
 	request.addEventListener("load",function(){
 		if (request.status === 200) {
-			console.log("ok");
+			if(type==="TODO"){
+				var todoListElement = document.getElementById("todoList_"+id);
+				var doingElement = document.getElementById("doing").firstElementChild;
+				
+				doingElement.appendChild(todoListElement);
+			}else if(type==="DOING"){
+				
+				var doingListElement = document.getElementById("doingList_"+id);
+				var doneElement = document.getElementById("done").firstElementChild;
+				var buttonElement = document.getElementById("doingListButton_"+id);
+				
+				doneElement.appendChild(doingListElement);
+				buttonElement.remove();
+			}
 		} else {
-			console.log("updated failed");
+			console.log("update failed");
 		}
-		
-		location.reload();
 	});
 	
 	var url  = "http://localhost:8080/todo/update?id="+id+"&type="+type;
