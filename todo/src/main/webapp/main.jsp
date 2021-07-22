@@ -35,14 +35,11 @@
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'TODO'}">
-							<li id="todoList_${item.id}"><b>${item.title}</b><br /> 
-								<sub> 등록 날짜 :
-									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
-									${item.sequence } 
-								</sub>
-								<button onclick="updateState( ${item.id} , '${item.type}' )"> ➔ </button>
-								<button onclick="deleteTodo(${item.id} , '${item.type}')"> 삭제 </button>
-							</li>
+							<li id="todoList_${item.id}"><b>${item.title}</b><br /> <sub>
+									등록 날짜 : ${fn:substring(item.regDate,0,10)}, ${item.name } ,
+									우선순위 ${item.sequence } </sub>
+								<button class="updateButton" id="todoListButton_${item.id}">
+									➔</button></li>
 						</c:when>
 					</c:choose>
 				</c:forEach>
@@ -54,13 +51,11 @@
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'DOING'}">
-							<li id="todoList_${item.id}"><b>${item.title}</b><br /> 
-								<sub> 등록 날짜 :
-									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
-									${item.sequence } 
-								</sub>
-								<button id="doingListButton_${item.id}"  onclick="updateState( ${item.id} , '${item.type}' )"> ➔ </button>
-								<button onclick="deleteTodo(${item.id} , '${item.type}')"> 삭제 </button>
+							<li id="doingList_${item.id}"><b>${item.title}</b><br /> <sub>
+									등록 날짜 : ${fn:substring(item.regDate,0,10)}, ${item.name } ,
+									우선순위 ${item.sequence } </sub>
+								<button class="updateButton" id="doingListButton_${item.id}">
+									➔</button>
 						</c:when>
 					</c:choose>
 				</c:forEach>
@@ -73,13 +68,9 @@
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'DONE'}">
-							<li id="doneList_${item.id}"><b>${item.title}</b><br /> 
-								<sub> 등록 날짜 :
-									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
-									${item.sequence } 
-								</sub>
-								<button onclick="deleteTodo(${item.id} , '${item.type}')"> 삭제 </button>
-							</li>
+							<li id="doneList_${item.id}"><b>${item.title}</b><br /> <sub>
+									등록 날짜 : ${fn:substring(item.regDate,0,10)}, ${item.name } ,
+									우선순위 ${item.sequence } </sub></li>
 						</c:when>
 					</c:choose>
 				</c:forEach>

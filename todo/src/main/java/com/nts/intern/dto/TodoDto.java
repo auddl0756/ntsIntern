@@ -61,6 +61,6 @@ public class TodoDto {
 	@Override
 	public String toString() {
 		return "TodoDto [id=" + id + ", title=" + title + ", name=" + name + ", sequence=" + sequence + ", type=" + type
-				+ "]";
+			+ "]";
 	}
 }

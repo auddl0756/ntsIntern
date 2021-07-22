@@ -12,29 +12,31 @@ import javax.servlet.http.HttpServletResponse;
 import com.nts.intern.dao.TodoDao;
 import com.nts.intern.dto.TodoDto;
 import com.nts.intern.security.Security;
+import com.nts.intern.type.TodoType;
 
 @WebServlet("/add")
 public class AddServlet extends HttpServlet {
-	private static final TodoDao dao = new TodoDao();
+	private static final TodoDao DAO = new TodoDao();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+		throws ServletException, IOException {
 
 		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+		throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 
 		TodoDto dto = new TodoDto();
-		dto.setTitle(request.getParameterValues("title")[0]);
-		dto.setName(request.getParameterValues("name")[0]);
-		dto.setSequence(Integer.parseInt(request.getParameterValues("sequence")[0]));
-		dto.setType("TODO");
 
-		dao.addTodo(dto);
+		dto.setTitle(request.getParameter("title"));
+		dto.setName(request.getParameter("name"));
+		dto.setSequence(Integer.parseInt(request.getParameter("sequence")));
+		dto.setType(TodoType.TODO.getType());
+
+		DAO.addTodo(dto);
 
 		response.sendRedirect(Security.MAIN_URL);
 	}

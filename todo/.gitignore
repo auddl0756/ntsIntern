@@ -17,6 +17,8 @@ local.properties
 
 #내가 추가한 것
 
+**/test
+
 # External tool builders
 .externalToolBuilders/
 

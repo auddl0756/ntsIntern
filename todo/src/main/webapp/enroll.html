@@ -4,31 +4,30 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/enroll.css">
-<script src="js/eraseForm.js"></script>
-
 </head>
 <body>
 <h1>할일 등록</h1>
 
     <form id="enrollForm" action="http://localhost:8080/todo/add" method="post">
-	        어떤일인가요? <br/>
+	         어떤일인가요? <br/>
         <input name="title" id="title" type="text" placeholder="clean code 읽기(24자 까지)" maxlength="24" required/> 
-        <br/> <br/>
+		<br/>
 	        
-	        누가 할일인가요?<br/>
+	         누가 할일인가요?<br/>
         <input name="name" id="name" type="text" placeholder="myung roon" maxlength="20" required/> 
-        <br/> <br/> 
+ 		<br/>
 		
-	        우선 순위를 선택하세요 <br/>
-        <input name="sequence" value="1" class="sequence" type="radio" required/> 1순위
+	         우선 순위를 선택하세요 <br/>
+        <input id="sequenceFirst" name="sequence" value="1" class="sequence" type="radio" required/> 1순위
         <input name="sequence" value="2" class="sequence" type="radio"> 2순위
         <input name="sequence" value="3" class="sequence" type="radio"> 3순위
-        <br/> <br/>
+        <br/>
         
         <a class="before" href="http://localhost:8080/todo/main"> ⇦ 이전</a>
         <input class="others" type="submit" value="제출"/>    
         <input class ="others" type="reset" value="내용 지우기">
     </form>
 
+<script src="js/eraseForm.js"></script>
 </body>
 </html>

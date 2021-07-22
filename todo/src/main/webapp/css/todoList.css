@@ -55,7 +55,6 @@ body .center-nav ul {
 	float: left;
 	width: 22%;
 	text-align: center;
-	/*left : 5%;*/
 	margin-left: 160px;
 }
 
@@ -86,8 +85,7 @@ body .center #todo  ul li {
 	font-size: 16px;
 	color: black;
 	margin-bottom: 10%;
-	
-	opacity:0.8; 
+	opacity: 0.8;
 }
 
 body .center #doing  ul li {
@@ -106,8 +104,7 @@ body .center #doing  ul li {
 	font-size: 16px;
 	color: black;
 	margin-bottom: 10%;
-	
-	opacity:0.8; 
+	opacity: 0.8;
 }
 
 body .center #done ul li {
@@ -126,14 +123,13 @@ body .center #done ul li {
 	font-size: 16px;
 	color: black;
 	margin-bottom: 10%;
-	
-	opacity:0.8; 
+	opacity: 0.8;
 }
 
 body .center div ul li button {
 	float: right;
 	margin-right: 15px;
-	padding:4px;
+	padding: 4px;
 }
 
 body .center div ul li b {

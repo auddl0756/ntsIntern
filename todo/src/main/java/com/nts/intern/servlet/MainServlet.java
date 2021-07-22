@@ -15,17 +15,14 @@ import com.nts.intern.dto.TodoDto;
 
 @WebServlet("/main")
 public class MainServlet extends HttpServlet {
-	private static final TodoDao dao = new TodoDao();
+	private static final TodoDao DAO = new TodoDao();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("application/json");
+		throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 
-		List<TodoDto> list = dao.findAll();
-		
-		list.sort((dto1,dto2)->dto1.getRegDate().compareTo(dto2.getRegDate()));
-		
+		List<TodoDto> list = DAO.findAll();
+
 		request.setAttribute("todoList", list);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/main.jsp");
