@@ -25,7 +25,7 @@ function updateState(id, type) {
 			var doingListElement = document.getElementById("doingList_" + id);
 
 			if (todoListElement !== null) {
-				var doingElement = document.getElementById("doing").firstElementChild;
+				var doingElement = document.getElementById("doing-nav");
 				var buttonElement = document.getElementById("todoListButton_" + id);
 
 				doingElement.appendChild(todoListElement);
@@ -33,7 +33,7 @@ function updateState(id, type) {
 				todoListElement.id = "doingList_" + id;
 
 			} else if (doingListElement !== null) {
-				var doneElement = document.getElementById("done").firstElementChild;
+				var doneElement = document.getElementById("done-nav")
 				var buttonElement = document.getElementById("doingListButton_" + id);
 
 				doneElement.appendChild(doingListElement);

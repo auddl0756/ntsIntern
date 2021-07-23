@@ -8,7 +8,7 @@
 <body>
 <h1>할일 등록</h1>
 
-    <form id="enrollForm" action="http://localhost:8080/todo/add" method="post">
+    <form id="enrollForm" action="/todo/add" method="post">
 	         어떤일인가요? <br/>
         <input name="title" id="title" type="text" placeholder="clean code 읽기(24자 까지)" maxlength="24" required/> 
 		<br/>
@@ -23,11 +23,9 @@
         <input name="sequence" value="3" class="sequence" type="radio"> 3순위
         <br/>
         
-        <a class="before" href="http://localhost:8080/todo/main"> ⇦ 이전</a>
+        <a class="before" href="/todo/main"> ⇦ 이전</a>
         <input class="others" type="submit" value="제출"/>    
         <input class ="others" type="reset" value="내용 지우기">
     </form>
-
-<script src="js/eraseForm.js"></script>
 </body>
 </html>

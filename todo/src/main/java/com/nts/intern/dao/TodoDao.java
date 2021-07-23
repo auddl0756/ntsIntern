@@ -46,7 +46,8 @@ public class TodoDao {
 				result.add(dto);
 			}
 		} catch (Exception exception) {
-			System.err.println("getAll()" + " " + exception);
+			System.err.println("while finding all..." + " " + exception.getMessage());
+			exception.printStackTrace();
 		}
 
 		return result;
@@ -66,7 +67,8 @@ public class TodoDao {
 
 			insertedCount = preparedStatement.executeUpdate();
 		} catch (Exception exception) {
-			System.err.println("while inserting... " + dto + " " + exception);
+			System.err.println("while inserting... " + "dto= " + dto + " " + exception.getMessage());
+			exception.printStackTrace();
 		}
 		return insertedCount;
 	}
@@ -84,7 +86,8 @@ public class TodoDao {
 			updatedCount = preparedStatement.executeUpdate();
 
 		} catch (Exception exception) {
-			System.err.println("while updating... " + "id=" + id + "type=" + " " + exception);
+			System.err.println("while updating... " + "id=" + id + "type=" + " " + exception.getMessage());
+			exception.printStackTrace();
 		}
 		return updatedCount;
 	}

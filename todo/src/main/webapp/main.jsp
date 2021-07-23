@@ -14,24 +14,15 @@
 	<nav class="top">
 		<h1>나의 해야할 일들</h1>
 		<ul>
-			<li><a href="enroll.html">새로운 TODO 등록</a></li>
-		</ul>
-	</nav>
-
-	<nav class="center-nav">
-		<ul>TODO
-		</ul>
-
-		<ul>DOING
-		</ul>
-
-		<ul>DONE
+			<li><a href="/todo/enroll">새로운 TODO 등록</a></li>
 		</ul>
 	</nav>
 
 	<article class="center">
 		<div id="todo">
-			<ul>
+			<ul class="center-nav">TODO
+			</ul>
+			<ul id="todo-nav">
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'TODO'}">
@@ -46,8 +37,11 @@
 			</ul>
 		</div>
 
+
 		<div id="doing">
-			<ul>
+			<ul class="center-nav">DOING
+			</ul>
+			<ul id="doing-nav">
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'DOING'}">
@@ -64,7 +58,9 @@
 
 
 		<div id="done">
-			<ul>
+			<ul class="center-nav">DONE
+			</ul>
+			<ul id="done-nav">
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'DONE'}">
