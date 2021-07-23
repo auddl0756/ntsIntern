@@ -1,6 +1,9 @@
 package com.nts.intern.servlet;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.StringTokenizer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -9,8 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nts.intern.dao.TodoDao;
-import com.nts.intern.dto.TodoDto;
 import com.nts.intern.security.Security;
 import com.nts.intern.type.TodoType;
 
@@ -18,10 +22,15 @@ import com.nts.intern.type.TodoType;
 public class UpdateServlet extends HttpServlet {
 	private static final TodoDao DAO = new TodoDao();
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		long id = Long.parseLong(request.getParameter("id"));
-		String type = request.getParameter("type");
+		BufferedReader br = request.getReader();
+		String updateInfo = br.readLine();
+
+		HashMap<String, Object> map = new ObjectMapper().readValue(updateInfo, HashMap.class);
+
+		long id = Long.parseLong((String)map.getOrDefault("id", "0"));
+		String type = (String)map.get("type");
 
 		if (type.equals(TodoType.TODO.getType())) {
 			DAO.updateTodo(id, TodoType.DOING.getType());

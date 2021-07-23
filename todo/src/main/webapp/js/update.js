@@ -50,8 +50,13 @@ function updateState(id, type) {
 		}
 	});
 
-	var url = "http://localhost:8080/todo/update?id=" + id + "&type=" + type;
+	var url = "/todo/update";
+	var updateInfo = {
+		id: id,
+		type: type
+	};
 
-	request.open("GET", url, true);
-	request.send();
+	request.open("POST", url);
+	request.setRequestHeader('Content-Type', 'application/json;');
+	request.send(JSON.stringify(updateInfo));
 }
