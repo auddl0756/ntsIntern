@@ -18,11 +18,6 @@ import com.nts.intern.type.TodoType;
 public class AddServlet extends HttpServlet {
 	private static final TodoDao DAO = new TodoDao();
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
-		doPost(request, response);
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
