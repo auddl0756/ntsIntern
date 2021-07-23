@@ -12,12 +12,23 @@ body form {
 
 body form #title {
 	width: 450px;
-	height: 30px;
+	height: 40px;
+	margin-bottom: 50px;
 }
 
 body form #name {
 	width: 250px;
-	height: 30px;
+	height: 40px;
+	margin-bottom: 50px;
+}
+
+.sequence {
+	margin-bottom: 70px;
+	margin-left: 20px;
+}
+
+#sequenceFirst {
+	margin-left: 0px;
 }
 
 body form a {
@@ -28,7 +39,7 @@ body form a {
 	text-align: center;
 	box-sizing: border-box;
 	box-shadow: 3px 3px 3px 3px black;
-	padding-top:5px;
+	padding-top: 5px;
 }
 
 body form .others {

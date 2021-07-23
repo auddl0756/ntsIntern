@@ -14,53 +14,42 @@
 	<nav class="top">
 		<h1>나의 해야할 일들</h1>
 		<ul>
-			<li><a href="enroll.html">새로운 TODO 등록</a></li>
-		</ul>
-	</nav>
-
-	<nav class="center-nav">
-		<ul>TODO
-		</ul>
-
-		<ul>DOING
-		</ul>
-
-		<ul>DONE
+			<li><a href="/todo/enroll">새로운 TODO 등록</a></li>
 		</ul>
 	</nav>
 
 	<article class="center">
 		<div id="todo">
-			<ul>
+			<ul class="center-nav">TODO
+			</ul>
+			<ul id="todo-nav">
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'TODO'}">
-							<li id="todoList_${item.id}"><b>${item.title}</b><br /> 
-								<sub> 등록 날짜 :
-									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
-									${item.sequence } 
-								</sub>
-								<button onclick="updateState( ${item.id} , '${item.type}' )"> ➔ </button>
-								<button onclick="deleteTodo(${item.id} , '${item.type}')"> 삭제 </button>
-							</li>
+							<li id="todoList_${item.id}"><b>${item.title}</b><br /> <sub>
+									등록 날짜 : ${fn:substring(item.regDate,0,10)}, ${item.name } ,
+									우선순위 ${item.sequence } </sub>
+								<button class="updateButton" id="todoListButton_${item.id}">
+									➔</button></li>
 						</c:when>
 					</c:choose>
 				</c:forEach>
 			</ul>
 		</div>
 
+
 		<div id="doing">
-			<ul>
+			<ul class="center-nav">DOING
+			</ul>
+			<ul id="doing-nav">
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'DOING'}">
-							<li id="todoList_${item.id}"><b>${item.title}</b><br /> 
-								<sub> 등록 날짜 :
-									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
-									${item.sequence } 
-								</sub>
-								<button id="doingListButton_${item.id}"  onclick="updateState( ${item.id} , '${item.type}' )"> ➔ </button>
-								<button onclick="deleteTodo(${item.id} , '${item.type}')"> 삭제 </button>
+							<li id="doingList_${item.id}"><b>${item.title}</b><br /> <sub>
+									등록 날짜 : ${fn:substring(item.regDate,0,10)}, ${item.name } ,
+									우선순위 ${item.sequence } </sub>
+								<button class="updateButton" id="doingListButton_${item.id}">
+									➔</button>
 						</c:when>
 					</c:choose>
 				</c:forEach>
@@ -69,17 +58,15 @@
 
 
 		<div id="done">
-			<ul>
+			<ul class="center-nav">DONE
+			</ul>
+			<ul id="done-nav">
 				<c:forEach var="item" items="${todoList}">
 					<c:choose>
 						<c:when test="${item.type eq'DONE'}">
-							<li id="doneList_${item.id}"><b>${item.title}</b><br /> 
-								<sub> 등록 날짜 :
-									${fn:substring(item.regDate,0,10)}, ${item.name } ,우선순위
-									${item.sequence } 
-								</sub>
-								<button onclick="deleteTodo(${item.id} , '${item.type}')"> 삭제 </button>
-							</li>
+							<li id="doneList_${item.id}"><b>${item.title}</b><br /> <sub>
+									등록 날짜 : ${fn:substring(item.regDate,0,10)}, ${item.name } ,
+									우선순위 ${item.sequence } </sub></li>
 						</c:when>
 					</c:choose>
 				</c:forEach>
