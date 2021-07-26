@@ -4,3 +4,5 @@
 - eclipse encoding : UTF-8
 - tomcat : 9.0.50
  [tomcat 설치 시 한글깨짐 해결](https://sjkim-dev.tistory.com/9)
+- spring framework : 4.3.30
+- project lombok : 1.18.20
