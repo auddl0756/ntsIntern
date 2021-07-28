@@ -1,5 +1,7 @@
 package com.nts.intern.reserve.dao;
 
+import java.util.Collections;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +18,21 @@ import static com.nts.intern.reserve.dao.ProductDaoSqls.*;
 
 @Repository
 public class ProductDao {
-	 	private NamedParameterJdbcTemplate jdbc;
-	    private RowMapper<ProductDto> rowMapper = BeanPropertyRowMapper.newInstance(ProductDto.class);
+	private NamedParameterJdbcTemplate jdbc;
+	private RowMapper<ProductDto> rowMapper = BeanPropertyRowMapper.newInstance(ProductDto.class);
 
-	    public ProductDao(DataSource dataSource) {
-	        this.jdbc = new NamedParameterJdbcTemplate(dataSource);
-	    }
-	    
-	    public List<ProductDto> findAll(Integer start, Integer limit) {
-	    		Map<String, Integer> params = new HashMap<>();
-	    		params.put("start", start);
-	    		params.put("limit", limit);
-	        return jdbc.query(SELECT_PAGING, params, rowMapper);
-	    }
+	public ProductDao(DataSource dataSource) {
+		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
+	}
+ 
+	public List<ProductDto> findAll(Integer start, Integer limit) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("start", start);
+		params.put("limit", limit);
+		return jdbc.query(SELECT_PAGING, params, rowMapper);
+	}
+
+	public int getCount() {
+		return jdbc.queryForObject(SELECT_COUNT, Collections.emptyMap(), Integer.class);
+	}
 }

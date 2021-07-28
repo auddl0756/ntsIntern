@@ -16,7 +16,7 @@ import lombok.ToString;
 public class ProductDto {
 	private String description;
 	private String content;
-	
+
 	private LocalDateTime createDate;
 	private LocalDateTime modifyDate;
 }

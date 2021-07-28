@@ -19,16 +19,21 @@ import com.nts.intern.reserve.dto.ProductDto;
 public class ProductDaoTest {
 	@Autowired
 	private ProductDao productDao;
-	
+
 	@Test
 	public void selectAllTest() {
 		assertThat(productDao).isNotNull();
-		List<ProductDto> list=productDao.findAll(0, 5);
-		
-		list.stream().forEach(product->{
+		List<ProductDto> list = productDao.findAll(0, 5);
+
+		list.stream().forEach(product -> {
 			assertThat(product.getContent()).isNotNull();
 		});
-		
 	}
 
+	@Test
+	public void selectCountTest() {
+		assertThat(productDao).isNotNull();
+		assertThat(productDao.getCount()).isGreaterThan(-1);
+		System.out.println(productDao.getCount());
+	}
 }

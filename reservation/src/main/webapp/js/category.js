@@ -1,10 +1,32 @@
 let clickedCategory = 0;
 
+function makeTemplate(data) {
+	let html = document.querySelector("#itemList").innerHTML;
+	let resultHTML = html;
+
+	for (let elem of data) {
+		for (let key in elem) {
+			resultHTML = resultHTML.replace("${" + key + "}", elem[key]);
+		}
+	}
+
+	return resultHTML;
+}
+
 function requestContents(url) {
 	let XHR = new XMLHttpRequest();
 	XHR.addEventListener("load", function() {
 		if (XHR.status == 200) {
-			console.log(XHR.response);
+			// console.log(XHR.response);
+			let data = JSON.parse(XHR.responseText);
+
+			let html = makeTemplate(data);
+			let eventBox = document.querySelector(".wrap_event_box");
+
+			eventBox.innerHTML = html;
+
+		} else {
+			alert("sorry. something failed");
 		}
 	});
 
@@ -17,16 +39,13 @@ let ulTag = document.querySelector(".section_event_tab .event_tab_lst");
 ulTag.addEventListener("click", function(event) {
 	//ajax통신할 때 cache 필요할 것.
 
-	//선택된 카테고리의 글자색을 바꾸려면 자바스크립트를 꼭 써야하나? css만으론 안 되나?
 	let target = event.target;
-	let LiTag = target;
-
-	console.log("target : ", target);
+	let liTag = target;
 
 	if (target.tagName === "SPAN") {
-		LiTag = target.parentNode.parentNode;
+		liTag = target.parentNode.parentNode;
 	} else if (target.tagName === "A") {
-		LiTag = target.parentNode;
+		liTag = target.parentNode;
 	} else if (target.tagName === "UL") {
 		return;
 	}
@@ -35,11 +54,11 @@ ulTag.addEventListener("click", function(event) {
 	before.style.color = "black";
 	before.style.fontWeight = "normal";
 
-	clickedCategory = parseInt(LiTag.getAttribute('data-category'));
-
+	clickedCategory = parseInt(liTag.getAttribute('data-category'));
+	 
 	let after = ulTag.children[clickedCategory].children[0].children[0];
 	after.style.color = "#00c73c";
 	after.style.fontWeight = "bold";
 
-	requestContents("./sampleText.txt");
+	requestContents("/sampleJson.json");
 });

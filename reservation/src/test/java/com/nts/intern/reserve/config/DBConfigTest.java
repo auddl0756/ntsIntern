@@ -16,14 +16,14 @@ import java.sql.SQLException;
 public class DBConfigTest {
 	@Autowired
 	BasicDataSource dataSource;
-	
+
 	@Test
-	public void test() {
+	public void DBConnectionTest() {
 		try {
 			dataSource.getConnection();
 			assertThat(dataSource.getUsername()).isEqualTo("user07");
-			
-		}catch(SQLException sqlException) {
+
+		} catch (SQLException sqlException) {
 			System.err.println(sqlException.getMessage());
 			sqlException.printStackTrace();
 		}
