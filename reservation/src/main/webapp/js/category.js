@@ -1,39 +1,60 @@
 let clickedCategory = 0;
 
-function makeTemplate(data){
-    let html = document.querySelector("#itemList").innerHTML;
-    let resultHTML ="";
-
+function makeTemplateCategory(targetHTML,data){
+    let htmlTemplate = document.querySelector("#itemList").innerHTML;
+    let resultHTML =targetHTML;
+	
+	let htmlLocation="left";
+	let leftBox= targetHTML.children[0];
+	let rightBox= targetHTML.children[1];
+	console.log(leftBox);
+	console.log(rightBox);
+	
+	let leftHTML="";
+	let rightHTML="";
+	
     for(let elem of data){
-        let hereHTML = html;
+        let hereHTML = htmlTemplate;
         for(let iter=0;iter<2;iter++){
             for(let key in elem){
                 hereHTML=hereHTML.replace("${"+key+"}",elem[key]);
             }
         }
-        resultHTML+=hereHTML;
+    	
+		if(htmlLocation==="left"){
+			leftHTML+=hereHTML;
+			htmlLocation ="right";
+		}else{
+			rightHTML+=hereHTML;
+			htmlLocation ="left";
+		} 
     }
+
+	console.log(leftHTML);
+	console.log(rightHTML);
     
-    return resultHTML;
+	leftBox.innerHTML=leftHTML;
+	rightBox.innerHTML=rightHTML; 
 }
 
 function requestContents(url) {
 	let XHR = new XMLHttpRequest();
 	XHR.addEventListener("load", function() {
 		if (XHR.status == 200) {
-			// console.log(XHR.response);
-			let data = JSON.parse(XHR.responseText);
-
-			let html = makeTemplate(data);
-			let eventBox = document.querySelector(".wrap_event_box");
 			
-			eventBox.innerHTML = html;
-
+			let data = JSON.parse(XHR.responseText);
+			console.log(data);
+			
+			let targetHTML = document.querySelector(".wrap_event_box");
+			
+			makeTemplateCategory(targetHTML,data);
+			
 		} else {
 			alert("sorry. something failed");
 		}
 	});
-
+	
+	url+="/"+clickedCategory+"?type=th";
 	XHR.open("GET", url);
 	XHR.send();
 }
@@ -64,5 +85,7 @@ ulTag.addEventListener("click", function(event) {
 	after.style.color = "#00c73c";
 	after.style.fontWeight = "bold";
 
-	requestContents("/sampleJson.json");
+	//requestContents("/sampleJson.json");
+	requestContents("/api/productImages");
+	
 });

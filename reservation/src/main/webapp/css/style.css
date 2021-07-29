@@ -3156,7 +3156,7 @@ button {
 
 .event .section_visual .group_visual .container_visual .visual_img {
 	position: relative;
-	min-height: 177px
+	min-height: 177px;
 }
 
 .event .section_visual .group_visual .container_visual .visual_img .item

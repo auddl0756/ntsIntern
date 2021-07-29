@@ -17,7 +17,7 @@ public class DBConfig implements TransactionManagementConfigurer{
 	private String url = "jdbc:mysql://10.113.116.52:13306/user07";
 	
 	private String userName="user07";
-	private String password="user07ss";
+	private String password="user07";
 	
 	@Bean
 	public DataSource dataSource() {

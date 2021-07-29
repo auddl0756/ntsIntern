@@ -3,6 +3,7 @@ package com.nts.intern.reserve.dao;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.junit.After;
 import org.junit.Test;
@@ -21,19 +22,23 @@ public class ProductDaoTest {
 	private ProductDao productDao;
 
 	@Test
-	public void selectAllTest() {
+	public void daoNotNullTest() {
 		assertThat(productDao).isNotNull();
-		List<ProductDto> list = productDao.findAll(0, 5);
+	}
 
+	@Test
+	public void findWithPagingAndCategoryTest() {
+		List<ProductDto> list = productDao.findWithPagingAndCategory(0, 5, 1);
 		list.stream().forEach(product -> {
-			assertThat(product.getContent()).isNotNull();
+			assertThat(product.getProductContent()).isNotNull();
 		});
 	}
 
 	@Test
-	public void selectCountTest() {
-		assertThat(productDao).isNotNull();
-		assertThat(productDao.getCount()).isGreaterThan(-1);
-		System.out.println(productDao.getCount());
+	public void findWithPagingTest() {
+		List<ProductDto> list = productDao.findWithPaging(0, 5);
+		list.stream().forEach(product -> {
+			assertThat(product.getProductContent()).isNotNull();
+		});
 	}
 }

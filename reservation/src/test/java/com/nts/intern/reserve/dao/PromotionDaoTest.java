@@ -18,15 +18,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PromotionDaoTest {
 	@Autowired
 	private PromotionDao promotionDao;
-	
+
+	@Test
+	public void daoNotNullTest() {
+		assertThat(promotionDao).isNotNull();
+	}
+
 	@Test
 	public void findAllTest() {
-		assertThat(promotionDao).isNotNull();
 		List<PromotionDto> all = promotionDao.findAll();
-		all.stream().forEach(result->{
+		all.stream().forEach(result -> {
 			assertThat(result.getProductImageUrl()).contains("_th_");
 		});
-		
 	}
 
 }

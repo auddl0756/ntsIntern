@@ -1,4 +1,4 @@
-function makeTemplate(data) {
+function makeTemplatePromotion(data) {
 	let html = document.querySelector("#promotionItem").innerHTML;
 	let resultHTML = "";
 
@@ -20,7 +20,7 @@ function requestPromotions(url) {
 		if (XHR.status == 200) {
 			let promotionData = JSON.parse(XHR.responseText);
 
-			let html = makeTemplate(promotionData);
+			let html = makeTemplatePromotion(promotionData);
 
 			let promotionArea = document.querySelector(".container_visual .container_visual .visual_img");
 

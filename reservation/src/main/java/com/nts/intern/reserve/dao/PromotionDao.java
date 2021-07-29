@@ -1,5 +1,7 @@
 package com.nts.intern.reserve.dao;
 
+import static com.nts.intern.reserve.dao.sql.PromotionDaoSqls.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +13,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.nts.intern.reserve.dto.ProductDto;
 import com.nts.intern.reserve.dto.PromotionDto;
-import static com.nts.intern.reserve.dao.PromotionDaoSqls.*;
 
 @Repository
 public class PromotionDao {
