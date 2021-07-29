@@ -13,9 +13,9 @@
 [SpringJUnit4ClassRunner](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/context/junit4/SpringJUnit4ClassRunner.html)
 
 # 무한 슬라이딩
-[쉬운 구현] (https://takeknowledge.tistory.com/34)
+[쉬운 구현](https://takeknowledge.tistory.com/34)
 
 # 스프링 컨트롤러 파라미터
-[여러 방법] (https://velog.io/@younghwan24/Spring-Controller-Parameter)
+[여러 방법](https://velog.io/@younghwan24/Spring-Controller-Parameter)
 
 
