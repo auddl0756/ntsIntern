@@ -1,16 +1,20 @@
 let clickedCategory = 0;
 
-function makeTemplate(data) {
-	let html = document.querySelector("#itemList").innerHTML;
-	let resultHTML = html;
+function makeTemplate(data){
+    let html = document.querySelector("#itemList").innerHTML;
+    let resultHTML ="";
 
-	for (let elem of data) {
-		for (let key in elem) {
-			resultHTML = resultHTML.replace("${" + key + "}", elem[key]);
-		}
-	}
-
-	return resultHTML;
+    for(let elem of data){
+        let hereHTML = html;
+        for(let iter=0;iter<2;iter++){
+            for(let key in elem){
+                hereHTML=hereHTML.replace("${"+key+"}",elem[key]);
+            }
+        }
+        resultHTML+=hereHTML;
+    }
+    
+    return resultHTML;
 }
 
 function requestContents(url) {
@@ -22,7 +26,7 @@ function requestContents(url) {
 
 			let html = makeTemplate(data);
 			let eventBox = document.querySelector(".wrap_event_box");
-
+			
 			eventBox.innerHTML = html;
 
 		} else {
