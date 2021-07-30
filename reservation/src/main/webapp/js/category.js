@@ -52,12 +52,8 @@ function requestContents(url) {
 			alert("sorry. something failed");
 		}
 	});
-	if (clickedCategory === 0) {
-		url += "/" + "ALL_CATEGORY";
-	} else {
-		url += "/" + clickedCategory;
-	}
-	url += "?type=th";
+
+	url += "/" + clickedCategory + "?type=th";
 
 	XHR.open("GET", url);
 	XHR.send();

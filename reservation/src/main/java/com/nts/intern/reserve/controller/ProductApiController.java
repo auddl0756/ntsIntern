@@ -18,13 +18,15 @@ public class ProductApiController {
 	@Autowired
 	private ProductService productService;
 
+	private final int ALL_CATEGORY = 0;
+
 	@GetMapping("{id}")
-	public List<ProductDto> findByCategory(@PathVariable(name = "id") String categoryId, @RequestParam String type) {
+	public List<ProductDto> findByCategory(@PathVariable(name = "id") int categoryId, @RequestParam String type) {
 		if (type.equals("th")) {
-			if (categoryId.equals("ALL_CATEGORY")) { 
+			if (categoryId == ALL_CATEGORY) {
 				return productService.findWithPaging(0, 4);
 			} else {
-				return productService.findWithPagingAndCategory(0, 4, Integer.parseInt(categoryId));
+				return productService.findWithPagingAndCategory(0, 4, categoryId);
 			}
 		} else {
 			return null; //not yet developed.
