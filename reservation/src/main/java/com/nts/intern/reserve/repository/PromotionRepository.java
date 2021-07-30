@@ -1,6 +1,6 @@
-package com.nts.intern.reserve.dao;
+package com.nts.intern.reserve.repository;
 
-import static com.nts.intern.reserve.dao.sql.PromotionDaoSqls.*;
+import static com.nts.intern.reserve.repository.sql.PromotionRepositorySqls.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,17 +16,16 @@ import org.springframework.stereotype.Repository;
 import com.nts.intern.reserve.dto.PromotionDto;
 
 @Repository
-public class PromotionDao {
+public class PromotionRepository {
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<PromotionDto> rowMapper = BeanPropertyRowMapper.newInstance(PromotionDto.class);
 
-	public PromotionDao(DataSource dataSource) {
+	public PromotionRepository(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 
 	public List<PromotionDto> findAll() {
 		Map<String, Integer> params = new HashMap<>();
-
 		return jdbc.query(SELECT_ALL, params, rowMapper);
 	}
 

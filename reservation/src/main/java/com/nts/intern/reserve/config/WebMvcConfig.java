@@ -14,13 +14,13 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
+	private final static int CACHE_PERIOD = 365 * 24 * 60 * 60;
+
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/assets/**").addResourceLocations("classpath:/META-INF/resources/webjars/")
-			.setCachePeriod(31556926);
-		registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(31556926);
-		registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(31556926);
-		registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(31556926);
+		registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(CACHE_PERIOD);
+		registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(CACHE_PERIOD);
+		registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(CACHE_PERIOD);
 	}
 
 	// default servlet handler를 사용하게 합니다.
@@ -31,7 +31,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addViewControllers(final ViewControllerRegistry registry) {
-		System.out.println("addViewControllers가 호출됩니다. ");
 		registry.addViewController("/").setViewName("mainpage");
 	}
 
