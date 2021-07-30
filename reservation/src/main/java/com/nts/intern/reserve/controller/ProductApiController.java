@@ -20,7 +20,6 @@ public class ProductApiController {
 
 	@GetMapping("{id}")
 	public List<ProductDto> findByCateogory(@PathVariable(name = "id") int categoryId, @RequestParam String type) {
-		System.out.println(type);
 		if (type.equals("th")) {
 			if (categoryId == 0) { 
 				return productService.findWithPaging(0, 4);
