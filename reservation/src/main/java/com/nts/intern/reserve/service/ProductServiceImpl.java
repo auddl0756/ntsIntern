@@ -22,4 +22,14 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductDto> findWithPagingAndCategory(int start, int limit, int categoryId) {
 		return productRepository.findWithPagingAndCategory(start, limit, categoryId);
 	}
+
+	@Override
+	public int getSize() {
+		return productRepository.countAll();
+	}
+
+	@Override
+	public int getSizeByCategory(int categoryId) {
+		return productRepository.countByCategory(categoryId);
+	}
 }

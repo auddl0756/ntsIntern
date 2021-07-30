@@ -32,4 +32,18 @@ public class ProductApiController {
 			return null; //not yet developed.
 		}
 	}
+
+	@GetMapping("/size")
+	public int getSize() {
+		return productService.getSize();
+	}
+
+	@GetMapping("/size/{id}")
+	public int getSizeByCategory(@PathVariable(name = "id") int categoryId, @RequestParam String type) {
+		if (type.equals("th")) {
+			return productService.getSizeByCategory(categoryId);
+		} else {
+			return -1; //not yet developed.
+		}
+	}
 }

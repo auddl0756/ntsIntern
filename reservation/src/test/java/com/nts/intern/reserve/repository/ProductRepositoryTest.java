@@ -42,4 +42,22 @@ public class ProductRepositoryTest {
 			assertThat(product.getProductContent()).isNotNull();
 		});
 	}
+
+	@Test
+	public void countAllTest() {
+		int countAll = productRepository.countAll();
+		assertThat(countAll).isGreaterThan(-1);
+	}
+
+	@Test
+	public void countWithCateogoryTest() {
+		int total = productRepository.countAll();
+		int sum = 0;
+		for (int id = 1; id <= 5; id++) {
+			sum += productRepository.countByCategory(id);
+		}
+
+		assertThat(total).isEqualTo(sum);
+	}
+
 }

@@ -35,6 +35,7 @@ function categoryChangeEvent(event) {
 	afterParent.className = "anchor active";
 
 	requestContents("/api/productImages");
+	requestSize("/api/productImages");
 }
 
 
@@ -54,6 +55,29 @@ function requestContents(url) {
 	});
 
 	url += "/" + clickedCategory + "?type=th";
+
+	XHR.open("GET", url);
+	XHR.send();
+}
+
+function requestSize(url) {
+	let XHR = new XMLHttpRequest();
+	XHR.addEventListener("load", function() {
+		if (XHR.status == 200) {
+
+			let categorySize = JSON.parse(XHR.responseText);
+			let targetHTML = document.querySelector(".pink");
+
+			targetHTML.innerText = categorySize + "개";
+
+		} else {
+			alert("sorry. something failed");
+		}
+	});
+
+	url += "/size/";
+	if (clickedCategory !== 0) url += clickedCategory;
+	url += "/?type=th";
 
 	XHR.open("GET", url);
 	XHR.send();
