@@ -14,13 +14,13 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
-	private final static int CACHE_PERIOD = 365 * 24 * 60 * 60;
+	private final static int ONE_YEAR = 365 * 24 * 60 * 60;
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(CACHE_PERIOD);
-		registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(CACHE_PERIOD);
-		registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(CACHE_PERIOD);
+		registry.addResourceHandler("/css/**").addResourceLocations("/css/").setCachePeriod(ONE_YEAR);
+		registry.addResourceHandler("/img/**").addResourceLocations("/img/").setCachePeriod(ONE_YEAR);
+		registry.addResourceHandler("/js/**").addResourceLocations("/js/").setCachePeriod(ONE_YEAR);
 	}
 
 	// default servlet handler를 사용하게 합니다.
