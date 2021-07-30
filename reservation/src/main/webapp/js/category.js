@@ -34,11 +34,11 @@ function categoryChangeEvent(event) {
 	let afterParent = after.parentElement;
 	afterParent.className = "anchor active";
 
-	requestContents("/api/productImages", clickedCategory);
+	requestContents("/api/productImages");
 }
 
 
-function requestContents(url, clickedCategory) {
+function requestContents(url) {
 	let XHR = new XMLHttpRequest();
 	XHR.addEventListener("load", function() {
 		if (XHR.status == 200) {
@@ -52,8 +52,13 @@ function requestContents(url, clickedCategory) {
 			alert("sorry. something failed");
 		}
 	});
+	if (clickedCategory === 0) {
+		url += "/" + "ALL_CATEGORY";
+	} else {
+		url += "/" + clickedCategory;
+	}
+	url += "?type=th";
 
-	url += "/" + clickedCategory + "?type=th";
 	XHR.open("GET", url);
 	XHR.send();
 }
