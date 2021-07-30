@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nts.intern.reserve.dto.PromotionDto;
 import com.nts.intern.reserve.service.PromotionService;
 
-@RequestMapping(path="/api/promotions/")
+@RequestMapping("/api/promotions/")
 @RestController
 public class PromotionApiController {
 	@Autowired
 	private PromotionService promotionService;
-	
+
 	@GetMapping
-	public List<PromotionDto> findAll(){
-		return promotionService.findAll(); 
+	public List<PromotionDto> findAll() {
+		return promotionService.findAll();
 	}
 }

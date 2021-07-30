@@ -1,4 +1,4 @@
-package com.nts.intern.reserve.dao;
+package com.nts.intern.reserve.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,21 +14,22 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.nts.intern.reserve.config.ApplicationConfig;
 import com.nts.intern.reserve.dto.ProductDto;
+import com.nts.intern.reserve.repository.ProductRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
-public class ProductDaoTest {
+public class ProductRepositoryTest {
 	@Autowired
-	private ProductDao productDao;
+	private ProductRepository productRepository;
 
 	@Test
 	public void daoNotNullTest() {
-		assertThat(productDao).isNotNull();
+		assertThat(productRepository).isNotNull();
 	}
 
 	@Test
 	public void findWithPagingAndCategoryTest() {
-		List<ProductDto> list = productDao.findWithPagingAndCategory(0, 5, 1);
+		List<ProductDto> list = productRepository.findWithPagingAndCategory(0, 5, 1);
 		list.stream().forEach(product -> {
 			assertThat(product.getProductContent()).isNotNull();
 		});
@@ -36,7 +37,7 @@ public class ProductDaoTest {
 
 	@Test
 	public void findWithPagingTest() {
-		List<ProductDto> list = productDao.findWithPaging(0, 5);
+		List<ProductDto> list = productRepository.findWithPaging(0, 5);
 		list.stream().forEach(product -> {
 			assertThat(product.getProductContent()).isNotNull();
 		});

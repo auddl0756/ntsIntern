@@ -12,22 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nts.intern.reserve.dto.ProductDto;
 import com.nts.intern.reserve.service.ProductService;
 
-@RequestMapping(path ="/api/productImages/")
+@RequestMapping("/api/productImages/")
 @RestController
 public class ProductApiController {
 	@Autowired
 	private ProductService productService;
-	
+
+	private final int ALL_CATEGORY = 0;
+
 	@GetMapping("{id}")
-	public List<ProductDto> findByCateogory(@PathVariable(name="id") int categoryId,@RequestParam(name = "type") String type) {
-		if(type.equals("th")) {
-			if(categoryId==0) {
+	public List<ProductDto> findByCategory(@PathVariable(name = "id") int categoryId, @RequestParam String type) {
+		if (type.equals("th")) {
+			if (categoryId == ALL_CATEGORY) {
 				return productService.findWithPaging(0, 4);
-			}else {
-				return productService.findWithPagingAndCategory(0, 4,categoryId);
-			}	
-		}else {
-			return null;	//not yet developed.
-		}	
+			} else {
+				return productService.findWithPagingAndCategory(0, 4, categoryId);
+			}
+		} else {
+			return null; //not yet developed.
+		}
 	}
 }

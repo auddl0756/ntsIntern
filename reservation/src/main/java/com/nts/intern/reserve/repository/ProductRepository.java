@@ -1,6 +1,6 @@
-package com.nts.intern.reserve.dao;
+package com.nts.intern.reserve.repository;
 
-import static com.nts.intern.reserve.dao.sql.ProductDaoSqls.*;
+import static com.nts.intern.reserve.repository.sql.ProductRepositorySqls.*;
 
 import java.util.Collections;
 
@@ -19,11 +19,11 @@ import org.springframework.stereotype.Repository;
 import com.nts.intern.reserve.dto.ProductDto;
 
 @Repository
-public class ProductDao {
+public class ProductRepository {
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<ProductDto> rowMapper = BeanPropertyRowMapper.newInstance(ProductDto.class);
 
-	public ProductDao(DataSource dataSource) {
+	public ProductRepository(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 
@@ -34,7 +34,7 @@ public class ProductDao {
 
 		return jdbc.query(SELECT_WITH_PAGING, params, rowMapper);
 	}
-	
+
 	public List<ProductDto> findWithPagingAndCategory(Integer start, Integer limit, Integer categoryId) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("start", start);
@@ -44,4 +44,3 @@ public class ProductDao {
 		return jdbc.query(SELECT_WITH_PAGING_AND_CATEGORY, params, rowMapper);
 	}
 }
-
