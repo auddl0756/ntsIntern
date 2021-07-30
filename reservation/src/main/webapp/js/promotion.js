@@ -13,7 +13,6 @@ function requestPromotions(url) {
 			let resultHtml = makeTemplatePromotion(promotionInfos);
 
 			let promotionArea = document.querySelector(".container_visual .container_visual .visual_img");
-			//let promotionArea = document.querySelector(".container_visual .container_visual");
 
 			promotionArea.innerHTML = resultHtml;
 
