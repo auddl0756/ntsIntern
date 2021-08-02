@@ -19,14 +19,16 @@ public class ProductApiController {
 	private ProductService productService;
 
 	private final int ALL_CATEGORY = 0;
+	private final int PAGING_SIZE = 4;
 
 	@GetMapping("{id}")
-	public List<ProductDto> findByCategory(@PathVariable(name = "id") int categoryId, @RequestParam String type) {
+	public List<ProductDto> findByCategory(@PathVariable(name = "id") int categoryId, @RequestParam String type,
+		@RequestParam int start) {
 		if (type.equals("th")) {
 			if (categoryId == ALL_CATEGORY) {
-				return productService.findWithPaging(0, 4);
+				return productService.findWithPaging(start, PAGING_SIZE);
 			} else {
-				return productService.findWithPagingAndCategory(0, 4, categoryId);
+				return productService.findWithPagingAndCategory(start, PAGING_SIZE, categoryId);
 			}
 		} else {
 			return null; //not yet developed.
