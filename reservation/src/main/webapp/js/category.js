@@ -65,7 +65,7 @@ function requestContents(url, event) {
 	}
 
 	if (event.currentTarget.className === "event_tab_lst tab_lst_min") {
-		if (cachedCategoryInfos[clickedCategory[0]].length != 0) {
+		if (cachedCategoryInfos[clickedCategory[0]].length !== 0) {
 			let targetHTML = document.querySelector(".wrap_event_box");
 			makeTemplateCategory(targetHTML);
 			return;
