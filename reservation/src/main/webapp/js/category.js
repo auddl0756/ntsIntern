@@ -55,6 +55,23 @@ function categoryMoreEvent(event) {
 
 
 function requestContents(url, event) {
+	pagingStartIdx = cachedCategoryInfos[clickedCategory[0]].length;
+
+	if (pagingStartIdx == totalCategoryCount[clickedCategory[0]]) {
+		document.querySelector(".more .btn").style.display = "none";
+		return;
+	} else {
+		document.querySelector(".more .btn").style.display = "block";
+	}
+
+	if (event.currentTarget.className === "event_tab_lst tab_lst_min") {
+		if (cachedCategoryInfos[clickedCategory[0]].length != 0) {
+			let targetHTML = document.querySelector(".wrap_event_box");
+			makeTemplateCategory(targetHTML);
+			return;
+		}
+	}
+
 	let XHR = new XMLHttpRequest();
 	XHR.addEventListener("load", function() {
 		if (XHR.status == 200) {
@@ -73,15 +90,6 @@ function requestContents(url, event) {
 			alert("sorry. something failed");
 		}
 	});
-
-	pagingStartIdx = cachedCategoryInfos[clickedCategory[0]].length;
-
-	if (pagingStartIdx == totalCategoryCount[clickedCategory[0]]) {
-		document.querySelector(".more .btn").style.display = "none";
-		return;
-	} else {
-		document.querySelector(".more .btn").style.display = "block";
-	}
 
 	url += "/" + clickedCategory[0] + "?type=th";
 	url += "&start=" + pagingStartIdx;
@@ -108,8 +116,10 @@ function requestTotalSize(url) {
 		}
 	});
 
-	url += "/size/";
-	if (clickedCategory[0] !== 0) url += clickedCategory[0];
+	url += "/size";
+	if (clickedCategory[0] !== 0) {
+		url += "/" + clickedCategory[0];
+	}
 	url += "/?type=th";
 
 	XHR.open("GET", url);
