@@ -43,4 +43,15 @@ public class ProductRepository {
 
 		return jdbc.query(SELECT_WITH_PAGING_AND_CATEGORY, params, rowMapper);
 	}
+
+	public int countAll() {
+		return jdbc.queryForObject(COUNT_ALL, Collections.emptyMap(), Integer.class);
+	}
+
+	public int countByCategory(int categoryId) {
+		Map<String, Integer> params = new HashMap<>();
+		params.put("categoryId", categoryId);
+		return jdbc.queryForObject(COUNT_BY_CATEGORY, params, Integer.class);
+	}
+
 }

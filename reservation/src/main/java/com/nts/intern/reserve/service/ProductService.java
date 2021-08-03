@@ -8,4 +8,8 @@ public interface ProductService {
 	List<ProductDto> findWithPaging(int start, int limit);
 
 	List<ProductDto> findWithPagingAndCategory(int start, int limit, int categoryId);
+
+	int getSize();
+
+	int getSizeByCategory(int categoryId);
 }

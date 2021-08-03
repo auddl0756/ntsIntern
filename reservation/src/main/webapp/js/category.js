@@ -1,11 +1,18 @@
 (document.querySelector(".section_event_tab .event_tab_lst")
 	.addEventListener("click", categoryChangeEvent));
 
-let clickedCategory = 0;
+(document.querySelector(".more .btn")
+	.addEventListener("click", categoryMoreEvent));
+
+
+let categoryObj = {
+	clickedCategory: 0,
+	totalCategoryCount: [],
+	cachedCategoryInfos: [[], [], [], [], [], []],
+	pagingStartIdx: 0
+}
 
 function categoryChangeEvent(event) {
-	//ajax통신할 때 cache 필요할 것.
-
 	let target = event.target;
 	let liTag = target;
 	let categoryArea = document.querySelector(".section_event_tab .event_tab_lst");
@@ -18,48 +25,105 @@ function categoryChangeEvent(event) {
 		return;
 	}
 
-	let before = categoryArea.children[clickedCategory].children[0].children[0];
+	let before = categoryArea.children[categoryObj.clickedCategory].children[0].children[0];
 	before.style.color = "black";
 	before.style.fontWeight = "normal";
 
 	let beforeParent = before.parentElement;
 	beforeParent.className = "anchor";
 
-	clickedCategory = parseInt(liTag.getAttribute('data-category'));
+	categoryObj.clickedCategory = parseInt(liTag.getAttribute('data-category'));
 
-	let after = categoryArea.children[clickedCategory].children[0].children[0];
+	let after = categoryArea.children[categoryObj.clickedCategory].children[0].children[0];
 	after.style.color = "#00c73c";
 	after.style.fontWeight = "bold";
 
 	let afterParent = after.parentElement;
 	afterParent.className = "anchor active";
 
-	requestContents("/api/productImages");
+	requestContents("/api/productImages", event);
+	requestTotalSize("/api/productImages");
+}
+
+function categoryMoreEvent(event) {
+	requestContents("/api/productImages", event);
 }
 
 
-function requestContents(url) {
+function requestContents(url, event) {
+	categoryObj.pagingStartIdx = categoryObj.cachedCategoryInfos[categoryObj.clickedCategory].length;
+
+	document.querySelector(".more .btn").style.display = "block";
+	if (categoryObj.pagingStartIdx == categoryObj.totalCategoryCount[categoryObj.clickedCategory]) {
+		document.querySelector(".more .btn").style.display = "none";
+		let targetHTML = document.querySelector(".wrap_event_box");
+		makeTemplateCategory(targetHTML);
+		return;
+	}
+
+	if (event.currentTarget.className === "event_tab_lst tab_lst_min") {
+		if (categoryObj.cachedCategoryInfos[categoryObj.clickedCategory].length !== 0) {
+			let targetHTML = document.querySelector(".wrap_event_box");
+			makeTemplateCategory(targetHTML);
+			return;
+		}
+	}
+
 	let XHR = new XMLHttpRequest();
 	XHR.addEventListener("load", function() {
 		if (XHR.status == 200) {
 
 			let categoryInfos = JSON.parse(XHR.responseText);
+
+			for (let info of categoryInfos) {
+				categoryObj.cachedCategoryInfos[categoryObj.clickedCategory].push(info);
+			}
+
 			let targetHTML = document.querySelector(".wrap_event_box");
 
-			makeTemplateCategory(targetHTML, categoryInfos);
+			makeTemplateCategory(targetHTML);
 
 		} else {
 			alert("sorry. something failed");
 		}
 	});
 
-	url += "/" + clickedCategory + "?type=th";
+	url += "/" + categoryObj.clickedCategory + "?type=th";
+	url += "&start=" + categoryObj.pagingStartIdx;
 
 	XHR.open("GET", url);
 	XHR.send();
 }
 
-function makeTemplateCategory(targetHTML, categoryInfos) {
+
+function requestTotalSize(url) {
+	let XHR = new XMLHttpRequest();
+	XHR.addEventListener("load", function() {
+		if (XHR.status == 200) {
+
+			let categorySize = JSON.parse(XHR.responseText);
+			let targetHTML = document.querySelector(".pink");
+
+			targetHTML.innerText = categorySize + "개";
+
+			categoryObj.totalCategoryCount[categoryObj.clickedCategory] = categorySize;
+
+		} else {
+			alert("sorry. something failed");
+		}
+	});
+
+	url += "/size";
+	if (categoryObj.clickedCategory !== 0) {
+		url += "/" + categoryObj.clickedCategory;
+	}
+	url += "/?type=th";
+
+	XHR.open("GET", url);
+	XHR.send();
+}
+
+function makeTemplateCategory(targetHTML) {
 	let htmlTemplate = document.querySelector("#itemList").innerHTML;
 
 	let htmlLocation = "left";
@@ -68,6 +132,8 @@ function makeTemplateCategory(targetHTML, categoryInfos) {
 
 	let leftHTML = "";
 	let rightHTML = "";
+
+	let categoryInfos = categoryObj.cachedCategoryInfos[categoryObj.clickedCategory];
 
 	for (let info of categoryInfos) {
 		let hereHTML = htmlTemplate;

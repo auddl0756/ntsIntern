@@ -9,7 +9,7 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
 <title>네이버 예약</title>
-<link href="../../css/style.css" rel="stylesheet">
+<link href="../css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -19,11 +19,11 @@
 				<h1 class="logo">
 					<a href="https://m.naver.com/" class="lnk_logo" title="네이버"> <span
 						class="spr_bi ico_n_logo">네이버</span>
-					</a> <a href="./myreservation.html" class="lnk_logo" title="예약"> <span
-						class="spr_bi ico_bk_logo">예약</span>
+					</a> <a href="../views/myreservation.html" class="lnk_logo" title="예약">
+						<span class="spr_bi ico_bk_logo">예약</span>
 					</a>
 				</h1>
-				<a href="./bookinglogin.html" class="btn_my"> <span
+				<a href="../views/bookinglogin.html" class="btn_my"> <span
 					class="viewReservation" title="예약확인">예약확인</span>
 				</a>
 			</header>
@@ -91,7 +91,8 @@
 				<div class="wrap_event_box">
 					<!-- [D] lst_event_box 가 2컬럼으로 좌우로 나뉨, 더보기를 클릭할때마다 좌우 ul에 li가 추가됨 -->
 					<ul class="lst_event_box">
-						<li class="item"><a href="detail.html" class="item_book">
+						<li class="item"><a href="../views/detail.html"
+							class="item_book">
 								<div class="item_preview">
 									<img alt="뮤지컬 드림걸즈(DREAMGIRLS) 최초 내한" class="img_thumb"
 										src="https://ssl.phinf.net/naverbooking/20170303_271/1488514705030TuUK4_JPEG/17%B5%E5%B8%B2%B0%C9%C1%EE_%B8%DE%C0%CE%C6%F7%BD%BA%C5%CD_%C3%D6%C1%BE.jpg?type=l591_945">
@@ -115,7 +116,8 @@
 										배우로 구성! 진정한 R&amp;B 오리지널 소울을 그대로 전하는 2017년 최고의 기대작!</p>
 								</div>
 						</a></li>
-						<li class="item"><a href="detail.html" class="item_book">
+						<li class="item"><a href="../views/detail.html"
+							class="item_book">
 								<div class="item_preview">
 									<img alt="뮤지컬 더 데빌 The DEVIL" class="img_thumb"
 										src="https://ssl.phinf.net/naverbooking/20170111_195/1484112206459rGQGI_JPEG/%BB%F3%BC%BC%C6%E4%C0%CC%C1%F6_%BB%F3%B4%DC%28%B3%D7%C0%CC%B9%F6_%BF%B9%BE%E0%29.jpg?type=l591_945">
@@ -151,7 +153,8 @@
 						</a></li>
 					</ul>
 					<ul class="lst_event_box">
-						<li class="item"><a href="detail.html" class="item_book">
+						<li class="item"><a href="../views/detail.html"
+							class="item_book">
 								<div class="item_preview">
 									<img alt="뮤지컬 로미오와 줄리엣" class="img_thumb"
 										src="https://ssl.phinf.net/naverbooking/20170119_135/1484789767866RPO6o_JPEG/%B7%CE%B9%CC%BF%C0%C1%D9%B8%AE%BF%A7_1242.jpg?type=l591_945">
@@ -166,7 +169,8 @@
 										최신작!</p>
 								</div>
 						</a></li>
-						<li class="item"><a href="detail.html" class="item_book">
+						<li class="item"><a href="../views/detail.html"
+							class="item_book">
 								<div class="item_preview">
 									<img alt="뮤지컬 인 더 하이츠(IN THE HEIGHTS)" class="img_thumb"
 										src="https://ssl.phinf.net/naverbooking/20170111_225/1484116579024rNkXW_JPEG/2016_%B9%C2%C1%F6%C4%C3_%C0%CE_%B4%F5_%C7%CF%C0%CC%C3%F7_%C6%F7%BD%BA%C5%CD%2820MB%29.jpg?type=l591_945">
@@ -223,7 +227,7 @@
 
 	<script type="rv-template" id="itemList">
         <li class="item">
-            <a href="detail.html?id=${id}" class="item_book">
+            <a href="../views/detail.html?id=${id}" class="item_book">
                 <div class="item_preview">
                     <img alt="${productDescription}" class="img_thumb" src="${productImageUrl}">
                     <span class="img_border"></span>
