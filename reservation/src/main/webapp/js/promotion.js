@@ -6,6 +6,7 @@ function init() {
 
 function requestPromotions(url) {
 	let XHR = new XMLHttpRequest();
+	
 	XHR.addEventListener("load", function() {
 		if (XHR.status == 200) {
 			let promotionInfos = JSON.parse(XHR.responseText);
@@ -22,7 +23,7 @@ function requestPromotions(url) {
 			//프로모션 영역 무한 슬라이딩
 			(function() {
 				let curIndex = 0;
-				let imageWidth = 414;
+				const imageWidth = 414;
 
 				setInterval(function() {
 					promotionArea.style.left = (parseInt(promotionArea.style.left) - imageWidth) + "px";
@@ -43,8 +44,6 @@ function requestPromotions(url) {
 	XHR.open("GET", url);
 	XHR.send();
 }
-
-
 
 
 function makeTemplatePromotion(promotionInfos) {

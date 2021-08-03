@@ -4,10 +4,13 @@
 (document.querySelector(".more .btn")
 	.addEventListener("click", categoryMoreEvent));
 
-let clickedCategory = 0;
-let totalCategoryCount = [];
-let cachedCategoryInfos = [[], [], [], [], [], []];
-let pagingStartIdx = 0;
+
+let categoryObj = {
+	clickedCategory: 0,
+	totalCategoryCount: [],
+	cachedCategoryInfos: [[], [], [], [], [], []],
+	pagingStartIdx: 0
+}
 
 function categoryChangeEvent(event) {
 	let target = event.target;
@@ -22,16 +25,16 @@ function categoryChangeEvent(event) {
 		return;
 	}
 
-	let before = categoryArea.children[clickedCategory].children[0].children[0];
+	let before = categoryArea.children[categoryObj.clickedCategory].children[0].children[0];
 	before.style.color = "black";
 	before.style.fontWeight = "normal";
 
 	let beforeParent = before.parentElement;
 	beforeParent.className = "anchor";
 
-	clickedCategory = parseInt(liTag.getAttribute('data-category'));
+	categoryObj.clickedCategory = parseInt(liTag.getAttribute('data-category'));
 
-	let after = categoryArea.children[clickedCategory].children[0].children[0];
+	let after = categoryArea.children[categoryObj.clickedCategory].children[0].children[0];
 	after.style.color = "#00c73c";
 	after.style.fontWeight = "bold";
 
@@ -48,16 +51,18 @@ function categoryMoreEvent(event) {
 
 
 function requestContents(url, event) {
-	pagingStartIdx = cachedCategoryInfos[clickedCategory].length;
+	categoryObj.pagingStartIdx = categoryObj.cachedCategoryInfos[categoryObj.clickedCategory].length;
 
 	document.querySelector(".more .btn").style.display = "block";
-	if (pagingStartIdx == totalCategoryCount[clickedCategory]) {
+	if (categoryObj.pagingStartIdx == categoryObj.totalCategoryCount[categoryObj.clickedCategory]) {
 		document.querySelector(".more .btn").style.display = "none";
+		let targetHTML = document.querySelector(".wrap_event_box");
+		makeTemplateCategory(targetHTML);
 		return;
 	}
 
 	if (event.currentTarget.className === "event_tab_lst tab_lst_min") {
-		if (cachedCategoryInfos[clickedCategory].length !== 0) {
+		if (categoryObj.cachedCategoryInfos[categoryObj.clickedCategory].length !== 0) {
 			let targetHTML = document.querySelector(".wrap_event_box");
 			makeTemplateCategory(targetHTML);
 			return;
@@ -71,7 +76,7 @@ function requestContents(url, event) {
 			let categoryInfos = JSON.parse(XHR.responseText);
 
 			for (let info of categoryInfos) {
-				cachedCategoryInfos[clickedCategory].push(info);
+				categoryObj.cachedCategoryInfos[categoryObj.clickedCategory].push(info);
 			}
 
 			let targetHTML = document.querySelector(".wrap_event_box");
@@ -83,8 +88,8 @@ function requestContents(url, event) {
 		}
 	});
 
-	url += "/" + clickedCategory + "?type=th";
-	url += "&start=" + pagingStartIdx;
+	url += "/" + categoryObj.clickedCategory + "?type=th";
+	url += "&start=" + categoryObj.pagingStartIdx;
 
 	XHR.open("GET", url);
 	XHR.send();
@@ -101,7 +106,7 @@ function requestTotalSize(url) {
 
 			targetHTML.innerText = categorySize + "개";
 
-			totalCategoryCount[clickedCategory] = categorySize;
+			categoryObj.totalCategoryCount[categoryObj.clickedCategory] = categorySize;
 
 		} else {
 			alert("sorry. something failed");
@@ -109,8 +114,8 @@ function requestTotalSize(url) {
 	});
 
 	url += "/size";
-	if (clickedCategory !== 0) {
-		url += "/" + clickedCategory;
+	if (categoryObj.clickedCategory !== 0) {
+		url += "/" + categoryObj.clickedCategory;
 	}
 	url += "/?type=th";
 
@@ -128,7 +133,7 @@ function makeTemplateCategory(targetHTML) {
 	let leftHTML = "";
 	let rightHTML = "";
 
-	let categoryInfos = cachedCategoryInfos[clickedCategory];
+	let categoryInfos = categoryObj.cachedCategoryInfos[categoryObj.clickedCategory];
 
 	for (let info of categoryInfos) {
 		let hereHTML = htmlTemplate;
