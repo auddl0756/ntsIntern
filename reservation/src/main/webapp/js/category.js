@@ -1,21 +1,97 @@
-(document.querySelector(".section_event_tab .event_tab_lst")
-	.addEventListener("click", categoryChangeEvent));
+document.querySelector("#categoryTab")
+	.addEventListener("click", categoryChangeEvent);
 
-(document.querySelector(".more .btn")
-	.addEventListener("click", categoryMoreEvent));
+document.querySelector(".more .btn")
+	.addEventListener("click", categoryMoreEvent);
 
 
 let categoryObj = {
 	clickedCategory: 0,
-	totalCategoryCount: [],
-	cachedCategoryInfos: [[], [], [], [], [], []],
-	pagingStartIdx: 0
+	totalCategoryCount: { 0: 0 },
+	cachedProductInfos: {},
+	oldestDisplayInfoId: { 0: 0 },
+	latestDisplayInfoId: { 0: 0 },
+
+	init() {
+		categoryInfos = arguments[0];
+		const totalCategoryId = 0;
+
+		for (info of categoryInfos) {
+			categoryObj.totalCategoryCount[info.id] = info.count;
+			categoryObj.totalCategoryCount[totalCategoryId] += info.count;
+
+			categoryObj.cachedProductInfos[info.id] = [];
+
+			categoryObj.oldestDisplayInfoId[info.id] = 1e9;
+			categoryObj.latestDisplayInfoId[info.id] = 0;
+		}
+		categoryObj.cachedProductInfos[totalCategoryId] = [];
+
+		document.querySelector(".pink").innerText = categoryObj.totalCategoryCount[categoryObj.clickedCategory] + "개";
+
+		templateCategoryTab(categoryInfos);
+
+	}
+};
+
+
+function requestCategoryTab() {
+	let XHR = new XMLHttpRequest();
+	let categoryInfos = null;
+
+	XHR.addEventListener("load", function() {
+		if (XHR.status == 200) {
+			categoryInfos = JSON.parse(XHR.responseText);
+
+			categoryObj.init(categoryInfos);
+
+
+		} else {
+			alert("sorry. something failed");
+		}
+	});
+
+	let url = "/api/categories";
+
+	XHR.open("GET", url);
+	XHR.send();
 }
 
+
+function templateCategoryTab(categoryInfos) {
+	let categoryTab = document.querySelector("#categoryTab");
+	let htmlTemplate = document.querySelector("#categoryList").innerHTML;
+
+	let tabHTML = "";
+
+	for (info of categoryInfos) {
+		let hereHTML = htmlTemplate;
+		for (let key in info) {
+			hereHTML = hereHTML.replace("${" + key + "}", info[key]);
+		}
+		tabHTML += hereHTML;
+	}
+
+	categoryTab.innerHTML += tabHTML;
+}
+
+
 function categoryChangeEvent(event) {
+	changeCategoryState(event);
+
+	if (categoryObj.cachedProductInfos[categoryObj.clickedCategory].length === 0) {
+		requestProducts(event.currentTarget);
+	}
+
+	templateProducts(categoryObj.cachedProductInfos[categoryObj.clickedCategory]);
+
+}
+
+
+function changeCategoryState(event) {
 	let target = event.target;
 	let liTag = target;
-	let categoryArea = document.querySelector(".section_event_tab .event_tab_lst");
+	let categoryTab = document.querySelector("#categoryTab");
 
 	if (target.tagName === "SPAN") {
 		liTag = target.parentNode.parentNode;
@@ -25,105 +101,71 @@ function categoryChangeEvent(event) {
 		return;
 	}
 
-	let before = categoryArea.children[categoryObj.clickedCategory].children[0].children[0];
-	before.style.color = "black";
-	before.style.fontWeight = "normal";
+	for (let categoryElem of categoryTab.children) {
+		categoryElem.children[0].className = "anchor";
+	}
 
-	let beforeParent = before.parentElement;
-	beforeParent.className = "anchor";
+	categoryObj.clickedCategory = parseInt(liTag.dataset.category);
 
-	categoryObj.clickedCategory = parseInt(liTag.getAttribute('data-category'));
-
-	let after = categoryArea.children[categoryObj.clickedCategory].children[0].children[0];
-	after.style.color = "#00c73c";
-	after.style.fontWeight = "bold";
+	let after = categoryTab.children[categoryObj.clickedCategory].children[0].children[0];
 
 	let afterParent = after.parentElement;
 	afterParent.className = "anchor active";
 
-	requestContents("/api/productImages", event);
-	requestTotalSize("/api/productImages");
-}
-
-function categoryMoreEvent(event) {
-	requestContents("/api/productImages", event);
+	document.querySelector(".pink").innerText = categoryObj.totalCategoryCount[categoryObj.clickedCategory] + "개";
 }
 
 
-function requestContents(url, event) {
-	categoryObj.pagingStartIdx = categoryObj.cachedCategoryInfos[categoryObj.clickedCategory].length;
-
-	document.querySelector(".more .btn").style.display = "block";
-	if (categoryObj.pagingStartIdx == categoryObj.totalCategoryCount[categoryObj.clickedCategory]) {
-		document.querySelector(".more .btn").style.display = "none";
-		let targetHTML = document.querySelector(".wrap_event_box");
-		makeTemplateCategory(targetHTML);
-		return;
-	}
-
-	if (event.currentTarget.className === "event_tab_lst tab_lst_min") {
-		if (categoryObj.cachedCategoryInfos[categoryObj.clickedCategory].length !== 0) {
-			let targetHTML = document.querySelector(".wrap_event_box");
-			makeTemplateCategory(targetHTML);
-			return;
-		}
-	}
+function requestProducts() {
+	const clickedCategory = categoryObj.clickedCategory;
 
 	let XHR = new XMLHttpRequest();
 	XHR.addEventListener("load", function() {
 		if (XHR.status == 200) {
-
 			let categoryInfos = JSON.parse(XHR.responseText);
 
-			for (let info of categoryInfos) {
-				categoryObj.cachedCategoryInfos[categoryObj.clickedCategory].push(info);
+			let items = categoryInfos.items;
+
+			for (let info of items) {
+				categoryObj.cachedProductInfos[clickedCategory].push(info);
+
+				categoryObj.latestDisplayInfoId[clickedCategory] = Math.max(categoryObj.latestDisplayInfoId[clickedCategory], info.displayInfoId);
+				categoryObj.oldestDisplayInfoId[clickedCategory] = Math.min(categoryObj.oldestDisplayInfoId[clickedCategory], info.displayInfoId);
 			}
 
-			let targetHTML = document.querySelector(".wrap_event_box");
+			templateProducts(items);
 
-			makeTemplateCategory(targetHTML);
+			let moreButton = document.querySelector(".more .btn");
+			moreButton.style.display = "block";
 
-		} else {
-			alert("sorry. something failed");
-		}
-	});
-
-	url += "/" + categoryObj.clickedCategory + "?type=th";
-	url += "&start=" + categoryObj.pagingStartIdx;
-
-	XHR.open("GET", url);
-	XHR.send();
-}
-
-
-function requestTotalSize(url) {
-	let XHR = new XMLHttpRequest();
-	XHR.addEventListener("load", function() {
-		if (XHR.status == 200) {
-
-			let categorySize = JSON.parse(XHR.responseText);
-			let targetHTML = document.querySelector(".pink");
-
-			targetHTML.innerText = categorySize + "개";
-
-			categoryObj.totalCategoryCount[categoryObj.clickedCategory] = categorySize;
+			if (items.length === 0) {
+				moreButton.style.display = "none";
+			}
 
 		} else {
 			alert("sorry. something failed");
 		}
 	});
 
-	url += "/size";
-	if (categoryObj.clickedCategory !== 0) {
-		url += "/" + categoryObj.clickedCategory;
-	}
-	url += "/?type=th";
+	let url = "/api/products";
+
+	url += "?categoryId=" + clickedCategory;
+	url += "&excludeFirst=" + categoryObj.oldestDisplayInfoId[clickedCategory];
+	url += "&excludeLast=" + categoryObj.latestDisplayInfoId[clickedCategory];
 
 	XHR.open("GET", url);
 	XHR.send();
 }
 
-function makeTemplateCategory(targetHTML) {
+
+function categoryMoreEvent(event) {
+	requestProducts();
+}
+
+
+function templateProducts(categoryItems) {
+	let targetHTML = document.querySelector(".wrap_event_box");
+
 	let htmlTemplate = document.querySelector("#itemList").innerHTML;
 
 	let htmlLocation = "left";
@@ -133,13 +175,11 @@ function makeTemplateCategory(targetHTML) {
 	let leftHTML = "";
 	let rightHTML = "";
 
-	let categoryInfos = categoryObj.cachedCategoryInfos[categoryObj.clickedCategory];
-
-	for (let info of categoryInfos) {
+	for (let item of categoryItems) {
 		let hereHTML = htmlTemplate;
 		for (let iter = 0; iter < 2; iter++) {
-			for (let key in info) {
-				hereHTML = hereHTML.replace("${" + key + "}", info[key]);
+			for (let key in item) {
+				hereHTML = hereHTML.replace("${" + key + "}", item[key]);
 			}
 		}
 
@@ -155,4 +195,12 @@ function makeTemplateCategory(targetHTML) {
 	leftBox.innerHTML = leftHTML;
 	rightBox.innerHTML = rightHTML;
 }
+
+
+function initCategory() {
+	requestCategoryTab();
+	requestProducts();
+}
+
+initCategory();
 
