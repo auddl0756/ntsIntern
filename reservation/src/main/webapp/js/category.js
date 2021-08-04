@@ -9,7 +9,7 @@ let categoryObj = {
 	clickedCategory: 0,
 	totalCategoryCount: { 0: 0 },
 	cachedProductInfos: {},
-	oldestDisplayInfoId: { 0: 0 },
+	oldestDisplayInfoId: { 0: 1e9 },
 	latestDisplayInfoId: { 0: 0 },
 
 	init() {
@@ -84,7 +84,7 @@ function categoryChangeEvent(event) {
 	}
 
 	templateProducts(categoryObj.cachedProductInfos[categoryObj.clickedCategory]);
-
+	showMoreButton();
 }
 
 
@@ -133,14 +133,7 @@ function requestProducts() {
 				categoryObj.oldestDisplayInfoId[clickedCategory] = Math.min(categoryObj.oldestDisplayInfoId[clickedCategory], info.displayInfoId);
 			}
 
-			templateProducts(items);
-
-			let moreButton = document.querySelector(".more .btn");
-			moreButton.style.display = "block";
-
-			if (items.length === 0) {
-				moreButton.style.display = "none";
-			}
+			templateProducts(categoryObj.cachedProductInfos[clickedCategory]);
 
 		} else {
 			alert("sorry. something failed");
@@ -160,6 +153,18 @@ function requestProducts() {
 
 function categoryMoreEvent(event) {
 	requestProducts();
+	showMoreButton();
+}
+
+function showMoreButton() {
+	let moreButton = document.querySelector(".more .btn");
+	moreButton.style.display = "block";
+
+	let clickedCategory = categoryObj.clickedCategory;
+
+	if (categoryObj.cachedProductInfos[clickedCategory].length === categoryObj.totalCategoryCount[clickedCategory]) {
+		moreButton.style.display = "none";
+	}
 }
 
 
