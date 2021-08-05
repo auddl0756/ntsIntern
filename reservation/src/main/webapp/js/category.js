@@ -1,20 +1,25 @@
-document.querySelector("#categoryTab")
-	.addEventListener("click", categoryChangeEvent);
+document.addEventListener("DOMContentLoaded", initCategory);
 
-document.querySelector(".more .btn")
-	.addEventListener("click", categoryMoreEvent);
+function initCategory() {
+	document.querySelector("#categoryTab")
+		.addEventListener("click", categoryChangeEvent);
 
+	document.querySelector(".more .btn")
+		.addEventListener("click", categoryMoreEvent);
+
+	requestCategoryTab(categoryObj.init);
+}
 
 let categoryObj = {
 	clickedCategory: 0,
 	totalCategoryCount: { 0: 0 },
 	cachedProductInfos: {},
-	oldestDisplayInfoId: { 0: 1e9 },
-	latestDisplayInfoId: { 0: 0 },
+	smallestDisplayInfoId: {},
+	biggestDisplayInfoId: {},
 
-	init() {
-		categoryInfos = arguments[0];
+	init(categoryInfos, callBack) {
 		const totalCategoryId = 0;
+		const MAX_VALUE = 1000_000_000;
 
 		for (info of categoryInfos) {
 			categoryObj.totalCategoryCount[info.id] = info.count;
@@ -22,29 +27,32 @@ let categoryObj = {
 
 			categoryObj.cachedProductInfos[info.id] = [];
 
-			categoryObj.oldestDisplayInfoId[info.id] = 1e9;
-			categoryObj.latestDisplayInfoId[info.id] = 0;
+			categoryObj.smallestDisplayInfoId[info.id] = MAX_VALUE;
+			categoryObj.biggestDisplayInfoId[info.id] = 0;
 		}
+
 		categoryObj.cachedProductInfos[totalCategoryId] = [];
+		categoryObj.smallestDisplayInfoId[totalCategoryId] = MAX_VALUE;
+		categoryObj.biggestDisplayInfoId[totalCategoryId] = 0;
 
 		document.querySelector(".pink").innerText = categoryObj.totalCategoryCount[categoryObj.clickedCategory] + "개";
 
-		templateCategoryTab(categoryInfos);
+		drawCategoryTab(categoryInfos);
 
+		callBack();
 	}
 };
 
-
-function requestCategoryTab() {
+function requestCategoryTab(callBack) {
 	let XHR = new XMLHttpRequest();
-	let categoryInfos = null;
 
 	XHR.addEventListener("load", function() {
 		if (XHR.status == 200) {
-			categoryInfos = JSON.parse(XHR.responseText);
+			let categoryInfos = JSON.parse(XHR.responseText);
+			//categoryObj.init(categoryInfos);
+			callBack(categoryInfos, requestProducts);
 
-			categoryObj.init(categoryInfos);
-
+			//debugger;
 
 		} else {
 			alert("sorry. something failed");
@@ -57,8 +65,7 @@ function requestCategoryTab() {
 	XHR.send();
 }
 
-
-function templateCategoryTab(categoryInfos) {
+function drawCategoryTab(categoryInfos) {
 	let categoryTab = document.querySelector("#categoryTab");
 	let htmlTemplate = document.querySelector("#categoryList").innerHTML;
 
@@ -71,7 +78,6 @@ function templateCategoryTab(categoryInfos) {
 		}
 		tabHTML += hereHTML;
 	}
-
 	categoryTab.innerHTML += tabHTML;
 }
 
@@ -83,29 +89,26 @@ function categoryChangeEvent(event) {
 		requestProducts(event.currentTarget);
 	}
 
-	templateProducts(categoryObj.cachedProductInfos[categoryObj.clickedCategory]);
-	showMoreButton();
+	drawProducts(categoryObj.cachedProductInfos[categoryObj.clickedCategory]);
+	DisplayMoreButton();
 }
 
 
 function changeCategoryState(event) {
-	let target = event.target;
-	let liTag = target;
 	let categoryTab = document.querySelector("#categoryTab");
+	let categoryItem = event.target;
 
-	if (target.tagName === "SPAN") {
-		liTag = target.parentNode.parentNode;
-	} else if (target.tagName === "A") {
-		liTag = target.parentNode;
-	} else if (target.tagName === "UL") {
+	if (categoryItem.tagName === "UL") {
 		return;
 	}
+
+	categoryItem = categoryItem.closest(".item");
 
 	for (let categoryElem of categoryTab.children) {
 		categoryElem.children[0].className = "anchor";
 	}
 
-	categoryObj.clickedCategory = parseInt(liTag.dataset.category);
+	categoryObj.clickedCategory = parseInt(categoryItem.dataset.category);
 
 	let after = categoryTab.children[categoryObj.clickedCategory].children[0].children[0];
 
@@ -114,7 +117,6 @@ function changeCategoryState(event) {
 
 	document.querySelector(".pink").innerText = categoryObj.totalCategoryCount[categoryObj.clickedCategory] + "개";
 }
-
 
 function requestProducts() {
 	const clickedCategory = categoryObj.clickedCategory;
@@ -129,11 +131,11 @@ function requestProducts() {
 			for (let info of items) {
 				categoryObj.cachedProductInfos[clickedCategory].push(info);
 
-				categoryObj.latestDisplayInfoId[clickedCategory] = Math.max(categoryObj.latestDisplayInfoId[clickedCategory], info.displayInfoId);
-				categoryObj.oldestDisplayInfoId[clickedCategory] = Math.min(categoryObj.oldestDisplayInfoId[clickedCategory], info.displayInfoId);
+				categoryObj.biggestDisplayInfoId[clickedCategory] = Math.max(categoryObj.biggestDisplayInfoId[clickedCategory], info.displayInfoId);
+				categoryObj.smallestDisplayInfoId[clickedCategory] = Math.min(categoryObj.smallestDisplayInfoId[clickedCategory], info.displayInfoId);
 			}
 
-			templateProducts(categoryObj.cachedProductInfos[clickedCategory]);
+			drawProducts(categoryObj.cachedProductInfos[clickedCategory]);
 
 		} else {
 			alert("sorry. something failed");
@@ -143,32 +145,30 @@ function requestProducts() {
 	let url = "/api/products";
 
 	url += "?categoryId=" + clickedCategory;
-	url += "&excludeFirst=" + categoryObj.oldestDisplayInfoId[clickedCategory];
-	url += "&excludeLast=" + categoryObj.latestDisplayInfoId[clickedCategory];
+	url += "&excludeFirst=" + categoryObj.smallestDisplayInfoId[clickedCategory];
+	url += "&excludeLast=" + categoryObj.biggestDisplayInfoId[clickedCategory];
 
 	XHR.open("GET", url);
 	XHR.send();
 }
 
-
 function categoryMoreEvent(event) {
 	requestProducts();
-	showMoreButton();
+	DisplayMoreButton();
 }
 
-function showMoreButton() {
+function DisplayMoreButton() {
 	let moreButton = document.querySelector(".more .btn");
-	moreButton.style.display = "block";
-
 	let clickedCategory = categoryObj.clickedCategory;
 
 	if (categoryObj.cachedProductInfos[clickedCategory].length === categoryObj.totalCategoryCount[clickedCategory]) {
 		moreButton.style.display = "none";
+	} else {
+		moreButton.style.display = "block";
 	}
 }
 
-
-function templateProducts(categoryItems) {
+function drawProducts(categoryItems) {
 	let targetHTML = document.querySelector(".wrap_event_box");
 
 	let htmlTemplate = document.querySelector("#itemList").innerHTML;
@@ -182,10 +182,9 @@ function templateProducts(categoryItems) {
 
 	for (let item of categoryItems) {
 		let hereHTML = htmlTemplate;
-		for (let iter = 0; iter < 2; iter++) {
-			for (let key in item) {
-				hereHTML = hereHTML.replace("${" + key + "}", item[key]);
-			}
+
+		for (let key in item) {
+			hereHTML = hereHTML.split("${" + key + "}").join(item[key]);
 		}
 
 		if (htmlLocation === "left") {
@@ -200,12 +199,4 @@ function templateProducts(categoryItems) {
 	leftBox.innerHTML = leftHTML;
 	rightBox.innerHTML = rightHTML;
 }
-
-
-function initCategory() {
-	requestCategoryTab();
-	requestProducts();
-}
-
-initCategory();
 
