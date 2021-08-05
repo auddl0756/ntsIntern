@@ -49,10 +49,7 @@ function requestCategoryTab(callBack) {
 	XHR.addEventListener("load", function() {
 		if (XHR.status == 200) {
 			let categoryInfos = JSON.parse(XHR.responseText);
-			//categoryObj.init(categoryInfos);
 			callBack(categoryInfos, requestProducts);
-
-			//debugger;
 
 		} else {
 			alert("sorry. something failed");
