@@ -87,7 +87,7 @@ function categoryChangeEvent(event) {
 	}
 
 	drawProducts(categoryObj.cachedProductInfos[categoryObj.clickedCategory]);
-	DisplayMoreButton();
+	displayMoreButton();
 }
 
 
@@ -151,10 +151,10 @@ function requestProducts() {
 
 function categoryMoreEvent(event) {
 	requestProducts();
-	DisplayMoreButton();
+	displayMoreButton();
 }
 
-function DisplayMoreButton() {
+function displayMoreButton() {
 	let moreButton = document.querySelector(".more .btn");
 	let clickedCategory = categoryObj.clickedCategory;
 
