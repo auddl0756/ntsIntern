@@ -1,16 +1,16 @@
 package com.nts.intern.reserve.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nts.intern.reserve.dto.ProductDto;
 import com.nts.intern.reserve.dto.ProductItemDto;
+import com.nts.intern.reserve.dto.ProductRequestDto;
 import com.nts.intern.reserve.service.ProductService;
 
 @RestController
@@ -21,22 +21,21 @@ public class ProductApiController {
 	private final int ALL_CATEGORY = 0;
 	private final int PAGING_SIZE = 4;
 
-	@GetMapping("/api/products")
-	public ProductDto findByCategory(
-		@RequestParam(required = false, defaultValue = "0") int excludeFirst,
-		@RequestParam(required = false, defaultValue = "0") int excludeLast,
-		@RequestParam int categoryId) {
-
+	@PostMapping("/api/products")
+	public ProductDto findByCategory(@RequestBody ProductRequestDto requestDto) {
 		ProductDto productDto = new ProductDto();
 
+		int categoryId = requestDto.getCategoryId();
+		Set<Integer> displayInfoIds = requestDto.getDisplayInfoIds();
+
 		if (categoryId == ALL_CATEGORY) {
-			List<ProductItemDto> items = productService.findWithPaging(excludeFirst, excludeLast, PAGING_SIZE);
+			List<ProductItemDto> items = productService.findWithPaging(displayInfoIds, PAGING_SIZE);
 			int totalCount = productService.getCount();
 
 			productDto.setItems(items);
 			productDto.setTotalCount(totalCount);
 		} else {
-			List<ProductItemDto> items = productService.findWithPagingAndCategory(excludeFirst, excludeLast,
+			List<ProductItemDto> items = productService.findWithPagingAndCategory(displayInfoIds,
 				PAGING_SIZE, categoryId);
 			int totalCount = productService.getCountByCategory(categoryId);
 

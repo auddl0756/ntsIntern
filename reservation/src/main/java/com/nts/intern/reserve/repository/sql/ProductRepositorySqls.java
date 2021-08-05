@@ -13,7 +13,7 @@ public class ProductRepositorySqls {
 		"INNER JOIN product_image pi on pd.id = pi.product_id " +
 		"INNER JOIN file_info fi on fi.id = pi.file_id " +
 		"WHERE pd.category_id = :categoryId " +
-		"AND (di.id < :excludeFirst or di.id > :excludeLast) " +
+		"AND di.id NOT IN (:displayInfoIds) " +
 		"GROUP BY di.id " +
 		"ORDER BY di.id DESC " +
 		"LIMIT :limit;";
@@ -29,7 +29,7 @@ public class ProductRepositorySqls {
 		"INNER JOIN display_info di on pd.id = di.product_id " +
 		"INNER JOIN product_image pi on pd.id = pi.product_id " +
 		"INNER JOIN file_info fi on fi.id = pi.file_id " +
-		"WHERE (di.id < :excludeFirst or di.id > :excludeLast) " +
+		"WHERE di.id NOT IN (:displayInfoIds) " +
 		"GROUP BY di.id " +
 		"ORDER BY di.id DESC " +
 		"LIMIT :limit;";

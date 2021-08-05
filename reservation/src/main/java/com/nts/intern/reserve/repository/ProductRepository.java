@@ -9,11 +9,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -28,22 +30,20 @@ public class ProductRepository {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 
-	public List<ProductItemDto> findWithPaging(int excludeFirst, int excludeLast, int limit) {
-		Map<String, Integer> params = new HashMap<>();
-		params.put("excludeFirst", excludeFirst);
-		params.put("excludeLast", excludeLast);
-		params.put("limit", limit);
+	public List<ProductItemDto> findWithPaging(Set<Integer> displayInfoIds, int limit) {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("displayInfoIds", displayInfoIds);
+		params.addValue("limit", limit);
 
 		return jdbc.query(SELECT_WITH_PAGING, params, rowMapper);
 	}
 
-	public List<ProductItemDto> findWithPagingAndCategory(int excludeFirst, int excludeLast, int limit,
+	public List<ProductItemDto> findWithPagingAndCategory(Set<Integer> displayInfoIds, int limit,
 		int categoryId) {
-		Map<String, Integer> params = new HashMap<>();
-		params.put("excludeFirst", excludeFirst);
-		params.put("excludeLast", excludeLast);
-		params.put("limit", limit);
-		params.put("categoryId", categoryId);
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("displayInfoIds", displayInfoIds);
+		params.addValue("limit", limit);
+		params.addValue("categoryId", categoryId);
 
 		return jdbc.query(SELECT_WITH_PAGING_AND_CATEGORY, params, rowMapper);
 	}

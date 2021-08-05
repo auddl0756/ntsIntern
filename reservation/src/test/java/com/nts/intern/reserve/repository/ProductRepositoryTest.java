@@ -2,10 +2,10 @@ package com.nts.intern.reserve.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.Set;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.nts.intern.reserve.config.ApplicationConfig;
-import com.nts.intern.reserve.dto.ProductDto;
 import com.nts.intern.reserve.dto.ProductItemDto;
-import com.nts.intern.reserve.repository.ProductRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
@@ -30,15 +28,21 @@ public class ProductRepositoryTest {
 
 	@Test
 	public void findWithPagingAndCategoryTest() {
-		List<ProductItemDto> list = productRepository.findWithPagingAndCategory(0, 0, 4, 1);
+		Set<Integer> displayInfoIds = new HashSet<>();
+		displayInfoIds.add(0);
+
+		List<ProductItemDto> list = productRepository.findWithPagingAndCategory(displayInfoIds, 4, 1);
 		list.stream().forEach(product -> {
 			assertThat(product.getProductContent()).isNotNull();
+			//System.out.println(product);
 		});
 	}
 
 	@Test
 	public void findWithPagingTest() {
-		List<ProductItemDto> list = productRepository.findWithPaging(0, 0, 4);
+		Set<Integer> displayInfoIds = new HashSet<>();
+		displayInfoIds.add(1);
+		List<ProductItemDto> list = productRepository.findWithPaging(displayInfoIds, 4);
 		list.stream().forEach(product -> {
 			assertThat(product.getProductContent()).isNotNull();
 		});

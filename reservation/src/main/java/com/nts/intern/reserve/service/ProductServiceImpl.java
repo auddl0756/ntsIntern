@@ -1,6 +1,7 @@
 package com.nts.intern.reserve.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,15 +17,15 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ProductItemDto> findWithPaging(int excludeFirst, int excludeLast, int limit) {
-		return productRepository.findWithPaging(excludeFirst, excludeLast, limit);
+	public List<ProductItemDto> findWithPaging(Set<Integer> displayInfoIds, int limit) {
+		return productRepository.findWithPaging(displayInfoIds, limit);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ProductItemDto> findWithPagingAndCategory(int excludeFirst, int excludeLast, int limit,
+	public List<ProductItemDto> findWithPagingAndCategory(Set<Integer> displayInfoIds, int limit,
 		int categoryId) {
-		return productRepository.findWithPagingAndCategory(excludeFirst, excludeLast, limit, categoryId);
+		return productRepository.findWithPagingAndCategory(displayInfoIds, limit, categoryId);
 	}
 
 	@Override

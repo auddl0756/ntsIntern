@@ -14,29 +14,26 @@ let categoryObj = {
 	clickedCategory: 0,
 	totalCategoryCount: { 0: 0 },
 	cachedProductInfos: {},
-	smallestDisplayInfoId: {},
-	biggestDisplayInfoId: {},
+	displayInfoIds: {},
 
 	init(categoryInfos, callBack) {
 		const totalCategoryId = 0;
-		const MAX_VALUE = 1000_000_000;
 
 		for (info of categoryInfos) {
 			categoryObj.totalCategoryCount[info.id] = info.count;
 			categoryObj.totalCategoryCount[totalCategoryId] += info.count;
 
 			categoryObj.cachedProductInfos[info.id] = [];
-
-			categoryObj.smallestDisplayInfoId[info.id] = MAX_VALUE;
-			categoryObj.biggestDisplayInfoId[info.id] = 0;
+			
+			categoryObj.displayInfoIds[info.id] = new Set();
+			categoryObj.displayInfoIds[info.id].add(0);
 		}
-
+		
 		categoryObj.cachedProductInfos[totalCategoryId] = [];
-		categoryObj.smallestDisplayInfoId[totalCategoryId] = MAX_VALUE;
-		categoryObj.biggestDisplayInfoId[totalCategoryId] = 0;
-
+		categoryObj.displayInfoIds[totalCategoryId] = new Set();
+		categoryObj.displayInfoIds[totalCategoryId].add(0);
+		
 		document.querySelector(".pink").innerText = categoryObj.totalCategoryCount[categoryObj.clickedCategory] + "개";
-
 		drawCategoryTab(categoryInfos);
 
 		callBack();
@@ -127,9 +124,7 @@ function requestProducts() {
 
 			for (let info of items) {
 				categoryObj.cachedProductInfos[clickedCategory].push(info);
-
-				categoryObj.biggestDisplayInfoId[clickedCategory] = Math.max(categoryObj.biggestDisplayInfoId[clickedCategory], info.displayInfoId);
-				categoryObj.smallestDisplayInfoId[clickedCategory] = Math.min(categoryObj.smallestDisplayInfoId[clickedCategory], info.displayInfoId);
+				categoryObj.displayInfoIds[clickedCategory].add(info.displayInfoId);
 			}
 
 			drawProducts(categoryObj.cachedProductInfos[clickedCategory]);
@@ -140,13 +135,17 @@ function requestProducts() {
 	});
 
 	let url = "/api/products";
+	
+	//let displayInfoIdList = Array.from(categoryObj.displayInfoIds[clickedCategory]);
+	
+	let requestData={
+		"categoryId" :  clickedCategory,
+		"displayInfoIds" : Array.from(categoryObj.displayInfoIds[clickedCategory])
+	}; 
 
-	url += "?categoryId=" + clickedCategory;
-	url += "&excludeFirst=" + categoryObj.smallestDisplayInfoId[clickedCategory];
-	url += "&excludeLast=" + categoryObj.biggestDisplayInfoId[clickedCategory];
-
-	XHR.open("GET", url);
-	XHR.send();
+	XHR.open("POST", url);
+	XHR.setRequestHeader('Content-Type', 'application/json;');
+	XHR.send(JSON.stringify(requestData));
 }
 
 function categoryMoreEvent(event) {
