@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.nts.intern.reserve.config.ApplicationConfig;
 import com.nts.intern.reserve.dto.ProductDto;
+import com.nts.intern.reserve.dto.ProductItemDto;
 import com.nts.intern.reserve.repository.ProductRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -29,7 +30,7 @@ public class ProductRepositoryTest {
 
 	@Test
 	public void findWithPagingAndCategoryTest() {
-		List<ProductDto> list = productRepository.findWithPagingAndCategory(0, 5, 1);
+		List<ProductItemDto> list = productRepository.findWithPagingAndCategory(0, 0, 4, 1);
 		list.stream().forEach(product -> {
 			assertThat(product.getProductContent()).isNotNull();
 		});
@@ -37,7 +38,7 @@ public class ProductRepositoryTest {
 
 	@Test
 	public void findWithPagingTest() {
-		List<ProductDto> list = productRepository.findWithPaging(0, 5);
+		List<ProductItemDto> list = productRepository.findWithPaging(0, 0, 4);
 		list.stream().forEach(product -> {
 			assertThat(product.getProductContent()).isNotNull();
 		});

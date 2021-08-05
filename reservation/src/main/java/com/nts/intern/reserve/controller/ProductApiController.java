@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nts.intern.reserve.dto.ProductDto;
+import com.nts.intern.reserve.dto.ProductItemDto;
 import com.nts.intern.reserve.service.ProductService;
 
-@RequestMapping("/api/productImages/")
 @RestController
 public class ProductApiController {
 	@Autowired
@@ -21,31 +21,29 @@ public class ProductApiController {
 	private final int ALL_CATEGORY = 0;
 	private final int PAGING_SIZE = 4;
 
-	@GetMapping("{id}")
-	public List<ProductDto> findByCategory(@PathVariable(name = "id") int categoryId, @RequestParam String type,
-		@RequestParam int start) {
-		if (type.equals("th")) {
-			if (categoryId == ALL_CATEGORY) {
-				return productService.findWithPaging(start, PAGING_SIZE);
-			} else {
-				return productService.findWithPagingAndCategory(start, PAGING_SIZE, categoryId);
-			}
-		} else {
-			return null; //not yet developed.
-		}
-	}
+	@GetMapping("/api/products")
+	public ProductDto findByCategory(
+		@RequestParam(required = false, defaultValue = "0") int excludeFirst,
+		@RequestParam(required = false, defaultValue = "0") int excludeLast,
+		@RequestParam int categoryId) {
 
-	@GetMapping("/size")
-	public int getSize() {
-		return productService.getSize();
-	}
+		ProductDto productDto = new ProductDto();
 
-	@GetMapping("/size/{id}")
-	public int getSizeByCategory(@PathVariable(name = "id") int categoryId, @RequestParam String type) {
-		if (type.equals("th")) {
-			return productService.getSizeByCategory(categoryId);
+		if (categoryId == ALL_CATEGORY) {
+			List<ProductItemDto> items = productService.findWithPaging(excludeFirst, excludeLast, PAGING_SIZE);
+			int totalCount = productService.getCount();
+
+			productDto.setItems(items);
+			productDto.setTotalCount(totalCount);
 		} else {
-			return -1; //not yet developed.
+			List<ProductItemDto> items = productService.findWithPagingAndCategory(excludeFirst, excludeLast,
+				PAGING_SIZE, categoryId);
+			int totalCount = productService.getCountByCategory(categoryId);
+
+			productDto.setItems(items);
+			productDto.setTotalCount(totalCount);
 		}
+
+		return productDto;
 	}
 }

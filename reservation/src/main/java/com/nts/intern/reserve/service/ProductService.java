@@ -3,13 +3,14 @@ package com.nts.intern.reserve.service;
 import java.util.List;
 
 import com.nts.intern.reserve.dto.ProductDto;
+import com.nts.intern.reserve.dto.ProductItemDto;
 
 public interface ProductService {
-	List<ProductDto> findWithPaging(int start, int limit);
+	List<ProductItemDto> findWithPaging(int excludeFirst, int excludeLast, int limit);
 
-	List<ProductDto> findWithPagingAndCategory(int start, int limit, int categoryId);
+	List<ProductItemDto> findWithPagingAndCategory(int excludeFirst, int excludeLast, int limit, int categoryId);
 
-	int getSize();
+	int getCount();
 
-	int getSizeByCategory(int categoryId);
+	int getCountByCategory(int categoryId);
 }
