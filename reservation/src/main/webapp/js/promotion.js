@@ -1,6 +1,6 @@
-document.addEventListener("DOMContentLoaded", init());
+document.addEventListener("DOMContentLoaded", initPromotion);
 
-function init() {
+function initPromotion() {
 	requestPromotions("/api/promotions/");
 }
 

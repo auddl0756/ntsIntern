@@ -10,13 +10,13 @@ import com.nts.intern.reserve.dto.CategoryDto;
 import com.nts.intern.reserve.repository.CategoryRepository;
 
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 	@Autowired
-	private CategoryRepository CategoryRepository;
-	
+	private CategoryRepository categoryRepository;
+
 	@Override
 	@Transactional(readOnly = true)
 	public List<CategoryDto> findAll() {
-		return CategoryRepository.findCategoryAll();
+		return categoryRepository.findCategoryAll();
 	}
 }

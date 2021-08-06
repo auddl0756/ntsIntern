@@ -25,8 +25,8 @@ public class CategoryRepository {
 	public CategoryRepository(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
- 
+
 	public List<CategoryDto> findCategoryAll() {
-		return jdbc.query(SELECT_ALL_CATEGORIES , Collections.emptyMap(), rowMapper);
+		return jdbc.query(SELECT_ALL_CATEGORIES, Collections.emptyMap(), rowMapper);
 	}
 }
