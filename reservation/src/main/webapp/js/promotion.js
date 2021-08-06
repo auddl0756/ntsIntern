@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", initPromotion);
 
 function initPromotion() {
-	requestPromotions("/api/promotions/");
+	requestPromotions();
 }
 
-function requestPromotions(url) {
+function requestPromotions() {
 	let XHR = new XMLHttpRequest();
 
 	XHR.addEventListener("load", function() {
@@ -14,7 +14,7 @@ function requestPromotions(url) {
 
 			let resultHtml = makeTemplatePromotion(promotionInfos);
 
-			let promotionArea = document.querySelector(".container_visual .container_visual .visual_img");
+			let promotionArea = document.querySelector("#promotionArea");
 
 			promotionArea.innerHTML = resultHtml;
 			promotionArea.style.left = "0px";
@@ -49,6 +49,7 @@ function requestPromotions(url) {
 		}
 	});
 
+	let url = "/api/promotions/";
 	XHR.open("GET", url);
 	XHR.send();
 }
