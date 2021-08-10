@@ -17,7 +17,7 @@ public class ProductDetailApiController {
 	public ProductDetailResponseDto findDetailInfo(@PathVariable int displayInfoId) {
 		ProductDetailResponseDto result = new ProductDetailResponseDto();
 
-		result.setAverageScore(displayInfoId);
+		result.setAverageScore(productDetailService.findAverageScore(displayInfoId));
 		result.setComments(productDetailService.findAllCommentsById(displayInfoId));
 		result.setDisplayInfo(productDetailService.findDisplayInfoById(displayInfoId));
 		result.setDisplayInfoImage(productDetailService.findDisplayInfoImageById(displayInfoId));

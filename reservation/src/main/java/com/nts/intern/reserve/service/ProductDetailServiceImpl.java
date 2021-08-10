@@ -36,7 +36,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 			.mapToInt(comment -> comment.getScore())
 			.sum();
 
-		return Math.round((double)scoreSum * 10 / comments.size()) / 10;
+		return (double)Math.round((double)scoreSum * 10 / comments.size()) / 10;
 	}
 
 	@Override
@@ -76,5 +76,4 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 	public List<ProductImageDto> findAllProductImagesById(int displayInfoId) {
 		return productImageRepository.findById(displayInfoId);
 	}
-
 }
