@@ -166,26 +166,16 @@ function makeEtcImages(etcImages) {
 
 }
 
-function explainMoreEvent(event) {
-	let target = event.target;
-	let openTag = document.querySelector(".bk_more._open");
-	let closeTag = document.querySelector(".bk_more._close");
-	let storeDetailTag = document.querySelector("#storeDetail");
+function explainMoreEvent() {
+	$("#bk_more_open").toggle();
+	$("#bk_more_close").toggle();
 
-	target = target.closest("A");
+	let className = $("#storeDetail").attr('class');
 
-	if (target === null) {
-		return;
-	}
-
-	if (target.className === "bk_more _open") {
-		openTag.style.display = "none";
-		closeTag.style.display = "block";
-		storeDetailTag.className = "store_details";
-	} else if (target.className === "bk_more _close") {
-		openTag.style.display = "block";
-		closeTag.style.display = "none";
-		storeDetailTag.className = "store_details close3";
+	if (className === "store_details") {
+		$("#storeDetail").attr('class', 'store_details close3');
+	} else {
+		$("#storeDetail").attr('class', 'store_details');
 	}
 }
 
@@ -249,7 +239,7 @@ function makeCommentsArea(comments, productDescription) {
 	let bindTemplate = Handlebars.compile(template);
 	let targetHTML = document.querySelector(".list_short_review");
 
-	preProcessComments(comments, productDescription);
+	preprocessComments(comments, productDescription);
 
 	let idx = commentArea.childElementCount;
 
@@ -266,7 +256,7 @@ function makeCommentsArea(comments, productDescription) {
 	}
 }
 
-function preProcessComments(comments, productDescription) {
+function preprocessComments(comments, productDescription) {
 	comments.forEach(function(item) {
 		item.reservationDate = item.reservationDate.year + "." + item.reservationDate.monthValue + "." + item.reservationDate.dayOfMonth;
 		item["productDescription"] = productDescription;
