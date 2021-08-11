@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.nts.intern.reserve.config.ApplicationConfig;
 import com.nts.intern.reserve.config.WebMvcConfig;
 
-// reference : https://docs.spring.io/spring-framework/docs/current/reference/html/testing.html
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebMvcConfig.class, ApplicationConfig.class})
@@ -42,7 +41,7 @@ public class ProductDetailApiControllerTest {
 	public void requestTest() {
 		try {
 			int sampleDisplayInfoId = 1;
-			MvcResult response = mockMvc.perform(get("/api/products/"+sampleDisplayInfoId))
+			MvcResult response = mockMvc.perform(get("/api/products/" + sampleDisplayInfoId))
 				.andReturn();
 
 			System.out.println(response.getResponse().getContentAsString());

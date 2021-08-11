@@ -33,7 +33,6 @@ public class ProductDetailServiceTest {
 	public void findDisplayInfoByIdTest() {
 		int sampleDisplayInfoId = 1;
 		System.out.println(productDetailService.findDisplayInfoById(sampleDisplayInfoId));
-		;
 	}
 
 	@Test

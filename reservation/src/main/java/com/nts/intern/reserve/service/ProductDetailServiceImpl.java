@@ -33,7 +33,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 	public double findAverageScore(int displayInfoId) {
 		List<CommentDto> comments = commentRepository.findAllById(displayInfoId);
 		int scoreSum = comments.stream()
-			.mapToInt(comment -> comment.getScore())
+			.mapToInt(CommentDto::getScore)
 			.sum();
 
 		return (double)Math.round((double)scoreSum * 10 / comments.size()) / 10;
@@ -44,10 +44,12 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 		List<CommentDto> comments = commentRepository.findAllById(displayInfoId);
 
 		//stream이 아래 for each문 보다 0.2초 정도 느리게 동작하는 듯.
-		//		comments = comments.stream().map(comment -> {
-		//			comment.setCommentImages(commentImageRepository.findAllById(comment.getReservationInfoId()));
-		//			return comment;
-		//		}).collect(Collectors.toList());
+		/*
+		comments = comments.stream().map(comment -> {
+			comment.setCommentImages(commentImageRepository.findAllById(comment.getReservationInfoId()));
+			return comment;
+		}).collect(Collectors.toList());
+		*/
 
 		for (CommentDto comment : comments) {
 			comment.setCommentImages(commentImageRepository.findAllById(comment.getReservationInfoId()));
