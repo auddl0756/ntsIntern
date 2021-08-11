@@ -259,7 +259,7 @@ function makeCommentsArea(comments, productDescription) {
 function preprocessComments(comments, productDescription) {
 	comments.forEach(function(item) {
 		item.reservationDate = item.reservationDate.year + "." + item.reservationDate.monthValue + "." + item.reservationDate.dayOfMonth;
-		item["productDescription"] = productDescription;
+		item.productDescription = productDescription;
 
 		if (item.commentImages.length == 0) {
 			item.commentImages = "";

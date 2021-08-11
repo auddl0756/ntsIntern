@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", initReview);
 let totalInfos;
 
 function initReview() {
-	//let id = location.href.split("=")[1];
 	let id = document.referrer.split("=")[1];
 
 	constructBackUrl(id);
@@ -13,7 +12,6 @@ function initReview() {
 function constructBackUrl(id) {
 	let backButton = document.querySelector(".btn_back");
 	backButton.setAttribute("href", backButton.getAttribute("href") + "?id=" + id);
-
 }
 
 function requestProductDetail(displayInfoId) {
@@ -50,7 +48,6 @@ function makeGradeArea(averageScore, commentCount) {
 }
 
 function makeCommentArea(comments, productDescription) {
-	let commentArea = document.querySelector(".list_short_review");
 	let template = document.querySelector("#commentArea").innerText;
 	let bindTemplate = Handlebars.compile(template);
 	let targetHTML = document.querySelector(".list_short_review");
@@ -64,15 +61,14 @@ function makeCommentArea(comments, productDescription) {
 
 		targetHTML.appendChild(newList);
 	});
-
 }
 
 function preProcessComments(comments, productDescription) {
 	comments.forEach(function(item) {
 		item.reservationDate = item.reservationDate.year + "." + item.reservationDate.monthValue + "." + item.reservationDate.dayOfMonth;
-		item["productDescription"] = productDescription;
+		item.productDescription = productDescription;
 
-		if (item.commentImages.length == 0) {
+		if (item.commentImages.length === 0) {
 			item.commentImages = "";
 		} else {
 			item.commentImages = item.commentImages[0].saveFileName;
