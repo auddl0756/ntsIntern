@@ -18,6 +18,10 @@
 
 [SpringJUnit4ClassRunner](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/test/context/junit4/SpringJUnit4ClassRunner.html)
 
+[스프링Testing 공식문서](https://docs.spring.io/spring-framework/docs/current/reference/html/testing.html)
+
+[스프링MVC 테스트 에디토리얼](https://twofootdog.github.io/Spring-Spring-MVC%EC%97%90%EC%84%9C-JUnit-%ED%99%9C%EC%9A%A9%ED%95%98%EA%B8%B02(MockMvc%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-Controller-%ED%85%8C%EC%8A%A4%ED%8A%B8)/)
+
 ## 스프링 컨트롤러 파라미터
 [여러 방법](https://velog.io/@younghwan24/Spring-Controller-Parameter)
 
