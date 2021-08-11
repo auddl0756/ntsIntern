@@ -3,10 +3,9 @@ let totalInfos;
 
 function initDetail() {
 	let id = location.href.split("=")[1];
+	requestProductDetail(id, requestEtcImages);
 
 	document.querySelector("#detailExplain").addEventListener("click", explainMoreEvent);
-
-	requestProductDetail(id, requestEtcImages);
 
 	document.querySelector(".btn_nxt").addEventListener("click", nextTitleImageEvent);
 	document.querySelector(".btn_prev").addEventListener("click", prevTitleImageEvent);
@@ -23,9 +22,8 @@ function itemDetailEvent() {
 
 	changeTabState(target);
 
-	document.querySelector(".detail_location").className += " hide";
-	let className = document.querySelector(".detail_area_wrap").className;
-	document.querySelector(".detail_area_wrap").className = className.split(" ")[0];
+	$("#detail_location").hide();
+	$("#detail_info").show();
 
 	makeItemDetailArea(preprocessItemDetailInfo());
 }
@@ -39,14 +37,13 @@ function preprocessItemDetailInfo() {
 }
 
 function makeItemDetailArea(info) {
-	let targetArea = document.querySelector("#detail_area_wrap");
+	let targetArea = document.querySelector("#detail_info");
 
 	let itemDetailTemplate = document.querySelector("#itemDetailTemplate").innerText;
 	let bindTemplate = Handlebars.compile(itemDetailTemplate);
 
 	let resultHTML = bindTemplate(info);
 	targetArea.innerHTML = resultHTML;
-
 }
 
 function itemPathEvent() {
@@ -57,12 +54,10 @@ function itemPathEvent() {
 
 	changeTabState(target);
 
-	document.querySelector(".detail_area_wrap").className += " hide";
-	let className = document.querySelector(".detail_location").className;
-	document.querySelector(".detail_location").className = className.split(" ")[0];
+	$("#detail_info").hide();
+	$("#detail_location").show();
 
 	makeItemPathArea(preprocessItemPathInfo());
-
 }
 
 function preprocessItemPathInfo() {
