@@ -24,9 +24,9 @@ public class CommentImageRepository {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 
-	public List<CommentImageDto> findAllById(int reservationInfoId) {
+	public List<CommentImageDto> findAllById(int commentId) {
 		Map<String, Integer> params = new HashMap<>();
-		params.put("reservationInfoId", reservationInfoId);
+		params.put("commentId", commentId);
 
 		return jdbc.query(FIND_ALL_BY_ID, params, rowMapper);
 	}

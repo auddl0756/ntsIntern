@@ -127,16 +127,17 @@
 							title="공유하기"></a>
 					</div>
 				</div>
-				<div class="section_store_details" id="detailExplain">
+				<div class="section_store_details">
 					<!-- [D] 펼쳐보기 클릭 시 store_details에 close3 제거 -->
-					<div id="storeDetail" class="store_details close3">
+					<div id="detailExplanation" class="store_details close3">
 						<p class="dsc"></p>
 					</div>
 					<!-- [D] 토글 상황에 따라 bk_more에 display:none 추가 -->
-					<a class="bk_more _open" id="bk_more_open"> <span class="bk_more_txt">펼쳐보기</span>
-						<i class="fn fn-down2"></i>
-					</a> <a class="bk_more _close" id="bk_more_close" style="display: none;"> <span
-						class="bk_more_txt">접기</span> <i class="fn fn-up2"></i>
+					<a class="bk_more _open" id="bk_more_open"> <span
+						class="bk_more_txt">펼쳐보기</span> <i class="fn fn-down2"></i>
+					</a> <a class="bk_more _close" id="bk_more_close"
+						style="display: none;"> <span class="bk_more_txt">접기</span> <i
+						class="fn fn-up2"></i>
 					</a>
 				</div>
 				<div class="section_event">
@@ -187,7 +188,7 @@
 				</div>
 				<div class="section_info_tab">
 					<!-- [D] tab 선택 시 anchor에 active 추가 -->
-					<ul class="info_tab_lst">
+					<ul id="detailInfoTab" class="info_tab_lst">
 						<li class="item active _detail" id="itemDetail"><a
 							class="anchor active"> <span>상세정보</span>
 						</a></li>
@@ -271,7 +272,7 @@
 
 	<script type="myTemplate" id="itemPathTemplate">
         <div class="box_store_info no_topline">
-            <a href="#" class="store_location" title="지도웹으로 연결"> <img
+            <a class="store_location" title="지도웹으로 연결"> <img
                 class="store_map img_thumb" alt="map" src= "/{{saveFileName}}">
                 <span class="img_border"></span> <span class="btn_map"><i
                     class="spr_book2 ico_mapview"></i></span>
@@ -309,10 +310,6 @@
             </div>
         </div>
     </script>
-
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"
-		integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
-		crossorigin="anonymous"></script>
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"

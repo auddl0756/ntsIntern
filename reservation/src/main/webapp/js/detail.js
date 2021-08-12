@@ -5,16 +5,60 @@ function initDetail() {
 	let id = location.href.split("=")[1];
 	requestProductDetail(id, requestEtcImages);
 
-	document.querySelector("#detailExplain").addEventListener("click", explainMoreEvent);
+	document.querySelector("#bk_more_open").addEventListener("click", explainMoreEvent);
+	document.querySelector("#bk_more_close").addEventListener("click", explainMoreEvent);
 
 	document.querySelector(".btn_nxt").addEventListener("click", nextTitleImageEvent);
 	document.querySelector(".btn_prev").addEventListener("click", prevTitleImageEvent);
 
-	document.querySelector("#itemDetail").addEventListener("click", itemDetailEvent);
-	document.querySelector("#itemPath").addEventListener("click", itemPathEvent);
+	document.querySelector("#detailInfoTab").addEventListener("click", detailInfoEvent);
 }
 
-function itemDetailEvent() {
+function requestProductDetail(displayInfoId, requestEtcCallback) {
+	let XHR = new XMLHttpRequest();
+	XHR.addEventListener("load", function() {
+		if (XHR.status == 200) {
+			totalInfos = JSON.parse(XHR.responseText);
+
+			makeTitleArea(totalInfos.displayInfo, totalInfos.productImages);
+
+			makeGradeArea(totalInfos.averageScore, totalInfos.comments.length);
+
+			makeCommentsArea(totalInfos.comments, totalInfos.displayInfo.productDescription);
+
+			requestEtcCallback(displayInfoId, makeEtcImages);
+
+			makeItemDetailArea(preprocessItemDetailInfo());
+			makeItemPathArea(preprocessItemPathInfo());
+
+		} else {
+			alert("sorry. something failed");
+		}
+	});
+
+	let url = "/api/products/" + displayInfoId;
+
+	XHR.open("GET", url);
+	XHR.send();
+}
+
+function explainMoreEvent() {
+	let openTag = document.querySelector("#bk_more_open");
+	let closeTag = document.querySelector("#bk_more_close");
+	let detailExplanationTag = document.querySelector("#detailExplanation");
+
+	if (closeTag.style.display === "none") {
+		closeTag.style.display = "block";
+		openTag.style.display = "none";
+		detailExplanationTag.className = "store_details";
+	} else if (closeTag.style.display === "block") {
+		closeTag.style.display = "none";
+		openTag.style.display = "block";
+		detailExplanationTag.className = "store_details close3";
+	}
+}
+
+function detailInfoEvent() {
 	let target = event.target.closest("LI");
 	if (target === null) {
 		return;
@@ -22,10 +66,11 @@ function itemDetailEvent() {
 
 	changeTabState(target);
 
-	$("#detail_location").hide();
-	$("#detail_info").show();
-
-	makeItemDetailArea(preprocessItemDetailInfo());
+	if (target.id === "itemDetail") {
+		makeItemDetailArea(preprocessItemDetailInfo());
+	} else if (target.id === "itemPath") {
+		makeItemPathArea(preprocessItemPathInfo());
+	}
 }
 
 function preprocessItemDetailInfo() {
@@ -44,20 +89,6 @@ function makeItemDetailArea(info) {
 
 	let resultHTML = bindTemplate(info);
 	targetArea.innerHTML = resultHTML;
-}
-
-function itemPathEvent() {
-	let target = event.target.closest("LI");
-	if (target === null) {
-		return;
-	}
-
-	changeTabState(target);
-
-	$("#detail_info").hide();
-	$("#detail_location").show();
-
-	makeItemPathArea(preprocessItemPathInfo());
 }
 
 function preprocessItemPathInfo() {
@@ -88,6 +119,17 @@ function changeTabState(target) {
 	}
 
 	target.children[0].className = "anchor active";
+
+	let detailInfoTag = document.querySelector("#detail_info");
+	let detailLocationTag = document.querySelector("#detail_location");
+
+	if (target.id === "itemDetail") {
+		detailInfoTag.className = "detail_area_wrap";
+		detailLocationTag.className = "detail_location hide";
+	} else if (target.id === "itemPath")  {
+		detailInfoTag.className = "detail_area_wrap hide";
+		detailLocationTag.className = "detail_location";
+	}
 }
 
 function nextTitleImageEvent() {
@@ -125,7 +167,7 @@ function prevTitleImageEvent() {
 
 		document.querySelector(".num").innerText = 2;
 
-	} else if (nowImageNumber == 2)  {
+	} else if (nowImageNumber == 2) {
 		titleImageArea.style.transition = "none";
 		titleImageArea.style.left = (-imageWidth * 2) + "px";
 		setTimeout(() => {
@@ -178,52 +220,13 @@ function makeEtcImages(etcImages) {
 	targetHTML.style.left = (-imageWidth) + "px";
 }
 
-function explainMoreEvent() {
-	$("#bk_more_open").toggle();
-	$("#bk_more_close").toggle();
 
-	let className = $("#storeDetail").attr('class');
 
-	if (className === "store_details") {
-		$("#storeDetail").attr('class', 'store_details close3');
-	} else {
-		$("#storeDetail").attr('class', 'store_details');
-	}
-}
-
-function requestProductDetail(displayInfoId, requestEtcCallback) {
-	let XHR = new XMLHttpRequest();
-	XHR.addEventListener("load", function() {
-		if (XHR.status == 200) {
-			totalInfos = JSON.parse(XHR.responseText);
-
-			makeTitleArea(totalInfos.displayInfo, totalInfos.displayInfoImage);
-
-			makeGradeArea(totalInfos.averageScore, totalInfos.comments.length);
-
-			makeCommentsArea(totalInfos.comments, totalInfos.displayInfo.productDescription);
-
-			requestEtcCallback(displayInfoId, makeEtcImages);
-
-			makeItemDetailArea(preprocessItemDetailInfo());
-			makeItemPathArea(preprocessItemPathInfo());
-
-		} else {
-			alert("sorry. something failed");
-		}
-	});
-
-	let url = "/api/products/" + displayInfoId;
-
-	XHR.open("GET", url);
-	XHR.send();
-}
-
-function makeTitleArea(displayInfo, displayInfoImage) {
+function makeTitleArea(displayInfo, productImages) {
 	let template = document.querySelector("#titleArea").innerText;
 	let bindTemplate = Handlebars.compile(template);
 
-	let resultHTML = bindTemplate(displayInfoImage);
+	let resultHTML = bindTemplate(productImages[0]);
 
 	let targetHTML = document.querySelector(".visual_img.detail_swipe");
 
@@ -264,20 +267,25 @@ function makeCommentsArea(comments, productDescription) {
 		newList.classList.add("list_item");
 		newList.innerHTML = bindTemplate(comments[idx + count]);
 
+		if (comments[idx + count].commentImages === "none") {
+			newList.querySelector(".thumb_area").style.display = "none";
+		}
+
 		targetHTML.appendChild(newList);
 	}
 }
 
 function preprocessComments(comments, productDescription) {
-	comments.forEach(function(item) {
-		item.reservationDate = item.reservationDate.year + "." + item.reservationDate.monthValue + "." + item.reservationDate.dayOfMonth;
-		item.productDescription = productDescription;
+	for (comment of comments) {
+		comment.reservationDate = comment.reservationDate.year + "." + comment.reservationDate.monthValue + "." + comment.reservationDate.dayOfMonth;
+		comment.productDescription = productDescription;
 
-		if (item.commentImages.length == 0) {
-			item.commentImages = "";
+		if (comment.commentImages.length === 0) {
+			comment.commentImages = "none";
 		} else {
-			item.commentImages = item.commentImages[0].saveFileName;
+			comment.commentImages = comment.commentImages[0].saveFileName;
 		}
-	});
+
+	}
 }
 

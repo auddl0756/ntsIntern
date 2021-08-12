@@ -43,16 +43,8 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 	public List<CommentDto> findAllCommentsById(int displayInfoId) {
 		List<CommentDto> comments = commentRepository.findAllById(displayInfoId);
 
-		//stream이 아래 for each문 보다 0.2초 정도 느리게 동작하는 듯.
-		/*
-		comments = comments.stream().map(comment -> {
-			comment.setCommentImages(commentImageRepository.findAllById(comment.getReservationInfoId()));
-			return comment;
-		}).collect(Collectors.toList());
-		*/
-
 		for (CommentDto comment : comments) {
-			comment.setCommentImages(commentImageRepository.findAllById(comment.getReservationInfoId()));
+			comment.setCommentImages(commentImageRepository.findAllById(comment.getCommentId()));
 		}
 
 		return comments;
@@ -66,7 +58,6 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 	@Override
 	public DisplayInfoImageDto findDisplayInfoImageById(int displayInfoId) {
 		return displayInfoImageRepository.findById(displayInfoId);
-
 	}
 
 	@Override

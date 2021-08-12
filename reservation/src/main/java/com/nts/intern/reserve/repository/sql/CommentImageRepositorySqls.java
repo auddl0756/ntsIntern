@@ -21,5 +21,5 @@ public class CommentImageRepositorySqls {
 		"INNER JOIN reservation_user_comment_image rev_com_img on rev_com_img.reservation_user_comment_id = rev_com.id " +
 		"INNER JOIN file_info fi on fi.id = rev_com_img.file_id " +
 		
-		"WHERE rev_info.id  = :reservationInfoId;";
+		"WHERE rev_com.id  = :commentId;";
 }

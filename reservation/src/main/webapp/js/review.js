@@ -54,25 +54,29 @@ function makeCommentArea(comments, productDescription) {
 
 	preProcessComments(comments, productDescription);
 
-	comments.forEach(function(comment) {
+	for (let comment of comments) {
 		let newList = document.createElement("li");
 		newList.classList.add("list_item");
 		newList.innerHTML = bindTemplate(comment);
 
+		if (comment.commentImages === "none") {
+			newList.querySelector(".thumb_area").style.display = "none";
+		}
+
 		targetHTML.appendChild(newList);
-	});
+	}
 }
 
 function preProcessComments(comments, productDescription) {
-	comments.forEach(function(item) {
-		item.reservationDate = item.reservationDate.year + "." + item.reservationDate.monthValue + "." + item.reservationDate.dayOfMonth;
-		item.productDescription = productDescription;
+	for (comment of comments) {
+		comment.reservationDate = comment.reservationDate.year + "." + comment.reservationDate.monthValue + "." + comment.reservationDate.dayOfMonth;
+		comment.productDescription = productDescription;
 
-		if (item.commentImages.length === 0) {
-			item.commentImages = "";
+		if (comment.commentImages.length === 0) {
+			comment.commentImages = "none";
 		} else {
-			item.commentImages = item.commentImages[0].saveFileName;
+			comment.commentImages = comment.commentImages[0].saveFileName;
 		}
-	});
+	}
 }
 
