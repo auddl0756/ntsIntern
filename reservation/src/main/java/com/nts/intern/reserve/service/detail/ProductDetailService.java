@@ -1,7 +1,6 @@
 package com.nts.intern.reserve.service.detail;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -29,17 +28,27 @@ public class ProductDetailService {
 	private final ProductPriceRepository productPriceRepository;
 	private final ProductImageRepository productImageRepository;
 
-	public double findAverageScore(int displayInfoId) {
-		List<CommentDto> comments = commentRepository.findAllById(displayInfoId);
-		int scoreSum = comments.stream()
-			.mapToInt(CommentDto::getScore)
-			.sum();
+	public double findInitialAverageScore(int displayInfoId) {
+		final int limit = 3;
+		return commentRepository.findAverageByIdLimit(displayInfoId, limit);
+	}
 
-		return (double)Math.round((double)scoreSum * 10 / comments.size()) / 10;
+	public double findTotalAverageScore(int displayInfoId) {
+		return commentRepository.findAverageById(displayInfoId);
 	}
 
 	public List<CommentDto> findAllCommentsById(int displayInfoId) {
 		List<CommentDto> comments = commentRepository.findAllById(displayInfoId);
+
+		for (CommentDto comment : comments) {
+			comment.setCommentImages(commentImageRepository.findAllById(comment.getCommentId()));
+		}
+
+		return comments;
+	}
+
+	public List<CommentDto> findInitialCommentsById(int displayInfoId) {
+		List<CommentDto> comments = commentRepository.findByIdLimit(displayInfoId);
 
 		for (CommentDto comment : comments) {
 			comment.setCommentImages(commentImageRepository.findAllById(comment.getCommentId()));

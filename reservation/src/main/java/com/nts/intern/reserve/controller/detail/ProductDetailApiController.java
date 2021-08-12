@@ -21,10 +21,24 @@ public class ProductDetailApiController {
 	private EtcImageService etcImageService;
 
 	@GetMapping(value = "/api/products/{displayInfoId}")
-	public ProductDetailResponseDto findDetailInfo(@PathVariable int displayInfoId) {
+	public ProductDetailResponseDto findInitialDetailInfo(@PathVariable int displayInfoId) {
 		ProductDetailResponseDto result = new ProductDetailResponseDto();
 
-		result.setAverageScore(productDetailService.findAverageScore(displayInfoId));
+		result.setAverageScore(productDetailService.findInitialAverageScore(displayInfoId));
+		result.setComments(productDetailService.findInitialCommentsById(displayInfoId));
+		result.setDisplayInfo(productDetailService.findDisplayInfoById(displayInfoId));
+		result.setDisplayInfoImage(productDetailService.findDisplayInfoImageById(displayInfoId));
+		result.setProductImages(productDetailService.findAllProductImagesById(displayInfoId));
+		result.setProductPrices(productDetailService.findAllPricesById(displayInfoId));
+
+		return result;
+	}
+
+	@GetMapping(value = "/api/products/all/{displayInfoId}")
+	public ProductDetailResponseDto findAllDetailInfo(@PathVariable int displayInfoId) {
+		ProductDetailResponseDto result = new ProductDetailResponseDto();
+
+		result.setAverageScore(productDetailService.findTotalAverageScore(displayInfoId));
 		result.setComments(productDetailService.findAllCommentsById(displayInfoId));
 		result.setDisplayInfo(productDetailService.findDisplayInfoById(displayInfoId));
 		result.setDisplayInfoImage(productDetailService.findDisplayInfoImageById(displayInfoId));

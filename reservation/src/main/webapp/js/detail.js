@@ -46,9 +46,10 @@ let detailObj = {
 					reject(new Error("sorry. something failed"));
 				}
 			});
-
+			
+			
 			let url = "/api/products/" + detailData.displayInfoId;
-
+			
 			XHR.open("GET", url);
 			XHR.send();
 		});

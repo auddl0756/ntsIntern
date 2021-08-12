@@ -17,8 +17,26 @@ public class CommentRepositoryTest {
 
 	@Test
 	public void findByIdTest() {
-		int sampleCommentId = 1;
-		System.out.println(commentRepository.findAllById(sampleCommentId));
+		int sampleDisplayInfoId = 1;
+		System.out.println(commentRepository.findAllById(sampleDisplayInfoId));
+	}
+	
+	@Test
+	public void findByIdLimitTest() {
+		int sampleDisplayInfoId = 1;
+		System.out.println(commentRepository.findByIdLimit(sampleDisplayInfoId));
 	}
 
+	@Test
+	public void findAverageByIdTest() {
+		int sampleDisplayInfoId =1;
+		System.out.println(commentRepository.findAverageById(sampleDisplayInfoId));
+	}
+	
+	@Test
+	public void findAverageByIdLimitTest() {
+		int sampleDisplayInfoId =1;
+		int sampleLimit = 2;
+		System.out.println(commentRepository.findAverageByIdLimit(sampleDisplayInfoId,sampleLimit));
+	}
 }

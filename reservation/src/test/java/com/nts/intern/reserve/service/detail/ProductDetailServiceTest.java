@@ -49,9 +49,16 @@ public class ProductDetailServiceTest {
 	}
 
 	@Test
-	public void findAverageScoreTest() {
+	public void findInitialAverageScoreTest() {
 		IntStream.rangeClosed(1, 10).forEach(sampleDisplayInfoId -> {
-			System.out.println(productDetailService.findAverageScore(sampleDisplayInfoId));
+			System.out.println(productDetailService.findInitialAverageScore(sampleDisplayInfoId));
+		});
+	}
+	
+	@Test
+	public void findTotalAverageScoreTest() {
+		IntStream.rangeClosed(1, 10).forEach(sampleDisplayInfoId -> {
+			System.out.println(productDetailService.findTotalAverageScore(sampleDisplayInfoId));
 		});
 	}
 }

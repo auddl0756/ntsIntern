@@ -15,7 +15,7 @@ public class CommentDto {
 	private int productId;
 	private int reservationInfoId;
 
-	private int score;
+	private double score;
 	private String comment;
 	private String reservationName;
 	private String reservationEmail;

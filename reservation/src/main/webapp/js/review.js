@@ -29,7 +29,7 @@ function requestProductDetail(displayInfoId) {
 		}
 	});
 
-	let url = "/api/products/" + displayInfoId;
+	let url = "/api/products/all/" + displayInfoId;
 
 	XHR.open("GET", url);
 	XHR.send();
