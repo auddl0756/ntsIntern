@@ -33,3 +33,4 @@
 
 [querySelector 유용한 방법들](https://interacting.tistory.com/150)
 
+[Promise 사용법](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Using_promises)
