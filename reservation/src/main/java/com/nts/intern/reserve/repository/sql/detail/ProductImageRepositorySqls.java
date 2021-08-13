@@ -7,7 +7,7 @@ public class ProductImageRepositorySqls {
 		"pi.id as productImageId," +
 		"pi.type as type," + 
 
-		"fi.id as fileInfoId," +		//fileId vs fileInfoId
+		"fi.id as fileInfoId," +
 		"fi.file_name as fileName," +
 		"fi.content_type as contentType," +
 		"fi.create_date as createDate," +

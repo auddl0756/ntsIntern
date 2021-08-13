@@ -46,15 +46,4 @@ public class CommentRepositorySqls {
 		"INNER JOIN reservation_user_comment rev_com on rev_com.reservation_info_id = rev_info.id " + 
 		"WHERE rev_info.display_info_id  = :displayInfoId;";
 	
-	
-	public static final String FIND_AVERAGE_BY_ID_LIMIT
-	= "SELECT ROUND(AVG(score),2) as averageScore " + 
-		"FROM " + 
-		"(" +
-		"	SELECT rev_com.score as score " + 
-		"	FROM reservation_info rev_info " + 
-		"	INNER JOIN reservation_user_comment rev_com on rev_com.reservation_info_id = rev_info.id " + 
-		"	WHERE rev_info.display_info_id  = :displayInfoId " + 
-		"	LIMIT :limit"
-		+ ") subQuery;";
 }

@@ -225,14 +225,13 @@ let detailObj = {
 	preprocessItemDetailInfo() {
 		let itemDetailInfo = {};
 		itemDetailInfo.productContent = detailObj.detailData.displayInfo.productContent;
-		itemDetailInfo.saveFileName = detailObj.detailData.displayInfoImage.saveFileName;
 
 		return itemDetailInfo;
 	},
 
 	preprocessItemPathInfo() {
 		let itemPathInfo = {};
-		itemPathInfo.saveFileName = detailObj.detailData.displayInfoImage.saveFileName;
+		
 		itemPathInfo.placeDescription = detailObj.detailData.displayInfo.placeDescription;
 		itemPathInfo.placeStreet = detailObj.detailData.displayInfo.placeStreet;
 		itemPathInfo.placeLot = detailObj.detailData.displayInfo.placeLot;

@@ -28,11 +28,6 @@ public class ProductDetailService {
 	private final ProductPriceRepository productPriceRepository;
 	private final ProductImageRepository productImageRepository;
 
-	public double findInitialAverageScore(int displayInfoId) {
-		final int limit = 3;
-		return commentRepository.findAverageByIdLimit(displayInfoId, limit);
-	}
-
 	public double findTotalAverageScore(int displayInfoId) {
 		return commentRepository.findAverageById(displayInfoId);
 	}
@@ -72,7 +67,11 @@ public class ProductDetailService {
 	public void preprocessComments(List<CommentDto> comments) {
 		for (CommentDto comment : comments) {
 			comment.setCommentImages(commentImageRepository.findAllById(comment.getCommentId()));
-			comment.setReservationEmail(comment.getReservationEmail().substring(0, 4) + "****");
+			if (comment.getReservationEmail().length() < 4) {
+				comment.setReservationEmail("****");
+			} else {
+				comment.setReservationEmail(comment.getReservationEmail().substring(0, 4) + "****");
+			}
 		}
 	}
 }

@@ -2,7 +2,6 @@ package com.nts.intern.reserve.repository.detail;
 
 import static com.nts.intern.reserve.repository.sql.detail.CommentRepositorySqls.FIND_ALL_BY_ID;
 import static com.nts.intern.reserve.repository.sql.detail.CommentRepositorySqls.FIND_AVERAGE_BY_ID;
-import static com.nts.intern.reserve.repository.sql.detail.CommentRepositorySqls.FIND_AVERAGE_BY_ID_LIMIT;
 import static com.nts.intern.reserve.repository.sql.detail.CommentRepositorySqls.FIND_BY_ID_LIMIT;
 
 import java.util.HashMap;
@@ -22,6 +21,7 @@ import com.nts.intern.reserve.dto.detail.CommentDto;
 public class CommentRepository {
 	private NamedParameterJdbcTemplate jdbc;
 	private RowMapper<CommentDto> rowMapper = BeanPropertyRowMapper.newInstance(CommentDto.class);
+	private final int LIMIT = 3;
 
 	public CommentRepository(DataSource dataSource) {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
@@ -35,27 +35,12 @@ public class CommentRepository {
 	}
 
 	public List<CommentDto> findByIdLimit(int displayInfoId) {
-		final int limit = 3;
 		Map<String, Integer> params = new HashMap<>();
 
 		params.put("displayInfoId", displayInfoId);
-		params.put("limit", limit);
+		params.put("limit", LIMIT);
 
 		return jdbc.query(FIND_BY_ID_LIMIT, params, rowMapper);
-	}
-
-	public double findAverageByIdLimit(int displayInfoId, int limit) {
-		Map<String, Integer> params = new HashMap<>();
-
-		params.put("displayInfoId", displayInfoId);
-		params.put("limit", limit);
-		Double queryResult = jdbc.queryForObject(FIND_AVERAGE_BY_ID_LIMIT, params, Double.class);
-
-		if (queryResult == null) {
-			return 0;
-		} else {
-			return queryResult;
-		}
 	}
 
 	public double findAverageById(int displayInfoId) {
@@ -71,5 +56,4 @@ public class CommentRepository {
 			return queryResult;
 		}
 	}
-
 }
