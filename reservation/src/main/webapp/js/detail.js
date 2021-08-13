@@ -61,9 +61,9 @@ let detailObj = {
 		return new Promise(function(resolve, reject) {
 			XHR.addEventListener("load", function() {
 				if (XHR.status == 200) {
-					let data = JSON.parse(XHR.responseText);
+					let etcImages = JSON.parse(XHR.responseText);
 
-					detailData.etcImages = JSON.parse(XHR.responseText);
+					detailData.etcImages = etcImages;
 					resolve(detailData);
 				} else {
 					alert("sorry. something failed");
@@ -83,6 +83,7 @@ let detailObj = {
 		detailObj.makeEtcImages(detailData.etcImages);
 		detailObj.makeGradeArea(detailData.averageScore, detailData.comments.length);
 		detailObj.makeCommentsArea(detailData.comments, detailData.displayInfo.productDescription);
+		detailObj.makeDiscountArea(detailData.productPrices);
 	},
 
 	makeTitleArea(displayInfo, productImages) {
@@ -96,7 +97,7 @@ let detailObj = {
 		targetHTML.innerHTML = resultHTML;
 
 		document.querySelector(".visual_txt_tit").innerHTML = displayInfo.productDescription;
-		document.querySelector(".store_details").innerHTML = displayInfo.productContent;
+		document.querySelector(".store_details .dsc").innerHTML = displayInfo.productContent;
 	},
 
 	makeEtcImages(etcImages) {
@@ -121,7 +122,6 @@ let detailObj = {
 		const imageWidth = 414;
 		targetHTML.style.left = (-imageWidth) + "px";
 	},
-
 
 	makeGradeArea(averageScore, commentsCount) {
 		let gradeArea = document.querySelector(".grade_area");
@@ -180,6 +180,24 @@ let detailObj = {
 
 		let resultHTML = bindTemplate(info);
 		itemPathArea.innerHTML = resultHTML;
+	},
+
+	makeDiscountArea(productPrices) {
+		let eventInfoArea = document.querySelector(".event_info .in_dsc");
+
+		eventInfoArea.innerHTML = "[네이버예약 특별할인]</br>";
+
+		let discountInfos = [];
+
+		for (let product of productPrices) {
+			if (product.discountRate == 0) {
+				continue;
+			}
+
+			let discountInfo = product.priceTypeName + "석 " + product.discountRate + "%";
+			discountInfos.push(discountInfo);
+		}
+		eventInfoArea.innerHTML += discountInfos.join(",") + " 할인";
 	},
 
 	preprocessComments(comments, productDescription) {
@@ -268,9 +286,9 @@ let detailEvent = {
 	nextTitleImageEvent() {
 		let titleImageArea = document.querySelector(".visual_img.detail_swipe");
 		let nowImageNumber = document.querySelector(".num").innerText;
-		let totalImageNumber = document.querySelector(".num.off").querySelector("SPAN").innerText;
+		const totalImageNumber = 2;
 
-		if (nowImageNumber == 2) {
+		if (nowImageNumber == totalImageNumber) {
 			titleImageArea.style.transition = "none";
 			titleImageArea.style.left = "0px";
 			setTimeout(() => {
@@ -282,7 +300,7 @@ let detailEvent = {
 		} else if (nowImageNumber == 1) {
 			titleImageArea.style.transition = '0.5s ease-in';
 			titleImageArea.style.left = (parseInt(titleImageArea.style.left) - detailEvent.imageWidth) + "px";
-			document.querySelector(".num").innerText = 2;
+			document.querySelector(".num").innerText = totalImageNumber;
 		}
 	},
 
