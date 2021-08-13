@@ -7,9 +7,9 @@ function initDetailPage() {
 
 let detailObj = {
 	detailData: {},
-	initDetail(data) {
+	initDetail(details) {
 
-		this.getDisplayInfoId(data)
+		this.getDisplayInfoId(details)
 			.then(function(result) {
 				return detailObj.getProductDetailData(result);
 			})
@@ -23,7 +23,9 @@ let detailObj = {
 
 	getDisplayInfoId(detailData) {
 		return new Promise(function(resolve, reject) {
-			detailData.displayInfoId = location.href.split("=")[1];
+			let tokens = location.href.split("/");
+			detailData.displayInfoId = tokens[tokens.length - 1];
+
 			resolve(detailData);
 		});
 	},
@@ -34,10 +36,10 @@ let detailObj = {
 		return new Promise(function(resolve, reject) {
 			XHR.addEventListener("load", function() {
 				if (XHR.status == 200) {
-					let data = JSON.parse(XHR.responseText);
+					let details = JSON.parse(XHR.responseText);
 
-					for (let key in data) {
-						detailData[key] = data[key];
+					for (let key in details) {
+						detailData[key] = details[key];
 					}
 
 					resolve(detailData);
@@ -46,10 +48,9 @@ let detailObj = {
 					reject(new Error("sorry. something failed"));
 				}
 			});
-			
-			
+
 			let url = "/api/products/" + detailData.displayInfoId;
-			
+
 			XHR.open("GET", url);
 			XHR.send();
 		});
@@ -225,6 +226,8 @@ let detailEvent = {
 		document.querySelector(".btn_prev").addEventListener("click", this.prevTitleImageEvent);
 
 		document.querySelector("#detailInfoTab").addEventListener("click", this.detailInfoEvent);
+
+		document.querySelector(".btn_review_more").addEventListener("click", this.moreCommentEvent);
 	},
 
 	explainMoreEvent() {
@@ -318,5 +321,11 @@ let detailEvent = {
 		} else if (target.id === "itemPath") {
 			detailObj.makeItemPathArea(detailObj.preprocessItemPathInfo());
 		}
+	},
+
+	moreCommentEvent() {
+		let target = event.target.closest("A");
+
+		target.href += "/" + detailObj.detailData.displayInfoId;
 	}
 };
