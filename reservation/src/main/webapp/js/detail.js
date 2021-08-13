@@ -84,6 +84,9 @@ let detailObj = {
 		detailObj.makeGradeArea(detailData.averageScore, detailData.comments.length);
 		detailObj.makeCommentsArea(detailData.comments, detailData.displayInfo.productDescription);
 		detailObj.makeDiscountArea(detailData.productPrices);
+		detailObj.makeItemDetailArea(detailObj.preprocessItemDetailInfo());
+		detailObj.makeItemPathArea(detailObj.preprocessItemPathInfo());
+
 	},
 
 	makeTitleArea(displayInfo, productImages) {
@@ -139,7 +142,6 @@ let detailObj = {
 		let commentArea = document.querySelector(".list_short_review");
 		let template = document.querySelector("#commentArea").innerText;
 		let bindTemplate = Handlebars.compile(template);
-		let targetHTML = document.querySelector(".list_short_review");
 
 		this.preprocessComments(comments, productDescription);
 
@@ -158,12 +160,12 @@ let detailObj = {
 				newList.querySelector(".thumb_area").style.display = "none";
 			}
 
-			targetHTML.appendChild(newList);
+			commentArea.appendChild(newList);
 		}
 	},
 
 	makeItemDetailArea(info) {
-		let targetArea = document.querySelector("#detail_info");
+		let targetArea = document.querySelector("#detailInfo");
 
 		let itemDetailTemplate = document.querySelector("#itemDetailTemplate").innerText;
 		let bindTemplate = Handlebars.compile(itemDetailTemplate);
@@ -173,7 +175,7 @@ let detailObj = {
 	},
 
 	makeItemPathArea(info) {
-		let itemPathArea = document.querySelector("#detail_location");
+		let itemPathArea = document.querySelector("#detailLocation");
 
 		let itemPathTemplate = document.querySelector("#itemPathTemplate").innerText;
 		let bindTemplate = Handlebars.compile(itemPathTemplate);
@@ -198,12 +200,19 @@ let detailObj = {
 			discountInfos.push(discountInfo);
 		}
 		eventInfoArea.innerHTML += discountInfos.join(",") + " 할인";
+
+		if (discountInfos.length === 0) {
+			eventInfoArea.innerHTML = "해당 상품에는 할인 이벤트가 없습니다.";
+		}
 	},
 
 	preprocessComments(comments, productDescription) {
 		for (comment of comments) {
-			comment.reservationDate = comment.reservationDate.year + "." + comment.reservationDate.monthValue + "." + comment.reservationDate.dayOfMonth;
+			let dateInfo = [comment.reservationDate.year, comment.reservationDate.monthValue, comment.reservationDate.dayOfMonth];
+			comment.reservationDate = dateInfo.join(".");
+
 			comment.productDescription = productDescription;
+			comment.score = comment.score.toFixed(1);
 
 			if (comment.commentImages.length === 0) {
 				comment.commentImages = "none";
@@ -212,6 +221,7 @@ let detailObj = {
 			}
 		}
 	},
+
 	preprocessItemDetailInfo() {
 		let itemDetailInfo = {};
 		itemDetailInfo.productContent = detailObj.detailData.displayInfo.productContent;
@@ -271,15 +281,15 @@ let detailEvent = {
 
 		target.children[0].className = "anchor active";
 
-		let detailInfoTag = document.querySelector("#detail_info");
-		let detailLocationTag = document.querySelector("#detail_location");
+		let detailInfoTag = document.querySelector("#detailInfo");
+		let detailLocationTag = document.querySelector("#detailLocation");
 
 		if (target.id === "itemDetail") {
 			detailInfoTag.className = "detail_area_wrap";
-			detailLocationTag.className = "detail_location hide";
+			detailLocationTag.className = "detailLocation hide";
 		} else if (target.id === "itemPath") {
 			detailInfoTag.className = "detail_area_wrap hide";
-			detailLocationTag.className = "detail_location";
+			detailLocationTag.className = "detailLocation";
 		}
 	},
 

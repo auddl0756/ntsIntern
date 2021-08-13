@@ -40,9 +40,7 @@ public class ProductDetailService {
 	public List<CommentDto> findAllCommentsById(int displayInfoId) {
 		List<CommentDto> comments = commentRepository.findAllById(displayInfoId);
 
-		for (CommentDto comment : comments) {
-			comment.setCommentImages(commentImageRepository.findAllById(comment.getCommentId()));
-		}
+		preprocessComments(comments);
 
 		return comments;
 	}
@@ -50,9 +48,7 @@ public class ProductDetailService {
 	public List<CommentDto> findInitialCommentsById(int displayInfoId) {
 		List<CommentDto> comments = commentRepository.findByIdLimit(displayInfoId);
 
-		for (CommentDto comment : comments) {
-			comment.setCommentImages(commentImageRepository.findAllById(comment.getCommentId()));
-		}
+		preprocessComments(comments);
 
 		return comments;
 	}
@@ -71,5 +67,12 @@ public class ProductDetailService {
 
 	public List<ProductImageDto> findAllProductImagesById(int displayInfoId) {
 		return productImageRepository.findById(displayInfoId);
+	}
+
+	public void preprocessComments(List<CommentDto> comments) {
+		for (CommentDto comment : comments) {
+			comment.setCommentImages(commentImageRepository.findAllById(comment.getCommentId()));
+			comment.setReservationEmail(comment.getReservationEmail().substring(0, 4) + "****");
+		}
 	}
 }

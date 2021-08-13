@@ -10,7 +10,7 @@ import lombok.ToString;
 @Setter
 @Getter
 public class CommentImageDto {
-	private int imageId; //productImage Id maybe
+	private int imageId;
 	private int fileId;
 	private int reservationInfoId;
 	private int reservationUserCommentId;

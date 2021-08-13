@@ -53,6 +53,7 @@ let reviewObj = {
 	},
 
 	makeUI(reviewData) {
+		document.querySelector(".title").innerText = reviewData.displayInfo.placeName;
 		this.makeBackUrl(reviewData.displayInfoId);
 		this.makeGradeArea(reviewData.averageScore, reviewData.comments.length);
 		this.makeCommentArea(reviewData.comments, reviewData.displayInfo.productDescription);
@@ -97,8 +98,11 @@ let reviewObj = {
 
 	preprocessComments(comments, productDescription) {
 		for (comment of comments) {
-			comment.reservationDate = comment.reservationDate.year + "." + comment.reservationDate.monthValue + "." + comment.reservationDate.dayOfMonth;
+			let dateInfo = [comment.reservationDate.year, comment.reservationDate.monthValue, comment.reservationDate.dayOfMonth];
+			comment.reservationDate = dateInfo.join(".");
+
 			comment.productDescription = productDescription;
+			comment.score = comment.score.toFixed(1);
 
 			if (comment.commentImages.length === 0) {
 				comment.commentImages = "none";
