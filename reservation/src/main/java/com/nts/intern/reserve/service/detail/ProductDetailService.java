@@ -67,11 +67,7 @@ public class ProductDetailService {
 	public void preprocessComments(List<CommentDto> comments) {
 		for (CommentDto comment : comments) {
 			comment.setCommentImages(commentImageRepository.findAllById(comment.getCommentId()));
-			if (comment.getReservationEmail().length() < 4) {
-				comment.setReservationEmail("****");
-			} else {
-				comment.setReservationEmail(comment.getReservationEmail().substring(0, 4) + "****");
-			}
+			comment.createMaskedReservationEmail();
 		}
 	}
 }

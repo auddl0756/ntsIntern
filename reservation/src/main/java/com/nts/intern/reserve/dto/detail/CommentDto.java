@@ -25,4 +25,14 @@ public class CommentDto {
 	private LocalDateTime reservationDate;
 	private LocalDateTime createDate;
 	private LocalDateTime modifyDate;
+
+	private String maskedReservationEmail;
+
+	public void createMaskedReservationEmail() {
+		if (this.getReservationEmail().length() < 4) {
+			this.maskedReservationEmail = "****";
+		} else {
+			this.maskedReservationEmail = this.getReservationEmail().substring(0, 4) + "****";
+		}
+	}
 }
