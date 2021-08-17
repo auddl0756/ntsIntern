@@ -24,7 +24,7 @@ let detailObj = {
 	getDisplayInfoId(detailData) {
 		return new Promise(function(resolve, reject) {
 			let tokens = location.href.split("/");
-			detailData.displayInfoId = tokens[tokens.length - 1];
+			detailData.displayInfoId = tokens[tokens.length - 1].split("#")[0];
 
 			resolve(detailData);
 		});
@@ -71,7 +71,7 @@ let detailObj = {
 				}
 			});
 
-			let url = "/api/products/etcImages/" + detailData.displayInfoId;
+			let url = "/api/products/" + detailData.displayInfoId + "/etcImages";
 
 			XHR.open("GET", url);
 			XHR.send();
@@ -231,7 +231,7 @@ let detailObj = {
 
 	preprocessItemPathInfo() {
 		let itemPathInfo = {};
-		
+
 		itemPathInfo.placeDescription = detailObj.detailData.displayInfo.placeDescription;
 		itemPathInfo.placeStreet = detailObj.detailData.displayInfo.placeStreet;
 		itemPathInfo.placeLot = detailObj.detailData.displayInfo.placeLot;

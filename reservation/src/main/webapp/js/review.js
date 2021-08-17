@@ -20,7 +20,7 @@ let reviewObj = {
 	getDisplayInfoId(reviewData) {
 		return new Promise(function(resolve, reject) {
 			let tokens = location.href.split("/");
-			reviewData.displayInfoId = tokens[tokens.length - 1];
+			reviewData.displayInfoId = tokens[tokens.length - 1].split("#")[0];
 
 			resolve(reviewData);
 		});

@@ -48,7 +48,7 @@ public class ProductDetailApiController {
 		return result;
 	}
 
-	@GetMapping("/api/products/etcImages/{displayInfoId}")
+	@GetMapping("/api/products/{displayInfoId}/etcImages")
 	public List<EtcImageDto> findEtcImages(@PathVariable int displayInfoId) {
 		return etcImageService.findAllEtcImagesById(displayInfoId);
 	}
