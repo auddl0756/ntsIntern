@@ -32,4 +32,10 @@ public class CommentRepositoryTest {
 		int sampleDisplayInfoId = 1;
 		System.out.println(commentRepository.findAverageById(sampleDisplayInfoId));
 	}
+
+	@Test
+	public void getTotalCountTest() {
+		int sampleDisplayInfoId = 1;
+		System.out.println(commentRepository.getTotalCount(sampleDisplayInfoId));
+	}
 }

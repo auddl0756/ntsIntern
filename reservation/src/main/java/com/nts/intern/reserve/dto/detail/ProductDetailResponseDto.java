@@ -12,6 +12,7 @@ import lombok.ToString;
 public class ProductDetailResponseDto {
 	private double averageScore;
 	private List<CommentDto> comments;
+	private int totalCommentsCount;
 	private DisplayInfoDto displayInfo;
 	private DisplayInfoImageDto displayInfoImage;
 	private List<ProductImageDto> productImages;

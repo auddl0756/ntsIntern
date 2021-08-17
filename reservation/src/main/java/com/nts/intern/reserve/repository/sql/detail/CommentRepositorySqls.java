@@ -46,4 +46,10 @@ public class CommentRepositorySqls {
 		"INNER JOIN reservation_user_comment rev_com on rev_com.reservation_info_id = rev_info.id " + 
 		"WHERE rev_info.display_info_id  = :displayInfoId;";
 	
+	public static final String GET_TOTAL_COUNT_BY_ID
+	="SELECT COUNT(*) as totalCount "+
+		"FROM reservation_info rev_info " + 
+		"INNER JOIN reservation_user_comment rev_com on rev_com.reservation_info_id = rev_info.id " + 
+		"WHERE rev_info.display_info_id  = :displayInfoId;";
+	
 }

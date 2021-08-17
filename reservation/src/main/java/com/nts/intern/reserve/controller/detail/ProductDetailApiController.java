@@ -26,6 +26,7 @@ public class ProductDetailApiController {
 
 		result.setAverageScore(productDetailService.findTotalAverageScore(displayInfoId));
 		result.setComments(productDetailService.findInitialCommentsById(displayInfoId));
+		result.setTotalCommentsCount(productDetailService.getTotalCommentsCount(displayInfoId));
 		result.setDisplayInfo(productDetailService.findDisplayInfoById(displayInfoId));
 		result.setDisplayInfoImage(productDetailService.findDisplayInfoImageById(displayInfoId));
 		result.setProductImages(productDetailService.findAllProductImagesById(displayInfoId));
@@ -40,6 +41,7 @@ public class ProductDetailApiController {
 
 		result.setAverageScore(productDetailService.findTotalAverageScore(displayInfoId));
 		result.setComments(productDetailService.findAllCommentsById(displayInfoId));
+		result.setTotalCommentsCount(productDetailService.getTotalCommentsCount(displayInfoId));
 		result.setDisplayInfo(productDetailService.findDisplayInfoById(displayInfoId));
 		result.setDisplayInfoImage(productDetailService.findDisplayInfoImageById(displayInfoId));
 		result.setProductImages(productDetailService.findAllProductImagesById(displayInfoId));

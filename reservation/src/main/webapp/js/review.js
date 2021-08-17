@@ -20,7 +20,7 @@ let reviewObj = {
 	getDisplayInfoId(reviewData) {
 		return new Promise(function(resolve, reject) {
 			let tokens = location.href.split("/");
-			reviewData.displayInfoId = tokens[tokens.length - 1].split("#")[0];
+			reviewData.displayInfoId = tokens[tokens.length - 1].replace("#", "");
 
 			resolve(reviewData);
 		});
@@ -81,7 +81,7 @@ let reviewObj = {
 		let bindTemplate = Handlebars.compile(template);
 		let targetHTML = document.querySelector(".list_short_review");
 
-		reviewObj.preprocessComments(comments, productDescription);
+		reviewObj.reviewData.comments = reviewObj.preprocessComments(comments, productDescription);
 
 		for (let comment of comments) {
 			let newList = document.createElement("li");
@@ -110,5 +110,7 @@ let reviewObj = {
 				comment.commentImages = comment.commentImages[0].saveFileName;
 			}
 		}
+
+		return comments;
 	}
 };

@@ -3,6 +3,7 @@ package com.nts.intern.reserve.repository.detail;
 import static com.nts.intern.reserve.repository.sql.detail.CommentRepositorySqls.FIND_ALL_BY_ID;
 import static com.nts.intern.reserve.repository.sql.detail.CommentRepositorySqls.FIND_AVERAGE_BY_ID;
 import static com.nts.intern.reserve.repository.sql.detail.CommentRepositorySqls.FIND_BY_ID_LIMIT;
+import static com.nts.intern.reserve.repository.sql.detail.CommentRepositorySqls.GET_TOTAL_COUNT_BY_ID;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +50,20 @@ public class CommentRepository {
 		params.put("displayInfoId", displayInfoId);
 
 		Double queryResult = jdbc.queryForObject(FIND_AVERAGE_BY_ID, params, Double.class);
+
+		if (queryResult == null) {
+			return 0;
+		} else {
+			return queryResult;
+		}
+	}
+
+	public int getTotalCount(int displayInfoId) {
+		Map<String, Integer> params = new HashMap<>();
+
+		params.put("displayInfoId", displayInfoId);
+
+		Integer queryResult = jdbc.queryForObject(GET_TOTAL_COUNT_BY_ID, params, Integer.class);
 
 		if (queryResult == null) {
 			return 0;
