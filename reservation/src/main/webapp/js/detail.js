@@ -7,18 +7,12 @@ function initDetailPage() {
 
 let detailObj = {
 	detailData: {},
-	initDetail(details) {
+	async initDetail(details) {
 
-		this.getDisplayInfoId(details)
-			.then(function(result) {
-				return detailObj.getProductDetailData(result);
-			})
-			.then(function(result) {
-				return detailObj.getEtcImages(result);
-			})
-			.then(function(result) {
-				detailObj.makeUI(result);
-			});
+		this.detailData = await this.getDisplayInfoId(details);
+		this.detailData = await this.getProductDetailData(this.detailData);
+		this.detailData = await this.getEtcImages(this.detailData);
+		this.makeUI(this.detailData);
 	},
 
 	getDisplayInfoId(detailData) {
@@ -144,7 +138,7 @@ let detailObj = {
 		let bindTemplate = Handlebars.compile(template);
 
 		detailObj.detailData.comments = detailObj.preprocessComments(comments, productDescription);
-		
+
 		let idx = commentArea.childElementCount;
 
 		for (let count = 0; count < 3; count++) {

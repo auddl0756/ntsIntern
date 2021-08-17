@@ -6,24 +6,19 @@ function initReviewPage() {
 
 let reviewObj = {
 	reviewData: {},
-	initReview(reviews) {
+	async initReview(reviews) {
 
-		this.getDisplayInfoId(reviews)
-			.then(function(result) {
-				return reviewObj.getAllReviews(result);
-			})
-			.then(function(result) {
-				return reviewObj.makeUI(result);
-			});
+		this.reviewData = await this.getDisplayInfoId(reviews);
+		this.reviewData = await this.getAllReviews(this.reviewData);
+
+		this.makeUI(this.reviewData);
 	},
 
 	getDisplayInfoId(reviewData) {
-		return new Promise(function(resolve, reject) {
-			let tokens = location.href.split("/");
-			reviewData.displayInfoId = tokens[tokens.length - 1].replace("#", "");
+		let tokens = location.href.split("/");
+		reviewData.displayInfoId = tokens[tokens.length - 1].replace("#", "");
 
-			resolve(reviewData);
-		});
+		return reviewData;
 	},
 
 	getAllReviews(reviewData) {
