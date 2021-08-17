@@ -3,6 +3,7 @@ package com.nts.intern.reserve.dto.detail;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,4 +26,15 @@ public class CommentDto {
 	private LocalDateTime reservationDate;
 	private LocalDateTime createDate;
 	private LocalDateTime modifyDate;
+
+	@Setter(AccessLevel.NONE)
+	private String maskedReservationEmail;
+
+	public void createMaskedReservationEmail() {
+		if (this.getReservationEmail().length() < 4) {
+			this.maskedReservationEmail = "****";
+		} else {
+			this.maskedReservationEmail = this.getReservationEmail().substring(0, 4) + "****";
+		}
+	}
 }

@@ -28,6 +28,10 @@ public class ProductDetailService {
 	private final ProductPriceRepository productPriceRepository;
 	private final ProductImageRepository productImageRepository;
 
+	public int getTotalCommentsCount(int displayInfoId) {
+		return commentRepository.getTotalCount(displayInfoId);
+	}
+
 	public double findTotalAverageScore(int displayInfoId) {
 		return commentRepository.findAverageById(displayInfoId);
 	}
@@ -35,7 +39,7 @@ public class ProductDetailService {
 	public List<CommentDto> findAllCommentsById(int displayInfoId) {
 		List<CommentDto> comments = commentRepository.findAllById(displayInfoId);
 
-		preprocessComments(comments);
+		preprocessComments(comments, displayInfoId);
 
 		return comments;
 	}
@@ -43,7 +47,7 @@ public class ProductDetailService {
 	public List<CommentDto> findInitialCommentsById(int displayInfoId) {
 		List<CommentDto> comments = commentRepository.findByIdLimit(displayInfoId);
 
-		preprocessComments(comments);
+		preprocessComments(comments, displayInfoId);
 
 		return comments;
 	}
@@ -64,14 +68,11 @@ public class ProductDetailService {
 		return productImageRepository.findById(displayInfoId);
 	}
 
-	public void preprocessComments(List<CommentDto> comments) {
+	public void preprocessComments(List<CommentDto> comments, int displayInfoId) {
 		for (CommentDto comment : comments) {
 			comment.setCommentImages(commentImageRepository.findAllById(comment.getCommentId()));
-			if (comment.getReservationEmail().length() < 4) {
-				comment.setReservationEmail("****");
-			} else {
-				comment.setReservationEmail(comment.getReservationEmail().substring(0, 4) + "****");
-			}
+			comment.createMaskedReservationEmail();
+
 		}
 	}
 }

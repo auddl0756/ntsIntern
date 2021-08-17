@@ -6,24 +6,19 @@ function initReviewPage() {
 
 let reviewObj = {
 	reviewData: {},
-	initReview(reviews) {
+	async initReview(reviews) {
 
-		this.getDisplayInfoId(reviews)
-			.then(function(result) {
-				return reviewObj.getAllReviews(result);
-			})
-			.then(function(result) {
-				return reviewObj.makeUI(result);
-			});
+		this.reviewData = await this.getDisplayInfoId(reviews);
+		this.reviewData = await this.getAllReviews(this.reviewData);
+
+		this.makeUI(this.reviewData);
 	},
 
 	getDisplayInfoId(reviewData) {
-		return new Promise(function(resolve, reject) {
-			let tokens = location.href.split("/");
-			reviewData.displayInfoId = tokens[tokens.length - 1].split("#")[0];
+		let tokens = location.href.split("/");
+		reviewData.displayInfoId = tokens[tokens.length - 1].replace("#", "");
 
-			resolve(reviewData);
-		});
+		return reviewData;
 	},
 
 	getAllReviews(reviewData) {
@@ -81,7 +76,7 @@ let reviewObj = {
 		let bindTemplate = Handlebars.compile(template);
 		let targetHTML = document.querySelector(".list_short_review");
 
-		reviewObj.preprocessComments(comments, productDescription);
+		reviewObj.reviewData.comments = reviewObj.preprocessComments(comments, productDescription);
 
 		for (let comment of comments) {
 			let newList = document.createElement("li");
@@ -110,5 +105,7 @@ let reviewObj = {
 				comment.commentImages = comment.commentImages[0].saveFileName;
 			}
 		}
+
+		return comments;
 	}
 };

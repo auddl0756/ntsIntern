@@ -7,24 +7,18 @@ function initDetailPage() {
 
 let detailObj = {
 	detailData: {},
-	initDetail(details) {
+	async initDetail(details) {
 
-		this.getDisplayInfoId(details)
-			.then(function(result) {
-				return detailObj.getProductDetailData(result);
-			})
-			.then(function(result) {
-				return detailObj.getEtcImages(result);
-			})
-			.then(function(result) {
-				detailObj.makeUI(result);
-			});
+		this.detailData = await this.getDisplayInfoId(details);
+		this.detailData = await this.getProductDetailData(this.detailData);
+		this.detailData = await this.getEtcImages(this.detailData);
+		this.makeUI(this.detailData);
 	},
 
 	getDisplayInfoId(detailData) {
 		return new Promise(function(resolve, reject) {
 			let tokens = location.href.split("/");
-			detailData.displayInfoId = tokens[tokens.length - 1].split("#")[0];
+			detailData.displayInfoId = tokens[tokens.length - 1].replace("#", "");
 
 			resolve(detailData);
 		});
@@ -81,7 +75,7 @@ let detailObj = {
 	makeUI(detailData) {
 		detailObj.makeTitleArea(detailData.displayInfo, detailData.productImages);
 		detailObj.makeEtcImages(detailData.etcImages);
-		detailObj.makeGradeArea(detailData.averageScore, detailData.comments.length);
+		detailObj.makeGradeArea(detailData.averageScore, detailData.totalCommentsCount);
 		detailObj.makeCommentsArea(detailData.comments, detailData.displayInfo.productDescription);
 		detailObj.makeDiscountArea(detailData.productPrices);
 		detailObj.makeItemDetailArea(detailObj.preprocessItemDetailInfo());
@@ -126,7 +120,7 @@ let detailObj = {
 		targetHTML.style.left = (-imageWidth) + "px";
 	},
 
-	makeGradeArea(averageScore, commentsCount) {
+	makeGradeArea(averageScore, totalCommentsCount) {
 		let gradeArea = document.querySelector(".grade_area");
 		let graphValue = document.querySelector(".graph_value");
 		let gradeText = gradeArea.querySelector(".text_value").querySelector("span");
@@ -135,7 +129,7 @@ let detailObj = {
 		graphValue.style.width = (100 * averageScore / 5) + "%";
 
 		gradeText.innerText = averageScore;
-		joinCount.children[0].innerText = commentsCount + "건";
+		joinCount.children[0].innerText = totalCommentsCount + "건";
 	},
 
 	makeCommentsArea(comments, productDescription) {
@@ -143,7 +137,7 @@ let detailObj = {
 		let template = document.querySelector("#commentArea").innerText;
 		let bindTemplate = Handlebars.compile(template);
 
-		this.preprocessComments(comments, productDescription);
+		detailObj.detailData.comments = detailObj.preprocessComments(comments, productDescription);
 
 		let idx = commentArea.childElementCount;
 
@@ -220,6 +214,7 @@ let detailObj = {
 				comment.commentImages = comment.commentImages[0].saveFileName;
 			}
 		}
+		return comments;
 	},
 
 	preprocessItemDetailInfo() {
