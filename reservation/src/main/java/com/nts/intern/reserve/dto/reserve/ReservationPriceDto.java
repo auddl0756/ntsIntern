@@ -22,7 +22,7 @@ public class ReservationPriceDto {
 	private final static Map<String, String> priceTypeMap = new HashMap<String, String>() {
 		{
 			put("Y", "청소년");
-			put("A", "청소년");
+			put("A", "성인");
 			put("B", "유아");
 			put("D", "장애인");
 
@@ -31,7 +31,7 @@ public class ReservationPriceDto {
 
 			put("V", "VIP석");
 			put("R", "R석");
-			put("S", "R석");
+			put("S", "S석");
 		}
 	};
 

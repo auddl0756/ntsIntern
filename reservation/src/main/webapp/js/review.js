@@ -52,7 +52,6 @@ let reviewObj = {
 		this.makeBackUrl(reviewData.displayInfoId);
 		this.makeGradeArea(reviewData.averageScore, reviewData.comments.length);
 		this.makeCommentArea(reviewData.comments, reviewData.displayInfo.productDescription);
-
 	},
 
 	makeBackUrl(id) {
