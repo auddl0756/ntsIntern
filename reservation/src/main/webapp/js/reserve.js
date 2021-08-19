@@ -46,7 +46,10 @@ async function initReservationPage() {
 
 	let ticketBodyArea = new TicketBodyArea(displayInfoId, productData.priceInfos);
 	ticketBodyArea.makeTicketBodyArea();
-	ticketBodyArea.enrollEvent();
+	ticketBodyArea.addEventListeners();
+
+	let bookingForm = new BookingForm();
+	bookingForm.addEventListeners();
 
 }
 
@@ -111,16 +114,16 @@ class TicketBodyArea {
 		targetHTML.innerHTML = resultHTML;
 	}
 
-	enrollEvent() {
+	addEventListeners() {
 		let ticketButtons = document.querySelectorAll(".clearfix");
 
 		for (let button of Array.from(ticketButtons)) {
-			button.addEventListener("click", this.ticketEvent);
+			button.addEventListener("click", this.ticketAddSubEvent);
 			button.addEventListener("click", this.calculatePriceEvent);
 		}
 	}
 
-	ticketEvent() {
+	ticketAddSubEvent() {
 		let clickedTitle = event.target.title;
 
 		let wrapperArea = event.target.closest(".clearfix");
@@ -134,7 +137,7 @@ class TicketBodyArea {
 			ticketCount.className = "count_control_input";
 			ticketCount.value = parseInt(ticketCount.value) + 1;
 
-		} else if (clickedTitle === "빼기") {
+		} else if (clickedTitle === "빼기")  {
 			ticketCount.value = parseInt(ticketCount.value) - 1;
 
 			if (parseInt(ticketCount.value) <= 0) {
@@ -146,24 +149,9 @@ class TicketBodyArea {
 				ticketCount.className = "count_control_input";
 			}
 
-		} else if (clickedTitle === "수량") {
+		} else if (clickedTitle ===  "수량") {
 			return;
 		}
-
-
-		let priceArea = wrapperArea.nextElementSibling;
-
-		let price = parseInt(wrapperArea.closest(".qty").querySelector(".price").innerText);
-		let count = parseInt(wrapperArea.children[1].value);
-
-		if (count <= 0) {
-			priceArea.className = "individual_price";
-		} else {
-			priceArea.className = "individual_price on_color";
-		}
-
-		priceArea.children[0].innerText = price * count;
-
 	}
 
 	calculatePriceEvent() {
@@ -179,5 +167,42 @@ class TicketBodyArea {
 		}
 
 		priceArea.children[0].innerText = price * count;
+	}
+}
+
+class BookingForm {
+	addEventListeners() {
+		let termButtons = document.querySelectorAll(".btn_agreement");
+		for (let button of Array.from(termButtons)) {
+			button.addEventListener("click", this.viewTermsEvent);
+		}
+
+		let agreeButton = document.querySelector("#chk3");
+		agreeButton.addEventListener("click", this.bookingAgreeEvent);
+
+	}
+
+	viewTermsEvent() {
+		const termTag = event.target.closest(".agreement");
+		const arrowSign = termTag.querySelector(".btn_agreement I");
+
+		if (termTag.className.includes("open")) {
+			termTag.className = termTag.className.replace("open", "");
+			arrowSign.className = "fn fn-down2";
+		} else {
+			termTag.className += " open";
+			arrowSign.className = "fn fn-up2";
+		}
+	}
+
+	bookingAgreeEvent() {
+		let isChecked = document.querySelector("#chk3").checked;
+		let formSubmitButton = document.querySelector(".bk_btn_wrap");
+
+		if (isChecked === true) {
+			formSubmitButton.className = "bk_btn_wrap";
+		} else if (isChecked === false) {
+			formSubmitButton.className = "bk_btn_wrap disable";
+		}
 	}
 }
