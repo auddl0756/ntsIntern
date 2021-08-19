@@ -1,5 +1,7 @@
 package com.nts.intern.reserve.dto.reserve;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,8 +12,9 @@ import lombok.ToString;
 public class ReservationProductDto {
 	private int displayInfoId;
 	private String productDescription;
-	private String priceTypeName;
-	private int productPrice;
-	private double discountRate;
 	private String saveFileName;
+	private String placeName;
+	private String openingHours;
+	private List<ReservationPriceDto> priceInfos;
+	private int minimumPrice;
 }

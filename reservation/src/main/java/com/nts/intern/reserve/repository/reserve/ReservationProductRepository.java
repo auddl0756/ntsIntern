@@ -24,10 +24,11 @@ public class ReservationProductRepository {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 
-	public List<ReservationProductDto> findById(int displayInfoId) {
+	public ReservationProductDto findById(int displayInfoId) {
 		Map<String, Integer> params = new HashMap<>();
 		params.put("displayInfoId", displayInfoId);
+		params.put("limit", 1);
 
-		return jdbc.query(FIND_BY_ID, params, rowMapper);
+		return jdbc.queryForObject(FIND_BY_ID, params, rowMapper);
 	}
 }
