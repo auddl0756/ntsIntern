@@ -35,8 +35,7 @@ async function initReservationPage() {
 	const displayInfoId = getDisplayInfoId();
 
 	let productData = await getProductData(displayInfoId, {});
-
-	//console.log(productData);
+	console.log(productData);
 
 	let titleArea = new TitleArea(displayInfoId, productData);
 
@@ -47,6 +46,7 @@ async function initReservationPage() {
 
 	let ticketBodyArea = new TicketBodyArea(displayInfoId, productData.priceInfos);
 	ticketBodyArea.makeTicketBodyArea();
+	ticketBodyArea.enrollEvent();
 
 }
 
@@ -88,7 +88,6 @@ class TitleArea {
 
 		let targetHTML = document.querySelector(".section_store_details");
 		targetHTML.innerHTML = resultHTML;
-
 	}
 }
 
@@ -102,7 +101,7 @@ class TicketBodyArea {
 	makeTicketBodyArea() {
 		let template = document.querySelector("#ticketBodyTemplate").innerText;
 		let bindTemplate = Handlebars.compile(template);
-		let resultHTML = this.priceInfos.map((info) => {
+		let resultHTML = this.priceInfos.map((info) =>  {
 			return bindTemplate(info);
 		});
 
@@ -110,6 +109,75 @@ class TicketBodyArea {
 
 		let targetHTML = document.querySelector(".ticket_body");
 		targetHTML.innerHTML = resultHTML;
+	}
 
+	enrollEvent() {
+		let ticketButtons = document.querySelectorAll(".clearfix");
+
+		for (let button of Array.from(ticketButtons)) {
+			button.addEventListener("click", this.ticketEvent);
+			button.addEventListener("click", this.calculatePriceEvent);
+		}
+	}
+
+	ticketEvent() {
+		let clickedTitle = event.target.title;
+
+		let wrapperArea = event.target.closest(".clearfix");
+
+		let subtractButton = wrapperArea.children[0];
+		let ticketCount = wrapperArea.children[1];
+		let addButton = wrapperArea.children[2];
+
+		if (clickedTitle === "더하기") {
+			subtractButton.className = "btn_plus_minus spr_book2 ico_minus3";
+			ticketCount.className = "count_control_input";
+			ticketCount.value = parseInt(ticketCount.value) + 1;
+
+		} else if (clickedTitle === "빼기") {
+			ticketCount.value = parseInt(ticketCount.value) - 1;
+
+			if (parseInt(ticketCount.value) <= 0) {
+				ticketCount.value = "0";
+				ticketCount.className = "count_control_input disabled";
+				subtractButton.className = "btn_plus_minus spr_book2 ico_minus3 disabled";
+			} else {
+				subtractButton.className = "btn_plus_minus spr_book2 ico_minus3";
+				ticketCount.className = "count_control_input";
+			}
+
+		} else if (clickedTitle === "수량") {
+			return;
+		}
+
+
+		let priceArea = wrapperArea.nextElementSibling;
+
+		let price = parseInt(wrapperArea.closest(".qty").querySelector(".price").innerText);
+		let count = parseInt(wrapperArea.children[1].value);
+
+		if (count <= 0) {
+			priceArea.className = "individual_price";
+		} else {
+			priceArea.className = "individual_price on_color";
+		}
+
+		priceArea.children[0].innerText = price * count;
+
+	}
+
+	calculatePriceEvent() {
+		let priceArea = event.currentTarget.nextElementSibling;
+
+		let price = parseInt(event.currentTarget.closest(".qty").querySelector(".price").innerText);
+		let count = parseInt(event.currentTarget.children[1].value);
+
+		if (count <= 0) {
+			priceArea.className = "individual_price";
+		} else {
+			priceArea.className = "individual_price on_color";
+		}
+
+		priceArea.children[0].innerText = price * count;
 	}
 }
