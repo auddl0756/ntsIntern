@@ -15,4 +15,9 @@ public class ProductDetailController {
 	public String detail(@PathVariable int displayInfoId) {
 		return "detail";
 	}
+
+	@GetMapping("/reserve/{displayInfoId}")
+	public String reserve(@PathVariable int displayInfoId) {
+		return "reserve";
+	}
 }

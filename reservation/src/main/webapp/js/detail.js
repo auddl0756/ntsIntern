@@ -250,6 +250,8 @@ let detailEvent = {
 		document.querySelector("#detailInfoTab").addEventListener("click", this.detailInfoEvent);
 
 		document.querySelector(".btn_review_more").addEventListener("click", this.moreCommentEvent);
+
+		document.querySelector(".bk_btn").addEventListener("click", this.reserveButtonEvent);
 	},
 
 	explainMoreEvent() {
@@ -349,5 +351,9 @@ let detailEvent = {
 		let target = event.target.closest("A");
 
 		target.href += "/" + detailObj.detailData.displayInfoId;
+	},
+
+	reserveButtonEvent() {
+		location.href = "/reserve/" + detailObj.detailData.displayInfoId;
 	}
 };
