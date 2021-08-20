@@ -1,8 +1,6 @@
 package com.nts.intern.reserve.repository.reserve;
 
 import static com.nts.intern.reserve.repository.sql.reserve.ReservationPriceRepositorySqls.FIND_BY_ID;
-import static com.nts.intern.reserve.repository.sql.reserve.ReservationPriceRepositorySqls.FIND_MIN_PRICE;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,12 +28,5 @@ public class ReservationPriceRepository {
 		params.put("displayInfoId", displayInfoId);
 
 		return jdbc.query(FIND_BY_ID, params, rowMapper);
-	}
-
-	public int findMinPrice(int displayInfoId) {
-		Map<String, Integer> params = new HashMap<>();
-		params.put("displayInfoId", displayInfoId);
-
-		return jdbc.queryForObject(FIND_MIN_PRICE, params, Integer.class);
 	}
 }

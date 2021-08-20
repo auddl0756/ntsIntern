@@ -39,17 +39,9 @@ async function initReservationPage() {
 
 	let titleArea = new TitleArea(displayInfoId, productData);
 
-	titleArea.makeBackUrl();
-	titleArea.makeTitle();
-	titleArea.makeTitleImage();
-	titleArea.makeDetails();
-
 	let ticketBodyArea = new TicketBodyArea(displayInfoId, productData.priceInfos);
-	ticketBodyArea.makeTicketBodyArea();
-	ticketBodyArea.addEventListeners();
 
 	let bookingForm = new BookingForm(productData.reservationDate);
-	bookingForm.addEventListeners();
 
 }
 
@@ -57,6 +49,11 @@ class TitleArea {
 	constructor(displayInfoId, productData) {
 		this.displayInfoId = displayInfoId;
 		this.productData = productData;
+
+		this.makeBackUrl();
+		this.makeTitle();
+		this.makeTitleImage();
+		this.makeDetails();
 	}
 
 	makeBackUrl() {
@@ -78,7 +75,14 @@ class TitleArea {
 		thumbNail.style.height = "414px";
 
 		let preview = document.querySelector(".preview_txt");
-		preview.children[1].innerText = "₩" + this.productData.minimumPrice + "원~";
+
+		let minimumPrice = this.productData.priceInfos
+			.map(priceInfo => priceInfo.discountedProductPrice)
+			.reduce((price1, price2) => {
+				return Math.min(price1, price2);
+			});
+
+		preview.children[1].innerText = "₩" + minimumPrice + "원~";
 		preview.children[2].innerText = this.productData.openingHours.split("\n")[0];
 	}
 
@@ -99,6 +103,9 @@ class TicketBodyArea {
 	constructor(displayInfoId, priceInfos) {
 		this.displayInfoId = displayInfoId;
 		this.priceInfos = priceInfos;
+
+		this.makeTicketBodyArea();
+		this.addEventListeners();
 	}
 
 	makeTicketBodyArea() {
@@ -124,20 +131,19 @@ class TicketBodyArea {
 	}
 
 	ticketAddSubEvent() {
-		let clickedTitle = event.target.title;
+		let clickedId = event.target.id;
 
 		let wrapperArea = event.target.closest(".clearfix");
 
 		let subtractButton = wrapperArea.children[0];
 		let ticketCount = wrapperArea.children[1];
-		let addButton = wrapperArea.children[2];
 
-		if (clickedTitle === "더하기") {
+		if (clickedId === "add_button") {
 			subtractButton.className = "btn_plus_minus spr_book2 ico_minus3";
 			ticketCount.className = "count_control_input";
 			ticketCount.value = parseInt(ticketCount.value) + 1;
 
-		} else if (clickedTitle === "빼기") {
+		} else if (clickedId === "subtract_button") {
 			ticketCount.value = parseInt(ticketCount.value) - 1;
 
 			if (parseInt(ticketCount.value) <= 0) {
@@ -148,9 +154,6 @@ class TicketBodyArea {
 				subtractButton.className = "btn_plus_minus spr_book2 ico_minus3";
 				ticketCount.className = "count_control_input";
 			}
-
-		} else if (clickedTitle === "수량") {
-			return;
 		}
 	}
 
@@ -173,6 +176,7 @@ class TicketBodyArea {
 class BookingForm {
 	constructor(reservationDate) {
 		this.setRervationDate(reservationDate);
+		this.addEventListeners();
 	}
 
 	setRervationDate(reservationDate) {
@@ -229,9 +233,9 @@ class BookingForm {
 		let isChecked = document.querySelector("#chk3").checked;
 		let formSubmitButton = document.querySelector(".bk_btn_wrap");
 
-		if (isChecked === true) {
+		if (isChecked) {
 			formSubmitButton.className = "bk_btn_wrap";
-		} else if (isChecked === false) {
+		} else {
 			formSubmitButton.className = "bk_btn_wrap disable";
 		}
 	}
@@ -252,16 +256,11 @@ class BookingForm {
 
 		let isValid = false;
 
-		let telValidation = [(/^\d{2,3}-\d{3,4}-\d{4}$/), (/^\d{2,3}\d{3,4}\d{4}$/)];
-		let mobileValidation = [(/^\d{3}-\d{3,4}-\d{4}$/), (/^\d{3}\d{3,4}\d{4}$/)];
+		const telValidation = (/^\d{2,3}-\d{3,4}-\d{4}$/);
+		const mobileValidation = (/^\d{3}-\d{3,4}-\d{4}$/);
 
-		for (let regExpr of telValidation) {
-			isValid ||= regExpr.test(phoneNumber);
-		}
-
-		for (let regExpr of mobileValidation) {
-			isValid ||= regExpr.test(phoneNumber);
-		}
+		isValid ||= telValidation.test(phoneNumber);
+		isValid ||= mobileValidation.test(phoneNumber);
 
 		if (isValid === false) {
 			alert("연락처 형식에 맞게 올바르게 입력해주세요");
@@ -273,7 +272,7 @@ class BookingForm {
 	static validateEmail() {
 		const emailInput = document.querySelector("[name='email']");
 		let email = emailInput.value;
-		let validationRegExpr = (/^[\w\.]+@\w+\.\w+/).test(email);
+		const validationRegExpr = (/^[\w\.]+@\w+\.\w+/).test(email);
 
 		if (validationRegExpr === false) {
 			alert("이메일 형식에 맞게 올바르게 입력해주세요")

@@ -1,6 +1,7 @@
 package com.nts.intern.reserve.service.reserve;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +22,23 @@ public class ReservationProductService {
 
 	private final int randomOffset = 5;
 
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+
 	public ReservationProductDto findById(int displayInfoId) {
 		ReservationProductDto result = reservationProductRepository.findById(displayInfoId);
 		List<ReservationPriceDto> priceInfos = reservationPriceRepository.findById(displayInfoId);
 
-		priceInfos.stream().forEach(ReservationPriceDto::makeActualPriceTypeName);
+		priceInfos.forEach(ReservationPriceDto::makeActualPriceTypeName);
 
 		result.setPriceInfos(priceInfos);
-		result.setMinimumPrice(reservationPriceRepository.findMinPrice(displayInfoId));
 		result.setReservationDate(makeRandomReservationDate());
 
 		return result;
 	}
 
 	public String makeRandomReservationDate() {
-		LocalDate now = LocalDate.now().plusDays((int)(Math.random() * randomOffset));
+		LocalDate reservationDate = LocalDate.now().plusDays((int)(Math.random() * randomOffset));
 
-		return now.getYear() + "." + now.getMonthValue() + "." + now.getDayOfMonth();
+		return reservationDate.format(FORMATTER);
 	}
 }

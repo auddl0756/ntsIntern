@@ -26,11 +26,4 @@ public class ReservationPriceRepositoryTest {
 		int sampleDisplayInfoId = 1;
 		System.out.println(reservationPriceRepository.findById(sampleDisplayInfoId));
 	}
-
-	@Test
-	public void findMinPriceTest() {
-		int sampleDisplayInfoId = 1;
-		System.out.println(reservationPriceRepository.findMinPrice(sampleDisplayInfoId));
-	}
-
 }
