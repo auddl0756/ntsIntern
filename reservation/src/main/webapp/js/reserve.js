@@ -193,6 +193,9 @@ class BookingForm {
 		for (let button of Array.from(ticketButtons)) {
 			button.addEventListener("click", this.bookingMessageEvent);
 		}
+
+		const reservationButton = document.querySelector(".bk_btn_wrap");
+		reservationButton.addEventListener("click", this.validateForm);
 	}
 
 	bookingMessageEvent() {
@@ -231,5 +234,56 @@ class BookingForm {
 		} else if (isChecked === false) {
 			formSubmitButton.className = "bk_btn_wrap disable";
 		}
+	}
+
+	validateForm() {
+		if (BookingForm.validatePhoneNumber() && BookingForm.validateEmail()) {
+
+			/* not yet developed
+			
+			this.submitReservationForm();
+			*/
+		}
+	}
+
+	static validatePhoneNumber() {
+		const phoneNumberInput = document.querySelector("[name='tel']");
+		let phoneNumber = phoneNumberInput.value;
+
+		let isValid = false;
+
+		let telValidation = [(/^\d{2,3}-\d{3,4}-\d{4}$/), (/^\d{2,3}\d{3,4}\d{4}$/)];
+		let mobileValidation = [(/^\d{3}-\d{3,4}-\d{4}$/), (/^\d{3}\d{3,4}\d{4}$/)];
+
+		for (let regExpr of telValidation) {
+			isValid ||= regExpr.test(phoneNumber);
+		}
+
+		for (let regExpr of mobileValidation) {
+			isValid ||= regExpr.test(phoneNumber);
+		}
+
+		if (isValid === false) {
+			alert("연락처 형식에 맞게 올바르게 입력해주세요");
+		}
+
+		return isValid;
+	}
+
+	static validateEmail() {
+		const emailInput = document.querySelector("[name='email']");
+		let email = emailInput.value;
+		let validationRegExpr = (/^[\w\.]+@\w+\.\w+/).test(email);
+
+		if (validationRegExpr === false) {
+			alert("이메일 형식에 맞게 올바르게 입력해주세요")
+		}
+		return validationRegExpr;
+	}
+
+	submitReservationForm() {
+		let form = document.querySelector(".form_horizontal");
+
+		form.submit();
 	}
 }
