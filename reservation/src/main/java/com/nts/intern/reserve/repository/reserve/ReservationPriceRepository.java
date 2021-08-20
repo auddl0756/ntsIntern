@@ -31,11 +31,4 @@ public class ReservationPriceRepository {
 
 		return jdbc.query(FIND_BY_ID, params, rowMapper);
 	}
-
-	public int findMinPrice(int displayInfoId) {
-		Map<String, Integer> params = new HashMap<>();
-		params.put("displayInfoId", displayInfoId);
-
-		return jdbc.queryForObject(FIND_MIN_PRICE, params, Integer.class);
-	}
 }

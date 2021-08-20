@@ -15,5 +15,5 @@ public class ReservationProductRepositorySqls {
 		"INNER JOIN product_image pi on pi.product_id = pd.id " +
 		"INNER JOIN file_info fi on fi.id = pi.file_id " +
 		"WHERE di.id  = :displayInfoId " +
-		"LIMIT :limit";
+		"AND pi.type = \'ma\'";
 }
