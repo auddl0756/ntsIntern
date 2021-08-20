@@ -1,5 +1,6 @@
 package com.nts.intern.reserve.service.reserve;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ public class ReservationProductService {
 	@Autowired
 	private ReservationPriceRepository reservationPriceRepository;
 
+	private final int randomOffset = 5;
+
 	public ReservationProductDto findById(int displayInfoId) {
 		ReservationProductDto result = reservationProductRepository.findById(displayInfoId);
 		List<ReservationPriceDto> priceInfos = reservationPriceRepository.findById(displayInfoId);
@@ -26,7 +29,14 @@ public class ReservationProductService {
 
 		result.setPriceInfos(priceInfos);
 		result.setMinimumPrice(reservationPriceRepository.findMinPrice(displayInfoId));
+		result.setReservationDate(makeRandomReservationDate());
 
 		return result;
+	}
+
+	public String makeRandomReservationDate() {
+		LocalDate now = LocalDate.now().plusDays((int)(Math.random() * randomOffset));
+
+		return now.getYear() + "." + now.getMonthValue() + "." + now.getDayOfMonth();
 	}
 }

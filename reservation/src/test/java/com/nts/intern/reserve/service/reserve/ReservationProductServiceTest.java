@@ -25,4 +25,10 @@ public class ReservationProductServiceTest {
 	public void findById() {
 		System.out.println(reservationProductService.findById(1));
 	}
+
+	@Test
+	public void 랜덤_예매일_생성Test() {
+		String randomReservationDate = reservationProductService.makeRandomReservationDate();
+		System.out.println(randomReservationDate);
+	}
 }

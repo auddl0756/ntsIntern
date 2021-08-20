@@ -48,7 +48,7 @@ async function initReservationPage() {
 	ticketBodyArea.makeTicketBodyArea();
 	ticketBodyArea.addEventListeners();
 
-	let bookingForm = new BookingForm();
+	let bookingForm = new BookingForm(productData.reservationDate);
 	bookingForm.addEventListeners();
 
 }
@@ -104,7 +104,7 @@ class TicketBodyArea {
 	makeTicketBodyArea() {
 		let template = document.querySelector("#ticketBodyTemplate").innerText;
 		let bindTemplate = Handlebars.compile(template);
-		let resultHTML = this.priceInfos.map((info) =>  {
+		let resultHTML = this.priceInfos.map((info) => {
 			return bindTemplate(info);
 		});
 
@@ -137,7 +137,7 @@ class TicketBodyArea {
 			ticketCount.className = "count_control_input";
 			ticketCount.value = parseInt(ticketCount.value) + 1;
 
-		} else if (clickedTitle === "빼기")  {
+		} else if (clickedTitle === "빼기") {
 			ticketCount.value = parseInt(ticketCount.value) - 1;
 
 			if (parseInt(ticketCount.value) <= 0) {
@@ -149,7 +149,7 @@ class TicketBodyArea {
 				ticketCount.className = "count_control_input";
 			}
 
-		} else if (clickedTitle ===  "수량") {
+		} else if (clickedTitle === "수량") {
 			return;
 		}
 	}
@@ -171,6 +171,14 @@ class TicketBodyArea {
 }
 
 class BookingForm {
+	constructor(reservationDate) {
+		this.setRervationDate(reservationDate);
+	}
+
+	setRervationDate(reservationDate) {
+		document.querySelector(".inline_txt").childNodes[0].textContent = reservationDate + ", 총 ";
+	}
+
 	addEventListeners() {
 		let termButtons = document.querySelectorAll(".btn_agreement");
 		for (let button of Array.from(termButtons)) {
@@ -180,6 +188,25 @@ class BookingForm {
 		let agreeButton = document.querySelector("#chk3");
 		agreeButton.addEventListener("click", this.bookingAgreeEvent);
 
+		let ticketButtons = document.querySelectorAll(".clearfix");
+
+		for (let button of Array.from(ticketButtons)) {
+			button.addEventListener("click", this.bookingMessageEvent);
+		}
+	}
+
+	bookingMessageEvent() {
+		const ticketArea = document.querySelector(".ticket_body");
+
+		const valueNodeList = Array.from(ticketArea.querySelectorAll(".clearfix .count_control_input"));
+
+		let totalTicketCount = 0;
+
+		for (let ticketCount of valueNodeList) {
+			totalTicketCount += parseInt(ticketCount.value);
+		}
+
+		document.querySelector("#totalCount").innerText = totalTicketCount;
 	}
 
 	viewTermsEvent() {

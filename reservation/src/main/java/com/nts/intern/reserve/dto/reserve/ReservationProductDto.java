@@ -17,4 +17,5 @@ public class ReservationProductDto {
 	private String openingHours;
 	private List<ReservationPriceDto> priceInfos;
 	private int minimumPrice;
+	private String reservationDate;
 }
