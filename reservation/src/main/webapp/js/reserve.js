@@ -308,7 +308,7 @@ class BookingForm {
 
 			priceInfos.push(info);
 		}
-
+		
 		form.querySelector("#form_prices").value = JSON.stringify(priceInfos);
 	}
 }

@@ -19,17 +19,24 @@ import com.nts.intern.reserve.dto.reserve.ReservationParam;
 public class ReservationProductRepositoryTest {
 	@Autowired
 	private ReservationProductRepository reservationProductRepository;
-	
+
 	@Test
 	public void notNullTest() {
 		assertThat(reservationProductRepository).isNotNull();
 	}
-	
+
+	@Test
+	public void getInsertedReservationIdTest() {
+		int newestReservationId = reservationProductRepository.getInsertedReservationId();
+		System.out.println("newestReservationId = " + newestReservationId);
+		assertThat(newestReservationId).isGreaterThan(0);
+	}
+
 	@Test
 	@Transactional
 	public void insertTest() {
 		ReservationParam sampleReservationParam = new ReservationParam();
-		
+
 		sampleReservationParam.setProductId(1);
 		sampleReservationParam.setDisplayInfoId(1);
 		sampleReservationParam.setReservationName("sample name");
@@ -38,8 +45,8 @@ public class ReservationProductRepositoryTest {
 		sampleReservationParam.setReservationDate("2021.1.1");
 		sampleReservationParam.setCancelFlag(false);
 		sampleReservationParam.setReservationPrices(Collections.emptyList());
-		
-		assertThat(reservationProductRepository.save(sampleReservationParam)).isGreaterThan(0);
-		
+
+		assertThat(reservationProductRepository.saveReservationInfo(sampleReservationParam)).isGreaterThan(0);
+
 	}
 }

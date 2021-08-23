@@ -36,7 +36,7 @@ public class ProductService {
 		return result;
 	}
 
-	public String makeRandomReservationDate() {
+	String makeRandomReservationDate() {
 		LocalDate reservationDate = LocalDate.now().plusDays((int)(Math.random() * randomOffset));
 
 		return reservationDate.format(FORMATTER);
