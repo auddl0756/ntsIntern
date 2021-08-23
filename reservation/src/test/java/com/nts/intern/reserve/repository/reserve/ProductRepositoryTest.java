@@ -1,6 +1,9 @@
 package com.nts.intern.reserve.repository.reserve;
 
 import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -8,22 +11,21 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.nts.intern.reserve.config.ApplicationConfig;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
-public class ReservationPriceRepositoryTest {
+public class ProductRepositoryTest {
+
 	@Autowired
-	private ReservationPriceRepository reservationPriceRepository;
+	private ProductRepository productRepository;
 
 	@Test
-	public void notNulltest() {
-		assertThat(reservationPriceRepository).isNotNull();
+	public void notNullTest() {
+		assertThat(productRepository).isNotNull();
 	}
 
 	@Test
-	public void findByIdTest() {
+	public void findById() {
 		int sampleDisplayInfoId = 1;
-		System.out.println(reservationPriceRepository.findById(sampleDisplayInfoId));
+		System.out.println(productRepository.findById(sampleDisplayInfoId));
 	}
 }

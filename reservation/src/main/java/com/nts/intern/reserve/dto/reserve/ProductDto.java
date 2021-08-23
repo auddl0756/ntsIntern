@@ -9,12 +9,13 @@ import lombok.ToString;
 @ToString
 @Setter
 @Getter
-public class ReservationProductDto {
+public class ProductDto {
+	private int productId;
 	private int displayInfoId;
 	private String productDescription;
 	private String saveFileName;
 	private String placeName;
 	private String openingHours;
-	private List<ReservationPriceDto> priceInfos;
+	private List<PriceDto> priceInfos;
 	private String reservationDate;
 }

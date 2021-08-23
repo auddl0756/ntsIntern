@@ -12,23 +12,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
-public class ReservationProductServiceTest {
+public class ProductServiceTest {
 	@Autowired
-	private ReservationProductService reservationProductService;
+	private ProductService productService;
 
 	@Test
 	public void NotNullTest() {
-		assertThat(reservationProductService).isNotNull();
+		assertThat(productService).isNotNull();
 	}
 
 	@Test
 	public void findById() {
-		System.out.println(reservationProductService.findById(1));
+		System.out.println(productService.findById(1));
 	}
 
 	@Test
 	public void 랜덤_예매일_생성Test() {
-		String randomReservationDate = reservationProductService.makeRandomReservationDate();
+		String randomReservationDate = productService.makeRandomReservationDate();
 		System.out.println(randomReservationDate);
 	}
 }
