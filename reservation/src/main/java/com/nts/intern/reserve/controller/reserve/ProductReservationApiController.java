@@ -60,6 +60,7 @@ public class ProductReservationApiController {
 				.build();
 
 			reservationProductService.save(reservationParam);
+			
 			response.sendRedirect("/");
 
 		} catch (Exception exception) {
