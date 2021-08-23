@@ -104,6 +104,13 @@
 										</p>
 									</div>
 								</div>
+								
+								<input type="hidden" id="form_product_id" name="form_product_id" value="">
+								<input type="hidden" id="form_display_info_id" name="form_display_info_id" value="">
+								<input type="hidden" id="form_date" name="form_date" value="">
+								<input type="hidden" id="form_prices" name="form_prices" value="">
+								
+								
 							</form>
 						</div>
 					</div>
@@ -211,6 +218,7 @@
                     <a class="btn_plus_minus spr_book2 ico_minus3 disabled" id="subtract_button" title="빼기"> </a> 
 					<input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
  					<a class="btn_plus_minus spr_book2 ico_plus3" id="add_button" title="더하기"> </a>
+					<input type="hidden" class="count_control_product_price_id" value={{productPriceId}}>
                 </div>
                 <!-- [D] 금액이 0 이상이면 individual_price에 on_color 추가 -->
                 <div class="individual_price">
@@ -222,6 +230,7 @@
                 </strong> <strong class="product_price"> <span class="price">{{discountedProductPrice}}</span>
                     <span class="price_type">원</span>
                 </strong> <em class="product_dsc">{{discountedProductPrice}}({{discountRate}}% 할인가)</em>
+				
             </div>
         </div>
     </script>
