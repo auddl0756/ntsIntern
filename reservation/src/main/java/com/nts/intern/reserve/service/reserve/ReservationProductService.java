@@ -11,8 +11,8 @@ import com.nts.intern.reserve.repository.reserve.ReservationProductRepository;
 public class ReservationProductService {
 	@Autowired
 	private ReservationProductRepository reservationProductRepository;
-	
+
 	public int save(ReservationParam reservationParam) {
-		return reservationProductRepository.save(reservationParam);
+		return reservationProductRepository.saveReservationInfo(reservationParam);
 	}
 }

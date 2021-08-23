@@ -25,7 +25,7 @@ import com.nts.intern.reserve.config.WebMvcConfig;
 public class ProductReservationApiControllerTest {
 	@Autowired
 	private ProductReservationApiController productReservationApiController;
-	
+
 	private MockMvc mockMvc;
 
 	@Before
@@ -44,16 +44,16 @@ public class ProductReservationApiControllerTest {
 	public void requestTest() {
 		try {
 			mockMvc.perform(post("/api/reservations/")
-				.param("name" ,"name" )
-				.param("email" ,"email" )
-				.param("tel" ,"tel" )
-				.param("form_product_id" ,"1")
-				.param("form_display_info_id" ,"1" )
-				.param("form_date" ,"2021.1.1" )
-				.param("form_prices","[{\"productPriceId\":\"1\",\"count\":\"2\"},{\"productPriceId\":\"2\",\"count\":\"2\"},{\"productPriceId\":\"3\",\"count\":\"2\"}]")
-			    .accept(MediaType.APPLICATION_JSON))
-			    .andExpect(status().isOk()
-				);
+				.param("name", "name")
+				.param("email", "email")
+				.param("tel", "tel")
+				.param("form_product_id", "1")
+				.param("form_display_info_id", "1")
+				.param("form_date", "2021.1.1")
+				.param("form_prices",
+					"[{\"productPriceId\":\"1\",\"count\":\"2\"},{\"productPriceId\":\"2\",\"count\":\"3\"},{\"productPriceId\":\"3\",\"count\":\"1\"}]")
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
 
 		} catch (Exception e) {
 			e.printStackTrace();
