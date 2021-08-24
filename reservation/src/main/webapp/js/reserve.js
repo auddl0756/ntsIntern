@@ -41,7 +41,7 @@ async function initReservationPage() {
 
 	let ticketBodyArea = new TicketBodyArea(displayInfoId, productData.priceInfos);
 
-	let bookingForm = new BookingForm(productData.reservationDate);
+	let bookingForm = new BookingForm(productData);
 
 }
 
@@ -174,13 +174,22 @@ class TicketBodyArea {
 }
 
 class BookingForm {
-	constructor(reservationDate) {
-		this.setRervationDate(reservationDate);
+	constructor(productData) {
+		this.setRervationDate(productData.reservationDate);
 		this.addEventListeners();
+		this.setFormHiddenData(productData);
 	}
 
 	setRervationDate(reservationDate) {
 		document.querySelector(".inline_txt").childNodes[0].textContent = reservationDate + ", 총 ";
+	}
+
+	setFormHiddenData(productData) {
+		const form = document.querySelector(".form_horizontal");
+		form.querySelector("#form_product_id").value = productData.productId;
+		form.querySelector("#form_display_info_id").value = productData.displayInfoId;
+		form.querySelector("#form_date").value = productData.reservationDate;
+
 	}
 
 	addEventListeners() {
@@ -243,10 +252,7 @@ class BookingForm {
 	validateForm() {
 		if (BookingForm.validatePhoneNumber() && BookingForm.validateEmail()) {
 
-			/* not yet developed
-			
-			this.submitReservationForm();
-			*/
+			BookingForm.submitReservationForm();
 		}
 	}
 
@@ -280,9 +286,29 @@ class BookingForm {
 		return validationRegExpr;
 	}
 
-	submitReservationForm() {
+	static submitReservationForm() {
 		let form = document.querySelector(".form_horizontal");
 
+		BookingForm.setPriceInfos();
+
+
 		form.submit();
+	}
+
+	static setPriceInfos() {
+		let form = document.querySelector(".form_horizontal");
+
+		let ticketButtons = document.querySelectorAll(".clearfix");
+		let priceInfos = [];
+
+		for (let button of Array.from(ticketButtons)) {
+			let info = {};
+			info.productPriceId = button.querySelector(".count_control_product_price_id").value;
+			info.count = button.querySelector(".count_control_input").value;
+
+			priceInfos.push(info);
+		}
+		
+		form.querySelector("#form_prices").value = JSON.stringify(priceInfos);
 	}
 }

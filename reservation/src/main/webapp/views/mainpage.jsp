@@ -1,7 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
 <meta charset="utf-8">
 <meta name="description"
@@ -19,13 +21,28 @@
 				<h1 class="logo">
 					<a href="https://m.naver.com/" class="lnk_logo" title="네이버"> <span
 						class="spr_bi ico_n_logo">네이버</span>
-					</a> <a href="/views/myreservation.html" class="lnk_logo" title="예약">
-						<span class="spr_bi ico_bk_logo">예약</span>
+					</a> <a href="/" class="lnk_logo" title="예약"> <span
+						class="spr_bi ico_bk_logo">예약</span>
 					</a>
 				</h1>
-				<a href="/views/bookinglogin.html" class="btn_my"> <span
-					class="viewReservation" title="예약확인">예약확인</span>
-				</a>
+				
+				<c:if test="${empty email}">
+					<a href="/login" class="btn_my"> 
+						<span class="viewReservation" title="예약확인">
+							예약확인
+						</span>
+					</a>
+				</c:if>
+				
+				<c:if test="${!empty email}">
+					<a href="/myreservation/${email}" class="btn_my"> 
+						<span class="viewReservation" title="예약확인">
+							${email} 
+						</span>
+					</a>
+				</c:if>
+			
+				
 			</header>
 		</div>
 		<hr>
@@ -100,13 +117,13 @@
 	</footer>
 
 	<script type="rv-template" id="categoryList">
-		<li class="item" data-category="${id}"><a class="anchor"> <span>${name}</span>
+		<li class="item" data-category="{id}"><a class="anchor"> <span>{name}</span>
 		</a></li>
     </script>
 
 
 	<script type="rv-template" id="promotionItem">
-		<li class="item" style="background-image: url(${productImageUrl}); width:414px; height:177px; background-size:414px 177px;"> 
+		<li class="item" style="background-image: url(/{productImageUrl}); width:414px; height:177px; background-size:414px 177px;"> 
         	<a href="#"> <span class="img_btm_border"></span> <span class="img_right_border"></span> <span class="img_bg_gra"></span>
             	<div class="event_txt">
                 	<h4 class="event_txt_tit"></h4>
@@ -119,14 +136,14 @@
 
 	<script type="rv-template" id="itemList">
         <li class="item">
-            <a href="/detail/${displayInfoId}" class="item_book">
+            <a href="/detail/{displayInfoId}" class="item_book">
                 <div class="item_preview">
-                    <img alt="${productDescription}" class="img_thumb" src="${productImageUrl}">
+                    <img alt="{productDescription}" class="img_thumb" src="{productImageUrl}">
                     <span class="img_border"></span>
                 </div>
                 <div class="event_txt">
-                    <h4 class="event_txt_tit"> <span>${productDescription}</span> <small class="sm">${placeName}</small> </h4>
-                    <p class="event_txt_dsc">${productContent}</p>
+                    <h4 class="event_txt_tit"> <span>{productDescription}</span> <small class="sm">{placeName}</small> </h4>
+                    <p class="event_txt_dsc">{productContent}</p>
                 </div>
             </a>
         </li>
@@ -137,4 +154,6 @@
 </body>
 
 </html>
+
+
 

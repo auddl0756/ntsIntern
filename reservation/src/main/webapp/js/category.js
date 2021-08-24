@@ -50,7 +50,6 @@ function requestCategoryTab(callBack) {
 		if (XHR.status == 200) {
 			let categoryInfos = JSON.parse(XHR.responseText);
 			callBack(categoryInfos, requestProducts);
-
 		} else {
 			alert("sorry. something failed");
 		}
@@ -67,14 +66,15 @@ function drawCategoryTab(categoryInfos) {
 	let htmlTemplate = document.querySelector("#categoryList").innerHTML;
 
 	let tabHTML = "";
-
+	
 	for (info of categoryInfos) {
 		let hereHTML = htmlTemplate;
 		for (let key in info) {
-			hereHTML = hereHTML.replace("${" + key + "}", info[key]);
+			hereHTML = hereHTML.replace("{" + key + "}", info[key]);
 		}
 		tabHTML += hereHTML;
 	}
+	
 	categoryTab.innerHTML += tabHTML;
 }
 
@@ -181,7 +181,7 @@ function drawProducts(categoryItems) {
 		let hereHTML = htmlTemplate;
 
 		for (let key in item) {
-			hereHTML = hereHTML.split("${" + key + "}").join(item[key]);
+			hereHTML = hereHTML.split("{" + key + "}").join(item[key]);
 		}
 
 		if (htmlLocation === "left") {
@@ -196,4 +196,7 @@ function drawProducts(categoryItems) {
 	leftBox.innerHTML = leftHTML;
 	rightBox.innerHTML = rightHTML;
 }
+
+
+
 

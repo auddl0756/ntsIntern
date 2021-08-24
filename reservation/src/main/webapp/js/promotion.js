@@ -60,11 +60,11 @@ function makeTemplatePromotion(promotionInfos) {
 	let resultHTML = "";
 	let firstHTML = "";
 	let isFirst = true;
-
+	
 	for (let info of promotionInfos) {
 		let hereHTML = html;
 		for (let key in info) {
-			hereHTML = hereHTML.replace("${" + key + "}", info[key]);
+			hereHTML = hereHTML.replace("{" + key + "}", info[key]);
 		}
 		resultHTML += hereHTML;
 
@@ -73,7 +73,7 @@ function makeTemplatePromotion(promotionInfos) {
 			isFirst = false;
 		}
 	}
-
+	
 	resultHTML += firstHTML;
 
 	return resultHTML;

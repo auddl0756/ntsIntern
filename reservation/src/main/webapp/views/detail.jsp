@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -42,7 +44,7 @@
 								class="spr_bi ico_bk_logo">예약</span>
 							</a>
 						</h1>
-						<a href="./myreservation.html" class="btn_my"> <span
+						<a href="/login" class="btn_my"> <span
 							class="viewReservation" title="예약확인">예약확인</span>
 						</a>
 					</header>
@@ -115,16 +117,13 @@
 						</div>
 					</div>
 					<div class="group_btn_goto" style="display: none;">
-						<a class="btn_goto_home" title="홈페이지" target="siteUrl">
-							<i class="fn fn-home1"></i>
-						</a> <a class="btn_goto_tel" title="전화"> <i
-							class="fn fn-call1"></i>
-						</a> <a class="btn_goto_mail" title="이메일"> <i
-							class="fn fn-mail1"></i>
+						<a class="btn_goto_home" title="홈페이지" target="siteUrl"> <i
+							class="fn fn-home1"></i>
+						</a> <a class="btn_goto_tel" title="전화"> <i class="fn fn-call1"></i>
+						</a> <a class="btn_goto_mail" title="이메일"> <i class="fn fn-mail1"></i>
 						</a> <a class="btn_goto_path" title="길찾기"> <i
 							class="fn fn-path-find1"></i>
-						</a> <a class="fn fn-share1 naver-splugin btn_goto_share"
-							title="공유하기"></a>
+						</a> <a class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 					</div>
 				</div>
 				<div class="section_store_details">
@@ -148,9 +147,7 @@
 							</h4>
 						</div>
 						<div class="event_info">
-							<div class="in_dsc">
-								
-							</div>
+							<div class="in_dsc"></div>
 						</div>
 					</div>
 				</div>
@@ -182,8 +179,8 @@
 								이용자가 남긴 평가입니다.</span>
 						</p>
 					</div>
-					<a class="btn_review_more" href="/review"> <span>예매자
-							한줄평 더보기</span> <i class="fn fn-forward1"></i>
+					<a class="btn_review_more" href="/review"> <span>예매자 한줄평
+							더보기</span> <i class="fn fn-forward1"></i>
 					</a>
 				</div>
 				<div class="section_info_tab">
