@@ -34,8 +34,8 @@ public class ReservationResponseRepositoryTest {
 		assertThat(result.size()).isGreaterThan(0);
 
 		assertThat(result.get(0).getReservationEmail()).isEqualTo(sampleEmail);
-		
+
 		assertThat(result.get(0).getTotalPrice()).isGreaterThan(0);
-		
+
 	}
 }

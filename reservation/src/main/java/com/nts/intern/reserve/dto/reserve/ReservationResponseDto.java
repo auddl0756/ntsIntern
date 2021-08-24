@@ -1,6 +1,5 @@
 package com.nts.intern.reserve.dto.reserve;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

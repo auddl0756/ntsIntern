@@ -17,16 +17,17 @@ public class ReservationResponseController {
 	private ReservationResponseService reservationResponseService;
 
 	@GetMapping("/api/reservations")
-	public String getReservationInfo(@RequestParam(name = "resrv_email") String email, Model model,HttpSession session) {
+	public String getReservationInfo(@RequestParam(name = "resrv_email") String email, Model model,
+		HttpSession session) {
 		ReservationLookUpResponseDto result = ReservationLookUpResponseDto.builder()
 			.reservations(reservationResponseService.findAllReservationsByEmail(email))
 			.totalReservationCount(reservationResponseService.findAllReservationsByEmail(email).size())
 			.build();
 
 		model.addAttribute("reservationInfo", result);
-		
+
 		session.setAttribute("email", email);
-		
+
 		return "myreservation";
 	}
 }

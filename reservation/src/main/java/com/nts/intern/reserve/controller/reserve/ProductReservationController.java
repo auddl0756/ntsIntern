@@ -19,7 +19,7 @@ public class ProductReservationController {
 	private ReservationProductService reservationProductService;
 
 	private static ObjectMapper objectMapper = new ObjectMapper();
-	
+
 	@PostMapping("/api/reservations")
 	public String makeReservation(
 		@RequestParam("name") String reservationName,
