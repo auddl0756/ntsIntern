@@ -47,6 +47,5 @@ public class ReservationProductRepositoryTest {
 		sampleReservationParam.setReservationPrices(Collections.emptyList());
 
 		assertThat(reservationProductRepository.saveReservationInfo(sampleReservationParam)).isGreaterThan(0);
-
 	}
 }

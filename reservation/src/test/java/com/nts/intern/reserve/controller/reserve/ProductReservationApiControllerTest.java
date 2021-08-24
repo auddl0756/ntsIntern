@@ -53,7 +53,7 @@ public class ProductReservationApiControllerTest {
 				.param("form_prices",
 					"[{\"productPriceId\":\"1\",\"count\":\"2\"},{\"productPriceId\":\"2\",\"count\":\"3\"},{\"productPriceId\":\"3\",\"count\":\"1\"}]")
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk());
+				.andExpect(status().isOk());				
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -41,13 +44,10 @@
 					<div class="container_visual" style="width: 414px;">
 						<ul class="visual_img">
 							<li class="item" style="width: 414px;"><img alt=""
-								class="img_thumb"
-								src="">
-								<span class="img_bg"></span>
+								class="img_thumb" src=""> <span class="img_bg"></span>
 								<div class="preview_txt">
 									<h2 class="preview_txt_tit"></h2>
-									<em class="preview_txt_dsc"></em><em
-										class="preview_txt_dsc"></em>
+									<em class="preview_txt_dsc"></em><em class="preview_txt_dsc"></em>
 								</div></li>
 						</ul>
 					</div>
@@ -67,7 +67,8 @@
 							<div class="agreement_nessasary help_txt">
 								<span class="spr_book ico_nessasary"></span> <span>필수입력</span>
 							</div>
-							<form class="form_horizontal" action="/api/reservations" method="POST">
+							<form class="form_horizontal" action="/api/reservations"
+								method="POST">
 								<div class="inline_form">
 									<label class="label" for="name"> <span
 										class="spr_book ico_nessasary">필수</span> <span>예매자</span>
@@ -93,7 +94,8 @@
 									</label>
 									<div class="inline_control">
 										<input type="email" name="email" id="email" class="email"
-											value="" placeholder="sample@naver.com" maxlength="50" required>
+											value="" placeholder="sample@naver.com" maxlength="50"
+											required>
 									</div>
 								</div>
 								<div class="inline_form last">
@@ -104,21 +106,23 @@
 										</p>
 									</div>
 								</div>
-								
-								<input type="hidden" id="form_product_id" name="form_product_id" value="">
-								<input type="hidden" id="form_display_info_id" name="form_display_info_id" value="">
+
+								<input type="hidden" id="form_product_id" name="form_product_id"
+									value=""> <input type="hidden"
+									id="form_display_info_id" name="form_display_info_id" value="">
 								<input type="hidden" id="form_date" name="form_date" value="">
-								<input type="hidden" id="form_prices" name="form_prices" value="">
-								
-								
+								<input type="hidden" id="form_prices" name="form_prices"
+									value="">
+
+
 							</form>
 						</div>
 					</div>
 					<div class="section_booking_agreement">
 						<div class="agreement all">
-							<input type="checkbox" id="chk3" class="chk_agree">
-							<label for="chk3" class="label chk_txt_label"> 
-								<span>이용자 약관 전체동의</span>
+							<input type="checkbox" id="chk3" class="chk_agree"> <label
+								for="chk3" class="label chk_txt_label"> <span>이용자
+									약관 전체동의</span>
 							</label>
 							<div class="agreement_nessasary">
 								<span>필수동의</span>
@@ -128,8 +132,8 @@
 						<div class="agreement">
 							<span class="chk_txt_span"> <i
 								class="spr_book ico_arr_ipc2"></i> <span>개인정보 수집 및 이용 동의</span>
-							</span> <a class="btn_agreement"> <span class="btn_text">보기</span>
-								<i class="fn fn-down2"></i>
+							</span> <a class="btn_agreement"> <span class="btn_text">보기</span> <i
+								class="fn fn-down2"></i>
 							</a>
 							<div class="useragreement_details">
 								&lt;개인정보 수집 및 이용 동의&gt;<br> <br> 1. 수집항목 : [필수] 이름,
@@ -146,8 +150,8 @@
 						<div class="agreement">
 							<span class="chk_txt_span"> <i
 								class="spr_book ico_arr_ipc2"></i> <span>개인정보 제3자 제공 동의</span>
-							</span> <a class="btn_agreement"> <span class="btn_text">보기</span>
-								<i class="fn fn-down2"></i>
+							</span> <a class="btn_agreement"> <span class="btn_text">보기</span> <i
+								class="fn fn-down2"></i>
 							</a>
 							<div class="useragreement_details custom_details_wrap">
 								<div class="custom_details">
@@ -244,3 +248,4 @@
 </body>
 
 </html>
+
