@@ -6,12 +6,12 @@ function initLoginPage() {
 
 class LoginArea {
 	constructor() {
-		this.loginForm = document.querySelector("#form1");
 		this.addEventListeners();
 	}
 
 	addEventListeners() {
-		this.loginForm.addEventListener("submit", this.submitForm);
+		const loginForm = document.querySelector("#form1");
+		loginForm.addEventListener("submit", this.submitForm);
 	}
 
 	static validateEmail() {
@@ -28,10 +28,11 @@ class LoginArea {
 	}
 
 	submitForm(event) {
+		const loginForm = document.querySelector("#form1");
 		event.preventDefault();
 
 		if (LoginArea.validateEmail()) {
-			this.loginForm.submit();
+			loginForm.submit();
 		}
 	}
 }
