@@ -1,7 +1,6 @@
 package com.nts.intern.reserve.repository.reserve;
 
-import static com.nts.intern.reserve.repository.sql.reserve.ReservationProductRepositorySqls.SELECT_ALL_RESERVATIONS;
-import static com.nts.intern.reserve.repository.sql.reserve.ReservationProductRepositorySqls.GET_TOTAL_PRICE_BY_ID;
+import static com.nts.intern.reserve.repository.sql.reserve.ReservationResponseRepositorySqls.SELECT_ALL_RESERVATIONS;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,12 +29,5 @@ public class ReservationResponseRepository {
 		params.put("email", email);
 
 		return jdbc.query(SELECT_ALL_RESERVATIONS, params, rowMapper);
-	}
-
-	public int getTotalPrice(int reservationInfoId) {
-		Map<String, Integer> params = new HashMap<>();
-		params.put("reservationInfoId", reservationInfoId);
-
-		return jdbc.queryForObject(GET_TOTAL_PRICE_BY_ID, params, Integer.class);
 	}
 }

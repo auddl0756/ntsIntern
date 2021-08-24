@@ -16,6 +16,6 @@ import lombok.ToString;
 @Setter
 @Getter
 public class ReservationLookUpResponseDto {
-	List<ReservationResponseDto> reservations;
-	int totalReservationCount;
+	private List<ReservationResponseDto> reservations;
+	private int totalReservationCount;
 }

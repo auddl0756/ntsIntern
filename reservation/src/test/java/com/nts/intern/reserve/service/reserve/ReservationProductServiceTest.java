@@ -1,4 +1,4 @@
-package com.nts.intern.reserve.repository.reserve;
+package com.nts.intern.reserve.service.reserve;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,18 +16,18 @@ import com.nts.intern.reserve.dto.reserve.ReservationParam;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
-public class ReservationProductRepositoryTest {
+public class ReservationProductServiceTest {
 	@Autowired
-	private ReservationProductRepository reservationProductRepository;
+	private ReservationProductService reservationProductService;
 
 	@Test
 	public void notNullTest() {
-		assertThat(reservationProductRepository).isNotNull();
+		assertThat(reservationProductService).isNotNull();
 	}
 
-	@Test
 	@Transactional
-	public void insertTest() {
+	@Test
+	public void saveTest() {
 		ReservationParam sampleReservationParam = new ReservationParam();
 
 		sampleReservationParam.setProductId(1);
@@ -39,6 +39,11 @@ public class ReservationProductRepositoryTest {
 		sampleReservationParam.setCancelFlag(false);
 		sampleReservationParam.setReservationPrices(Collections.emptyList());
 
-		assertThat(reservationProductRepository.saveReservationInfo(sampleReservationParam)).isGreaterThan(0);
+		int affectedRowCount = reservationProductService.save(sampleReservationParam);
+
+		System.out.println(affectedRowCount);
+
+		assertThat(affectedRowCount).isGreaterThan(-1);
 	}
+
 }

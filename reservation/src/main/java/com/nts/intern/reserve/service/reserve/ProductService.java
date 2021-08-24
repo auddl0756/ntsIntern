@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nts.intern.reserve.dto.reserve.PriceDto;
 import com.nts.intern.reserve.dto.reserve.ProductDto;
@@ -24,6 +25,7 @@ public class ProductService {
 
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
+	@Transactional(readOnly = true)
 	public ProductDto findById(int displayInfoId) {
 		ProductDto result = productRepository.findById(displayInfoId);
 		List<PriceDto> priceInfos = priceRepository.findById(displayInfoId);

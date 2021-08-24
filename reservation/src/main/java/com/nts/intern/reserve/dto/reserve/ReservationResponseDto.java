@@ -9,11 +9,24 @@ import lombok.ToString;
 @Setter
 @Getter
 public class ReservationResponseDto {
-	DisplayInfoDto displayInfo;
+	private int categoryId;
+	private String categoryName;
+	private String displayInfoCreateDate;
+	private String displayInfoModifyDate;
+	private String email;
+	private String homepage;
+	private String openingHours;
+	private String placeLot;
+	private String placeName;
+	private String placeStreet;
+	private String telephone;
+	private String productContent;
+	private String productDescription;
+	private String productEvent;
 	
 	private boolean cancleYn;
-	private String createDate;
-	private String modifyDate;
+	private String reservationCreateDate;
+	private String reservationModifyDate;
 	private int displayInfoId;
 	private int productId;
 	private String reservationDate;

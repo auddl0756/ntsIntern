@@ -1,44 +1,38 @@
 document.addEventListener("DOMContentLoaded", initLoginPage);
 
-function initLoginPage(){
-	let loginArea = new LoginArea();
-	
+function initLoginPage() {
+	const loginArea = new LoginArea();
 }
 
 class LoginArea {
-	constructor(){
+	constructor() {
+		this.loginForm = document.querySelector("#form1");
 		this.addEventListeners();
 	}
-	
-	addEventListeners(){
-		const loginForm = document.querySelector("#form1");
-		loginForm.addEventListener("submit",this.submitForm);
+
+	addEventListeners() {
+		this.loginForm.addEventListener("submit", this.submitForm);
 	}
-	
+
 	static validateEmail() {
 		const emailInput = document.querySelector("[name='resrv_email']");
-		let email = emailInput.value;
-		const validationRegExpr = (/^[\w\.]+@\w+\.\w+/).test(email);
+		const email = emailInput.value;
 
-		if (validationRegExpr === false) {
+		const validateResult = (/^[\w\.]+@\w+\.\w+/).test(email);
+
+		if (validateResult === false) {
 			alert("이메일 형식에 맞게 올바르게 입력해주세요")
 		}
 
-		return validationRegExpr;
+		return validateResult;
 	}
-	
-	
-	submitForm(event){
+
+	submitForm(event) {
 		event.preventDefault();
-		
-		if(LoginArea.validateEmail()){
-			const loginForm = document.querySelector("#form1");
-			const emailInput = document.querySelector("[name='resrv_email']");
-			let email = emailInput.value;
-			
-			loginForm.submit();
+
+		if (LoginArea.validateEmail()) {
+			this.loginForm.submit();
 		}
-		
 	}
 }
 

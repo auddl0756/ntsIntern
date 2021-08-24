@@ -2,14 +2,14 @@ package com.nts.intern.reserve.repository.sql.reserve;
 
 public class ProductRepositorySqls {
 	public static final String FIND_BY_ID 
-	= "SELECT di.id as displayInfoId," +
-		"di.place_name as placeName," +
-		"di.opening_hours as openingHours," +
+	= "SELECT di.id AS displayInfoId," +
+		"di.place_name AS placeName," +
+		"di.opening_hours AS openingHours," +
 		
-		"pd.description as productDescription," +
-		"pd.id as productId," +
+		"pd.description AS productDescription," +
+		"pd.id AS productId," +
 		
-		"fi.save_file_name as saveFileName "+
+		"fi.save_file_name AS saveFileName "+
 		
 		"FROM display_info di " +
 		"INNER JOIN product pd on pd.id = di.product_id " +
