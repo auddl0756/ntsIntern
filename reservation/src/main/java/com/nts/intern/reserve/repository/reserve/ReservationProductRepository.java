@@ -1,15 +1,7 @@
 package com.nts.intern.reserve.repository.reserve;
 
-import static com.nts.intern.reserve.repository.sql.reserve.ReservationProductRepositorySqls.SELECT_LATEST_RESERVATION_ID;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -27,7 +19,8 @@ public class ReservationProductRepository {
 
 	public ReservationProductRepository(DataSource dataSource) {
 		this.jdbcInsertReservationInfo = new SimpleJdbcInsert(dataSource)
-			.withTableName("reservation_info");
+			.withTableName("reservation_info")
+			.usingGeneratedKeyColumns("id");
 
 		this.jdbcInsertReservationInfoPrice = new SimpleJdbcInsert(dataSource)
 			.withTableName("reservation_info_price");
@@ -35,26 +28,15 @@ public class ReservationProductRepository {
 		this.jdbc = new NamedParameterJdbcTemplate(dataSource);
 	}
 
-	int getInsertedReservationId() {
-		return jdbc.queryForObject(SELECT_LATEST_RESERVATION_ID, Collections.emptyMap(), Integer.class);
-	}
-
 	public int saveReservationInfo(ReservationParam reservationParam) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(reservationParam);
 
-		int affectedRowCount = jdbcInsertReservationInfo.execute(params);
+		int newestReservationInfoId = jdbcInsertReservationInfo.executeAndReturnKey(params).intValue();
 
-		int newestReservationInfoId = getInsertedReservationId();
-
-		for (ReservationPrice price : reservationParam.getReservationPrices()) {
-			price.setReservationInfoId(newestReservationInfoId);
-			saveReservationInfoPrice(price);
-		}
-
-		return affectedRowCount;
+		return newestReservationInfoId;
 	}
 
-	int saveReservationInfoPrice(ReservationPrice price) {
+	public int saveReservationInfoPrice(ReservationPrice price) {
 		SqlParameterSource params = new BeanPropertySqlParameterSource(price);
 
 		return jdbcInsertReservationInfoPrice.execute(params);

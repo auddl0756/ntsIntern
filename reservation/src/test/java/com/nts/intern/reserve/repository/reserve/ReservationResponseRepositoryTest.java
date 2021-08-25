@@ -34,14 +34,8 @@ public class ReservationResponseRepositoryTest {
 		assertThat(result.size()).isGreaterThan(0);
 
 		assertThat(result.get(0).getReservationEmail()).isEqualTo(sampleEmail);
-	}
 
-	@Test
-	public void findTotalPriceByIdTest() {
-		int sampleReservationInfoId = 60;
-		int totalPrice = reservationResponseRepository.getTotalPrice(sampleReservationInfoId);
-		System.out.println(totalPrice);
+		assertThat(result.get(0).getTotalPrice()).isGreaterThan(0);
 
-		assertThat(totalPrice).isGreaterThan(0);
 	}
 }

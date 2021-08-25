@@ -148,11 +148,12 @@ class TicketBodyArea {
 
 			if (parseInt(ticketCount.value) <= 0) {
 				ticketCount.value = "0";
-				ticketCount.className = "count_control_input disabled";
-				subtractButton.className = "btn_plus_minus spr_book2 ico_minus3 disabled";
+				ticketCount.classList.add("disabled");
+				subtractButton.classList.add("disabled");
+	
 			} else {
-				subtractButton.className = "btn_plus_minus spr_book2 ico_minus3";
-				ticketCount.className = "count_control_input";
+				ticketCount.classList.remove("disabled");
+				subtractButton.classList.remove("disabled");
 			}
 		}
 	}
@@ -164,9 +165,9 @@ class TicketBodyArea {
 		let count = parseInt(event.currentTarget.children[1].value);
 
 		if (count <= 0) {
-			priceArea.className = "individual_price";
+			priceArea.classList.remove("on_color");
 		} else {
-			priceArea.className = "individual_price on_color";
+			priceArea.classList.add("on_color");
 		}
 
 		priceArea.children[0].innerText = price * count;
@@ -230,10 +231,10 @@ class BookingForm {
 		const arrowSign = termTag.querySelector(".btn_agreement I");
 
 		if (termTag.className.includes("open")) {
-			termTag.className = termTag.className.replace("open", "");
+			termTag.classList.remove("open");
 			arrowSign.className = "fn fn-down2";
 		} else {
-			termTag.className += " open";
+			termTag.classList.add("open");
 			arrowSign.className = "fn fn-up2";
 		}
 	}
@@ -243,9 +244,9 @@ class BookingForm {
 		let formSubmitButton = document.querySelector(".bk_btn_wrap");
 
 		if (isChecked) {
-			formSubmitButton.className = "bk_btn_wrap";
+			formSubmitButton.classList.remove("disable");
 		} else {
-			formSubmitButton.className = "bk_btn_wrap disable";
+			formSubmitButton.classList.add("disable");
 		}
 	}
 
@@ -308,7 +309,7 @@ class BookingForm {
 
 			priceInfos.push(info);
 		}
-		
+
 		form.querySelector("#form_prices").value = JSON.stringify(priceInfos);
 	}
 }

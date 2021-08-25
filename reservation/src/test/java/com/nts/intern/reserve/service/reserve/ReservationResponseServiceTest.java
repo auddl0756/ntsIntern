@@ -33,7 +33,6 @@ public class ReservationResponseServiceTest {
 
 		ReservationResponseDto first = result.get(0);
 
-		assertThat(first.getDisplayInfo()).isNotNull();
 		assertThat(first.getTotalPrice()).isGreaterThan(0);
 	}
 }

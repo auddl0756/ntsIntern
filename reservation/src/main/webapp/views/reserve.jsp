@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -19,15 +20,17 @@
 		<!-- [D] 예약하기로 들어오면 header에 fade 클래스 추가로 숨김 -->
 		<div class="header fade">
 			<header class="header_tit">
-				<h1 class="logo">
-					<a href="./mainpage.html" class="lnk_logo" title="네이버"> <span
-						class="spr_bi ico_n_logo">네이버</span>
-					</a> <a href="./mainpage.html" class="lnk_logo" title="예약"> <span
-						class="spr_bi ico_bk_logo">예약</span>
-					</a>
-				</h1>
-				<a href="#" class="btn_my"> <span title="예약확인">예약확인</span>
-				</a>
+				<c:if test="${empty email}">
+					<div class="header fade">
+				</c:if>
+
+				<c:if test="${!empty email}">
+					<div class="header">
+				</c:if>
+
+				<header class="header_tit">
+					<%@include file="header.jsp"%>
+				</header>
 			</header>
 		</div>
 		<div class="ct">

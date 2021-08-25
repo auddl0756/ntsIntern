@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationConfig.class)
 public class PriceRepositoryTest {
-	
+
 	@Autowired
 	//@Qualifier("reservationPageProductPrice")	//@Qualifier가 없어도 정상적으로 동작.
 	private PriceRepository priceRepository;
@@ -23,7 +23,7 @@ public class PriceRepositoryTest {
 	public void notNullTest() {
 		assertThat(priceRepository).isNotNull();
 	}
-	
+
 	@Test
 	public void 올바른_빈을_주입하는지_Test() {
 		System.out.println(priceRepository);
