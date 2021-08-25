@@ -20,6 +20,8 @@ public class ProductRepositorySqls {
 	
 	public static final String UPDATE_CANCEL_FLAG
 	=	"UPDATE reservation_info "+
-		"SET cancel_flag = 1 " +
+		"SET cancel_flag = 1," +
+		"modify_date = :now " +
 		"WHERE id = :reservationInfoId;";
 }
+

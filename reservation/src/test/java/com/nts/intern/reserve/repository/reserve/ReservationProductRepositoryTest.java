@@ -38,6 +38,8 @@ public class ReservationProductRepositoryTest {
 		sampleReservationParam.setReservationDate("2021.1.1");
 		sampleReservationParam.setCancelFlag(false);
 		sampleReservationParam.setReservationPrices(Collections.emptyList());
+		sampleReservationParam.setCreateDate("2021.1.1");
+		sampleReservationParam.setModifyDate("2021.1.1");
 
 		assertThat(reservationProductRepository.saveReservationInfo(sampleReservationParam)).isGreaterThan(0);
 	}

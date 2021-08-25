@@ -52,6 +52,7 @@ public class ProductReservationApiControllerTest {
 				.param("form_date", "2021.1.1")
 				.param("form_prices",
 					"[{\"productPriceId\":\"1\",\"count\":\"2\"},{\"productPriceId\":\"2\",\"count\":\"3\"},{\"productPriceId\":\"3\",\"count\":\"1\"}]")
+
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 

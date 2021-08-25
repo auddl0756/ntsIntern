@@ -1,6 +1,7 @@
 package com.nts.intern.reserve.service.reserve;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -20,10 +21,10 @@ public class ProductService {
 
 	@Autowired
 	private PriceRepository priceRepository;
+	
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
 
 	private final int randomOffset = 5;
-
-	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
 	@Transactional(readOnly = true)
 	public ProductDto findById(int displayInfoId) {
@@ -44,6 +45,6 @@ public class ProductService {
 	}
 
 	public int cancelReservation(int reservationInfoId) {
-		return productRepository.updateCancelFlag(reservationInfoId);
+		return productRepository.updateCancelFlag(reservationInfoId,FORMATTER.format(LocalDateTime.now()));
 	}
 }
