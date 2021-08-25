@@ -150,7 +150,7 @@ class TicketBodyArea {
 				ticketCount.value = "0";
 				ticketCount.classList.add("disabled");
 				subtractButton.classList.add("disabled");
-	
+
 			} else {
 				ticketCount.classList.remove("disabled");
 				subtractButton.classList.remove("disabled");

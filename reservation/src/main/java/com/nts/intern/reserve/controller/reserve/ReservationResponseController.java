@@ -17,18 +17,19 @@ import com.nts.intern.reserve.service.reserve.ReservationResponseService;
 public class ReservationResponseController {
 	@Autowired
 	private ReservationResponseService reservationResponseService;
-
+	private final int SESSION_INTERVAL = 60*30;
+	
 	@GetMapping("/api/reservations")
 	public String getReservationInfo(@RequestParam(name = "resrv_email") String email, Model model,
 		HttpSession session) {
-		
-		List<ReservationResponseDto> result = reservationResponseService.findAllReservationsByEmail(email);
-		
-		model.addAttribute("reservationInfo", result);
-		model.addAttribute("reservationCount",result.size());
-		
-		session.setAttribute("email", email);
 
+		List<ReservationResponseDto> result = reservationResponseService.findAllReservationsByEmail(email);
+
+		model.addAttribute("reservationInfo", result);
+		model.addAttribute("totalReservationCount", result.size());
+
+		session.setAttribute("email", email);
+		session.setMaxInactiveInterval(SESSION_INTERVAL);
 		return "myreservation";
 	}
 }
