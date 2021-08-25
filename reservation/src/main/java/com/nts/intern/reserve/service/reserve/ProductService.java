@@ -21,7 +21,7 @@ public class ProductService {
 
 	@Autowired
 	private PriceRepository priceRepository;
-	
+
 	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
 
 	private final int randomOffset = 5;
@@ -40,11 +40,11 @@ public class ProductService {
 	}
 
 	String makeRandomReservationDate() {
-		LocalDate reservationDate = LocalDate.now().plusDays((int)(Math.random() * randomOffset));
+		LocalDateTime reservationDate = LocalDateTime.now().plusDays((int)(Math.random() * randomOffset));
 		return reservationDate.format(FORMATTER);
 	}
 
 	public int cancelReservation(int reservationInfoId) {
-		return productRepository.updateCancelFlag(reservationInfoId,FORMATTER.format(LocalDateTime.now()));
+		return productRepository.updateCancelFlag(reservationInfoId, FORMATTER.format(LocalDateTime.now()));
 	}
 }
