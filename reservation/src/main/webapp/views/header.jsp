@@ -16,7 +16,7 @@
 </c:if>
 
 <c:if test="${!empty email}">
-	<a href="/myreservation/${email}" class="btn_my"> <span
+	<a href="/myreservation?resrv_email=${email}" class="btn_my"> <span
 		class="viewReservation" title="예약확인"> ${email} </span>
 	</a>
 </c:if>
