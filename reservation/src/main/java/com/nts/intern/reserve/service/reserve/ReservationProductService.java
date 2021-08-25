@@ -15,17 +15,14 @@ public class ReservationProductService {
 	private ReservationProductRepository reservationProductRepository;
 
 	@Transactional
-	public int save(ReservationParam reservationParam) {
+	public void save(ReservationParam reservationParam) {
 		int newestId = reservationProductRepository.saveReservationInfo(reservationParam);
-
-		//오직 reservation_info_price 테이블의 영향을 받은 행의 갯수  
-		int affectRowCount = 0;
 
 		for (ReservationPrice price : reservationParam.getReservationPrices()) {
 			price.setReservationInfoId(newestId);
-			affectRowCount += reservationProductRepository.saveReservationInfoPrice(price);
+			reservationProductRepository.saveReservationInfoPrice(price);
 		}
 
-		return affectRowCount;
+		return ;
 	}
 }
