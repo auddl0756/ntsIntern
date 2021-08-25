@@ -26,10 +26,10 @@ class Cancel {
 		}
 
 		let popupCloseButton = document.querySelector(".popup_btn_close");
-		popupCloseButton.addEventListener("click", this.popupOff);
+		popupCloseButton.addEventListener("click", Cancel.popupOff);
 
 		let popupNoButton = document.querySelector("#cancle_no");
-		popupNoButton.addEventListener("click", this.popupOff);
+		popupNoButton.addEventListener("click", Cancel.popupOff);
 
 		let cancelAgreeButton = document.querySelector(".btn_green");
 		cancelAgreeButton.addEventListener("click", this.sendCancelRequest);
