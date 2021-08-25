@@ -19,7 +19,7 @@ public class ReservationResponseController {
 	private ReservationResponseService reservationResponseService;
 	private final int SESSION_INTERVAL = 60*30;
 	
-	@GetMapping("/api/reservations")
+	@GetMapping("/reservations")
 	public String getReservationInfo(@RequestParam(name = "resrv_email") String email, Model model,
 		HttpSession session) {
 

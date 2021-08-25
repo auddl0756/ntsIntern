@@ -14,6 +14,6 @@ public class LoginController {
 
 	@GetMapping("/myreservation")
 	public String myReservation(@RequestParam(name = "resrv_email") String email) {
-		return "redirect:/api/reservations?resrv_email=" + email;
+		return "redirect:/reservations?resrv_email=" + email;
 	}
 }
