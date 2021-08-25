@@ -218,6 +218,7 @@ class BookingForm {
 		const reservationButton = document.querySelector(".bk_btn_wrap");
 		reservationButton.addEventListener("click", BookingForm.submitReservationForm);
 		reservationButton.addEventListener("click", BookingForm.validateAgreeButton);
+		reservationButton.addEventListener("mouseover", BookingForm.validateAgreeButton);
 
 	}
 
