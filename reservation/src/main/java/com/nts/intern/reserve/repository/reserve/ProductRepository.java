@@ -1,9 +1,9 @@
 package com.nts.intern.reserve.repository.reserve;
 
 import static com.nts.intern.reserve.repository.sql.reserve.ProductRepositorySqls.FIND_BY_ID;
+import static com.nts.intern.reserve.repository.sql.reserve.ProductRepositorySqls.UPDATE_CANCEL_FLAG;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -29,5 +29,11 @@ public class ProductRepository {
 		params.put("displayInfoId", displayInfoId);
 
 		return jdbc.queryForObject(FIND_BY_ID, params, rowMapper);
+	}
+
+	public int updateCancelFlag(int reservationInfoId) {
+		Map<String, Integer> param = new HashMap<>();
+		param.put("reservationInfoId", reservationInfoId);
+		return jdbc.update(UPDATE_CANCEL_FLAG, param);
 	}
 }

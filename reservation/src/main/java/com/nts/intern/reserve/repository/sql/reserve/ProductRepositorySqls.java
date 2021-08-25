@@ -17,4 +17,9 @@ public class ProductRepositorySqls {
 		"INNER JOIN file_info fi on fi.id = pi.file_id " +
 		"WHERE di.id  = :displayInfoId " +
 		"AND pi.type = \'ma\'";
+	
+	public static final String UPDATE_CANCEL_FLAG
+	=	"UPDATE reservation_info "+
+		"SET cancel_flag = 1 " +
+		"WHERE id = :reservationInfoId;";
 }

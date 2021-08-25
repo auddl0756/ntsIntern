@@ -40,7 +40,10 @@ public class ProductService {
 
 	String makeRandomReservationDate() {
 		LocalDate reservationDate = LocalDate.now().plusDays((int)(Math.random() * randomOffset));
-
 		return reservationDate.format(FORMATTER);
+	}
+
+	public int cancelReservation(int reservationInfoId) {
+		return productRepository.updateCancelFlag(reservationInfoId);
 	}
 }
