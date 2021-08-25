@@ -13,13 +13,7 @@
 	content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
 <title>네이버 예약</title>
 <link href="/css/style.css" rel="stylesheet">
-<style>
-.invalid {
- 	border-color: red;
-  	background-color: red;
-  	border-width:2px;
-}
-</style>
+<link href="/css/validation.css" rel="stylesheet">
 </head>
 
 <body>
