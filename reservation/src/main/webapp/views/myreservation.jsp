@@ -104,12 +104,14 @@
 																class="item_dsc" id="reservation_date"
 																data-reservation_date=${dto.reservationDate}>
 																	${dto.reservationDate}</em></li>
-															<li class="item"><span class="item_tit">내역</span> <em
-																class="item_dsc"> 내역이 없습니다. </em></li>
 															<li class="item"><span class="item_tit">장소</span> <em
 																class="item_dsc"> ${dto.placeName}</em></li>
-															<li class="item"><span class="item_tit">업체</span> <em
-																class="item_dsc"> 업체명이 없습니다. </em></li>
+															<li class="item"><span class="item_tit">업체 홈페이지</span> <em
+																class="item_dsc"> ${dto.homepage}</em></li>
+															<li class="item"><span class="item_tit">업체 전화번호</span> <em
+																class="item_dsc"> ${dto.telephone}</em></li>
+															<li class="item"><span class="item_tit">예약일</span> <em
+																class="item_dsc"> ${dto.reservationDate}</em></li>
 															<li class="reservation_info_id"
 																data-reservation_info_id=${dto.reservationInfoId}></li>
 
@@ -184,12 +186,14 @@
 														<ul class="detail">
 															<li class="item"><span class="item_tit">일정</span> <em
 																class="item_dsc"> ${dto.reservationDate}</em></li>
-															<li class="item"><span class="item_tit">내역</span> <em
-																class="item_dsc"> 내역이 없습니다. </em></li>
 															<li class="item"><span class="item_tit">장소</span> <em
 																class="item_dsc"> ${dto.placeName}</em></li>
-															<li class="item"><span class="item_tit">업체</span> <em
-																class="item_dsc"> 업체명이 없습니다. </em></li>
+															<li class="item"><span class="item_tit">업체 홈페이지</span> <em
+																class="item_dsc"> ${dto.homepage}</em></li>
+															<li class="item"><span class="item_tit">업체 전화번호</span> <em
+																class="item_dsc"> ${dto.telephone}</em></li>
+															<li class="item"><span class="item_tit">취소일</span> <em
+																class="item_dsc"> ${dto.reservationModifyDate}</em></li>
 														</ul>
 														<div class="price_summary">
 															<span class="price_tit">결제 예정금액</span> <em
