@@ -31,10 +31,9 @@ public class ProductRepository {
 		return jdbc.queryForObject(FIND_BY_ID, params, rowMapper);
 	}
 
-	public int updateCancelFlag(int reservationInfoId,String now) {
+	public int updateCancelFlag(int reservationInfoId) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("reservationInfoId", reservationInfoId);
-		param.put("now", now);
 		return jdbc.update(UPDATE_CANCEL_FLAG, param);
 	}
 }

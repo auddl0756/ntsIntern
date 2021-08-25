@@ -45,6 +45,6 @@ public class ProductService {
 	}
 
 	public int cancelReservation(int reservationInfoId) {
-		return productRepository.updateCancelFlag(reservationInfoId, FORMATTER.format(LocalDateTime.now()));
+		return productRepository.updateCancelFlag(reservationInfoId);
 	}
 }

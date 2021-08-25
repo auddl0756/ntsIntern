@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nts.intern.reserve.config.ApplicationConfig;
 
@@ -27,5 +28,16 @@ public class ProductRepositoryTest {
 	public void findById() {
 		int sampleDisplayInfoId = 1;
 		System.out.println(productRepository.findById(sampleDisplayInfoId));
+	}
+	
+	@Transactional
+	@Test
+	public void updateCancelFlagTest() {
+		int sampleReservationInfoId = 87;
+		int affectedCount = productRepository.updateCancelFlag(sampleReservationInfoId);
+		
+		System.out.println(affectedCount);
+		
+		assertThat(affectedCount).isGreaterThan(0);
 	}
 }
