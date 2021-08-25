@@ -35,14 +35,12 @@ async function initReservationPage() {
 	const displayInfoId = getDisplayInfoId();
 
 	let productData = await getProductData(displayInfoId, {});
-	console.log(productData);
-
+	
 	let titleArea = new TitleArea(displayInfoId, productData);
 
 	let ticketBodyArea = new TicketBodyArea(displayInfoId, productData.priceInfos);
 
 	let bookingForm = new BookingForm(productData);
-
 }
 
 class TitleArea {
@@ -199,17 +197,28 @@ class BookingForm {
 			button.addEventListener("click", this.viewTermsEvent);
 		}
 
-		let agreeButton = document.querySelector("#chk3");
-		agreeButton.addEventListener("click", this.bookingAgreeEvent);
-
 		let ticketButtons = document.querySelectorAll(".clearfix");
 
 		for (let button of Array.from(ticketButtons)) {
 			button.addEventListener("click", this.bookingMessageEvent);
+			button.addEventListener("click", BookingForm.validateTicketCount);
 		}
 
+		const form = document.querySelector(".form_horizontal");
+
+		form.addEventListener("change", BookingForm.validateForm);
+		form.addEventListener("focus", BookingForm.validateForm);
+		form.addEventListener("blur", BookingForm.validateForm);
+		form.addEventListener("click", BookingForm.validateForm);
+		form.addEventListener("keypress", BookingForm.validateForm);
+
+		let agreeButton = document.querySelector(".label.chk_txt_label");
+		agreeButton.addEventListener("click", BookingForm.bookingAgreeEvent);
+
 		const reservationButton = document.querySelector(".bk_btn_wrap");
-		reservationButton.addEventListener("click", this.validateForm);
+		reservationButton.addEventListener("click", BookingForm.submitReservationForm);
+		reservationButton.addEventListener("click", BookingForm.validateAgreeButton);
+
 	}
 
 	bookingMessageEvent() {
@@ -226,6 +235,18 @@ class BookingForm {
 		document.querySelector("#totalCount").innerText = totalTicketCount;
 	}
 
+	static bookingAgreeEvent() {
+		let isChecked = document.querySelector("#chk3").checked;
+		
+		if (isChecked===false) {
+			const wrapper = document.querySelector('.agreement.all');
+			const errorMsg = wrapper.querySelector(".invalid");
+			errorMsg.style.display = "none";
+		} 
+		
+		isChecked^=true;
+	}
+
 	viewTermsEvent() {
 		const termTag = event.target.closest(".agreement");
 		const arrowSign = termTag.querySelector(".btn_agreement I");
@@ -239,27 +260,48 @@ class BookingForm {
 		}
 	}
 
-	bookingAgreeEvent() {
-		let isChecked = document.querySelector("#chk3").checked;
+	static validateForm() {
+		let isValid = true;
+
+		isValid &= BookingForm.validateName();
+		isValid &= BookingForm.validatePhoneNumber();
+		isValid &= BookingForm.validateEmail();
+		isValid &= BookingForm.validateTicketCount();
+
 		let formSubmitButton = document.querySelector(".bk_btn_wrap");
 
-		if (isChecked) {
+		if (isValid) {
 			formSubmitButton.classList.remove("disable");
 		} else {
 			formSubmitButton.classList.add("disable");
 		}
+		return isValid;
 	}
 
-	validateForm() {
-		if (BookingForm.validatePhoneNumber() && BookingForm.validateEmail()) {
+	static validateName() {
+		const inputTag = document.querySelector("[name='name']");
 
-			BookingForm.submitReservationForm();
+		let isValid = true;
+
+		if (inputTag.value.length === 0) {
+			isValid = false;
 		}
+
+		const wrapper = inputTag.closest(".inline_form");
+		const errorMsg = wrapper.querySelector(".invalid");
+
+		if (isValid) {
+			errorMsg.style.display = "none";
+		} else {
+			errorMsg.style.display = "block";
+		}
+
+		return isValid;
 	}
 
 	static validatePhoneNumber() {
-		const phoneNumberInput = document.querySelector("[name='tel']");
-		let phoneNumber = phoneNumberInput.value;
+		const inputTag = document.querySelector("[name='tel']");
+		let phoneNumber = inputTag.value;
 
 		let isValid = false;
 
@@ -269,22 +311,61 @@ class BookingForm {
 		isValid ||= telValidation.test(phoneNumber);
 		isValid ||= mobileValidation.test(phoneNumber);
 
-		if (isValid === false) {
-			alert("연락처 형식에 맞게 올바르게 입력해주세요");
+		const wrapper = inputTag.closest(".inline_form");
+		const errorMsg = wrapper.querySelector(".invalid");
+
+		if (isValid) {
+			errorMsg.style.display = "none";
+		} else {
+			errorMsg.style.display = "block";
 		}
 
 		return isValid;
 	}
 
 	static validateEmail() {
-		const emailInput = document.querySelector("[name='email']");
-		let email = emailInput.value;
-		const validationRegExpr = (/^[\w\.]+@\w+\.\w+/).test(email);
+		const inputTag = document.querySelector("[name='email']");
+		let email = inputTag.value;
+		const isValid = (/^[\w\.]+@\w+\.\w+/).test(email);
 
-		if (validationRegExpr === false) {
-			alert("이메일 형식에 맞게 올바르게 입력해주세요")
+		const wrapper = inputTag.closest(".inline_form");
+		const errorMsg = wrapper.querySelector(".invalid");
+
+		if (isValid)  {
+			errorMsg.style.display = "none";
+		} else {
+			errorMsg.style.display = "block";
 		}
-		return validationRegExpr;
+
+		return isValid;
+	}
+
+	static validateAgreeButton() {
+		let isChecked = document.querySelector("#chk3").checked;
+		const wrapper = document.querySelector('.agreement.all');
+		const errorMsg = wrapper.querySelector(".invalid");
+
+		if (isChecked) {
+			errorMsg.style.display = "none";
+		} else {
+			errorMsg.style.display = "block";
+		}
+
+		return isChecked;
+	}
+
+	static validateTicketCount() {
+		const ticketCount = parseInt(document.querySelector("#totalCount").innerText);
+		const wrapper = document.querySelector("#totalCount").closest(".inline_control");
+		const errorMsg = wrapper.querySelector(".invalid");
+
+		if (ticketCount === 0) {
+			errorMsg.style.display = "block";
+			return false;
+		} else {
+			errorMsg.style.display = "none";
+			return true;
+		}
 	}
 
 	static submitReservationForm() {
@@ -292,8 +373,9 @@ class BookingForm {
 
 		BookingForm.setPriceInfos();
 
-
-		form.submit();
+		if (BookingForm.validateForm() && BookingForm.validateAgreeButton()) {
+			form.submit();
+		}
 	}
 
 	static setPriceInfos() {

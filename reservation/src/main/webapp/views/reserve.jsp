@@ -13,6 +13,13 @@
 	content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
 <title>네이버 예약</title>
 <link href="/css/style.css" rel="stylesheet">
+<style>
+.invalid {
+ 	border-color: red;
+  	background-color: red;
+  	border-width:2px;
+}
+</style>
 </head>
 
 <body>
@@ -80,6 +87,9 @@
 										<input type="text" name="name" id="name" class="text"
 											placeholder="네이버" maxlength="17" required>
 									</div>
+									<div>
+										<span class="invalid" style="display: none">이름을 입력하세요</span>
+									</div>
 								</div>
 								<div class="inline_form">
 									<label class="label" for="tel"> <span
@@ -87,8 +97,12 @@
 									</label>
 									<div class="inline_control tel_wrap">
 										<input type="tel" name="tel" id="tel" class="tel" value=""
-											placeholder="휴대폰 입력 시 예매내역 문자발송" required>
-										<div class="warning_msg">형식이 틀렸거나 너무 짧아요</div>
+											placeholder="'-'가 있는 형식의 번호를 입력하세요" required>
+										
+									<div>
+										<span class="invalid" style="display: none">올바른 형식의 전화 번호를 입력하세요</span>
+									</div>
+									
 									</div>
 								</div>
 								<div class="inline_form">
@@ -100,6 +114,11 @@
 											value="" placeholder="sample@naver.com" maxlength="50"
 											required>
 									</div>
+									
+									<div>
+										<span class="invalid" style="display: none">올바른 형식의 이메일을 입력하세요</span>
+									</div>
+									
 								</div>
 								<div class="inline_form last">
 									<label class="label" for="message">예매내용</label>
@@ -107,6 +126,10 @@
 										<p class="inline_txt selected">
 											, 총 <span id="totalCount">0</span>매
 										</p>
+										
+										<div>
+											<span class="invalid" style="display: none">수량을 선택하세요</span>
+										</div>
 									</div>
 								</div>
 
@@ -123,10 +146,13 @@
 					</div>
 					<div class="section_booking_agreement">
 						<div class="agreement all">
-							<input type="checkbox" id="chk3" class="chk_agree"> <label
-								for="chk3" class="label chk_txt_label"> <span>이용자
+							<input type="checkbox" id="chk3" class="chk_agree"> 
+							<label for="chk3" class="label chk_txt_label"> <span>이용자
 									약관 전체동의</span>
 							</label>
+							<div>
+								<span class="invalid" style="display: none">약관에 동의하세요</span>
+							</div>
 							<div class="agreement_nessasary">
 								<span>필수동의</span>
 							</div>
