@@ -283,7 +283,7 @@ class BookingForm {
 		const name = inputTag.value;
 
 		const regExprKoreanName = /^[ㄱ-ㅎㅏ-ㅣ가-힣]/;
-		const regExprEnglishName = /^[a-zA-Z]/; // 영어
+		const regExprEnglishName = /^[a-zA-Z]/;
 
 		let isValid = (regExprKoreanName).test(name);
 		isValid ||= (regExprEnglishName).test(name);
