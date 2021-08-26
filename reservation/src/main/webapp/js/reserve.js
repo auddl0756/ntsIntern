@@ -244,7 +244,7 @@ class BookingForm {
 			errorMsg.style.display = "none";
 		}
 
-		isChecked != isChecked;
+		isChecked = !isChecked;
 	}
 
 	viewTermsEvent() {
