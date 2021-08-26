@@ -198,6 +198,11 @@
 							<i class="spr_book ico_naver_s"></i> <span>예약하기</span>
 						</button>
 					</div>
+					<c:if test="${!empty error}">
+						<div>
+							<span class="invalid" id="by_wrong_request">유효하지 않은 파라미터를 전송했습니다. 다시 입력해주세요.</span>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>

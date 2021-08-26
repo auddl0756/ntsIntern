@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", initMyReservationPage);
 
 function initMyReservationPage() {
 	let cancel = new Cancel();
-
 }
 
 class Cancel {
@@ -11,7 +10,6 @@ class Cancel {
 		this.popupArea = document.querySelector(".popup_booking_wrapper");
 		this.clickedReservationCardId = "";
 		this.clickedReservationId = 0;
-
 	}
 
 	addEventListeners() {
@@ -56,7 +54,6 @@ class Cancel {
 		document.querySelector(".popup_booking_wrapper").style.display = "none";
 	}
 
-
 	static moveCard() {
 		let cancelArea = document.querySelector(".cancel");
 		cancelArea.appendChild(Cancel.clickedReservationCard);
@@ -85,7 +82,7 @@ class Cancel {
 			}
 		});
 
-		let url = "/api/reservations/" + Cancel.clickedReservationId;
+		const url = "/api/reservations/" + Cancel.clickedReservationId;
 
 		XHR.open("PUT", url);
 		XHR.send();

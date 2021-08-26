@@ -388,7 +388,11 @@ class BookingForm {
 			let info = {};
 			info.productPriceId = button.querySelector(".count_control_product_price_id").value;
 			info.count = button.querySelector(".count_control_input").value;
-
+			
+			if(info.count==0){
+				continue;
+			}
+			
 			priceInfos.push(info);
 		}
 
@@ -400,6 +404,13 @@ class BookingForm {
 
 		if (BookingForm.validateForm() && BookingForm.validateAgreeButton()) {
 			formSubmitButton.classList.remove("disable");
+			
+			const errorMsg = document.querySelector("#by_wrong_request");
+			
+			if(errorMsg !==null){
+				errorMsg.style.display="none";
+			}
+			
 			return true;
 		} else {
 			formSubmitButton.classList.add("disable");
