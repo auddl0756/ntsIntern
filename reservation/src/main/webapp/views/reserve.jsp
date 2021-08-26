@@ -79,10 +79,10 @@
 									</label>
 									<div class="inline_control">
 										<input type="text" name="name" id="name" class="text"
-											placeholder="네이버" maxlength="17" required>
+											placeholder="한글 또는 영문 이름을 입력하세요" minlength="1" maxlength="17" required>
 									</div>
 									<div>
-										<span class="invalid" style="display: none">이름을 입력하세요</span>
+										<span class="invalid" style="display: none">올바른 이름을 입력하세요</span>
 									</div>
 								</div>
 								<div class="inline_form">
@@ -198,6 +198,11 @@
 							<i class="spr_book ico_naver_s"></i> <span>예약하기</span>
 						</button>
 					</div>
+					<c:if test="${!empty error}">
+						<div>
+							<span class="invalid" id="by_wrong_request">유효하지 않은 파라미터를 전송했습니다. 다시 입력해주세요.</span>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>

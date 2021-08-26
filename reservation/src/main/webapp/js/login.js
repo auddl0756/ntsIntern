@@ -16,7 +16,7 @@ class LoginArea {
 	
 	static validateEmail() {
 		const inputTag = document.querySelector("[name='resrv_email']");
-		let email = inputTag.value;
+		const email = inputTag.value;
 		const isValid = (/^[\w\.]+@\w+\.\w+/).test(email);
 
 		const wrapper = inputTag.closest(".login_form");

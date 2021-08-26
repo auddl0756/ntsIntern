@@ -22,21 +22,21 @@ import com.nts.intern.reserve.config.WebMvcConfig;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {WebMvcConfig.class, ApplicationConfig.class})
-public class ProductReservationApiControllerTest {
+public class ProductReservationControllerTest {
 	@Autowired
-	private ProductReservationRestController productReservationRestController;
+	private ProductReservationRestController productReservationController;
 
 	private MockMvc mockMvc;
 
 	@Before
 	public void setUp() {
-		this.mockMvc = MockMvcBuilders.standaloneSetup(productReservationRestController).build();
+		this.mockMvc = MockMvcBuilders.standaloneSetup(productReservationController).build();
 	}
 
 	@Test
 	public void notNullTest() {
 		assertThat(mockMvc).isNotNull();
-		assertThat(productReservationRestController).isNotNull();
+		assertThat(productReservationController).isNotNull();
 	}
 
 	@Transactional
