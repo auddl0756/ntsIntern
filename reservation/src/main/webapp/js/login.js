@@ -13,18 +13,22 @@ class LoginArea {
 		const loginForm = document.querySelector("#form1");
 		loginForm.addEventListener("submit", this.submitForm);
 	}
-
+	
 	static validateEmail() {
-		const emailInput = document.querySelector("[name='resrv_email']");
-		const email = emailInput.value;
+		const inputTag = document.querySelector("[name='resrv_email']");
+		let email = inputTag.value;
+		const isValid = (/^[\w\.]+@\w+\.\w+/).test(email);
 
-		const validateResult = (/^[\w\.]+@\w+\.\w+/).test(email);
+		const wrapper = inputTag.closest(".login_form");
+		const errorMsg = wrapper.querySelector(".invalid");
 
-		if (validateResult === false) {
-			alert("이메일 형식에 맞게 올바르게 입력해주세요")
+		if (isValid)  {
+			errorMsg.style.display = "none";
+		} else {
+			errorMsg.style.display = "block";
 		}
 
-		return validateResult;
+		return isValid;
 	}
 
 	submitForm(event) {

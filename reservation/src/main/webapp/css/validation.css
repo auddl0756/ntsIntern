@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+.invalid {
+ 	border-color: red;
+  	background-color: red;
+  	border-width:2px;
+}

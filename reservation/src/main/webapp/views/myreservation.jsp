@@ -2,6 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<c:forEach var="info" items="${reservationInfo}">
+	<c:if test="${info.cancleYn}">
+		<c:set var="canceledCount" value="${canceledCount + 1}" />
+	</c:if>
+</c:forEach>
+
+<c:set var="reservedCount" value="${totalReservationCount-canceledCount}" />
+
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -31,12 +39,12 @@
 						<li class="item">
 							<!--[D] 선택 후 .on 추가 link_summary_board --> <a href="#"
 							class="link_summary_board on"> <i class="spr_book2 ico_book2"></i>
-								<em class="tit">전체</em> <span class="figure">${reservationCount}</span>
+								<em class="tit">전체</em> <span class="figure">${totalReservationCount}</span>
 						</a>
 						</li>
 						<li class="item"><a href="#" class="link_summary_board">
 								<i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em>
-								<span class="figure">0</span>
+								<span class="figure" id="beforeCount">${reservedCount}</span>
 						</a></li>
 						<li class="item"><a href="#" class="link_summary_board">
 								<i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span
@@ -44,7 +52,7 @@
 						</a></li>
 						<li class="item"><a href="#" class="link_summary_board">
 								<i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span
-								class="figure">0</span>
+								class="figure" id="cancelCount">${canceledCount}</span>
 						</a></li>
 					</ul>
 				</div>
@@ -96,12 +104,14 @@
 																class="item_dsc" id="reservation_date"
 																data-reservation_date=${dto.reservationDate}>
 																	${dto.reservationDate}</em></li>
-															<li class="item"><span class="item_tit">내역</span> <em
-																class="item_dsc"> 내역이 없습니다. </em></li>
 															<li class="item"><span class="item_tit">장소</span> <em
 																class="item_dsc"> ${dto.placeName}</em></li>
-															<li class="item"><span class="item_tit">업체</span> <em
-																class="item_dsc"> 업체명이 없습니다. </em></li>
+															<li class="item"><span class="item_tit">업체 홈페이지</span> <em
+																class="item_dsc"> ${dto.homepage}</em></li>
+															<li class="item"><span class="item_tit">업체 전화번호</span> <em
+																class="item_dsc"> ${dto.telephone}</em></li>
+															<li class="item"><span class="item_tit">예약일</span> <em
+																class="item_dsc"> ${dto.reservationDate}</em></li>
 															<li class="reservation_info_id"
 																data-reservation_info_id=${dto.reservationInfoId}></li>
 
@@ -171,17 +181,19 @@
 												<div class="left"></div>
 												<div class="middle">
 													<div class="card_detail">
-														<em class="booking_number">No.${status.index}</em>
+														<em class="booking_number">No.${status.count}</em>
 														<h4 class="tit">${dto.productDescription}</h4>
 														<ul class="detail">
 															<li class="item"><span class="item_tit">일정</span> <em
 																class="item_dsc"> ${dto.reservationDate}</em></li>
-															<li class="item"><span class="item_tit">내역</span> <em
-																class="item_dsc"> 내역이 없습니다. </em></li>
 															<li class="item"><span class="item_tit">장소</span> <em
 																class="item_dsc"> ${dto.placeName}</em></li>
-															<li class="item"><span class="item_tit">업체</span> <em
-																class="item_dsc"> 업체명이 없습니다. </em></li>
+															<li class="item"><span class="item_tit">업체 홈페이지</span> <em
+																class="item_dsc"> ${dto.homepage}</em></li>
+															<li class="item"><span class="item_tit">업체 전화번호</span> <em
+																class="item_dsc"> ${dto.telephone}</em></li>
+															<li class="item"><span class="item_tit">취소일</span> <em
+																class="item_dsc"> ${dto.reservationModifyDate}</em></li>
 														</ul>
 														<div class="price_summary">
 															<span class="price_tit">결제 예정금액</span> <em
@@ -189,13 +201,6 @@
 																<span class="unit">원</span>
 															</em>
 														</div>
-														<!-- [D] 예약 신청중, 예약 확정 만 취소가능, 취소 버튼 클릭 시 취소 팝업 활성화 -->
-														<div class="booking_cancel">
-															<button class="btn">
-																<span>취소</span>
-															</button>
-														</div>
-
 													</div>
 												</div>
 												<div class="right"></div>
@@ -218,9 +223,9 @@
 
 
 				<!-- 예약 리스트 없음 -->
-				<c:set var="reservationCount" value="${reservationCount}"
-					scope="page" />
-				<c:if test="${reservationCount == 0}">
+				<%-- <c:set var="totalReservationCount" value="${totalReservationCount}"
+					scope="page" /> --%>
+				<c:if test="${totalReservationCount == 0}">
 					<div class="err">
 						<i class="spr_book ico_info_nolist"></i>
 						<h1 class="tit">예약 리스트가 없습니다</h1>

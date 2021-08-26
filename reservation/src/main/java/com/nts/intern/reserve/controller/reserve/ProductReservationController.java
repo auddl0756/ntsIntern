@@ -1,10 +1,14 @@
 package com.nts.intern.reserve.controller.reserve;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,7 +23,8 @@ public class ProductReservationController {
 	private ReservationProductService reservationProductService;
 
 	private static ObjectMapper objectMapper = new ObjectMapper();
-
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+	
 	@PostMapping("/api/reservations")
 	public String makeReservation(
 		@RequestParam("name") String reservationName,
@@ -42,15 +47,20 @@ public class ProductReservationController {
 				.displayInfoId(displayInfoId)
 				.reservationDate(reservationDate)
 				.reservationPrices(reservationPrices)
+				.createDate(FORMATTER.format(LocalDateTime.now()))
+				.modifyDate(FORMATTER.format(LocalDateTime.now()))
 				.build();
 
 			reservationProductService.save(reservationParam);
 
-		} catch (Exception exception) {
+		}catch(NullPointerException nullException) {
+			System.err.println("필수 파라미터 중에 null인 것이 있음.");
+			nullException.printStackTrace();
+		}catch (Exception exception) {
 			System.err.println(exception.getMessage());
 			exception.printStackTrace();
 		}
 
-		return "mainpage";
+		return "redirect:/";
 	}
 }

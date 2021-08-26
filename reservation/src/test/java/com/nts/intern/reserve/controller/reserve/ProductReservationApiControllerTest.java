@@ -24,19 +24,19 @@ import com.nts.intern.reserve.config.WebMvcConfig;
 @ContextConfiguration(classes = {WebMvcConfig.class, ApplicationConfig.class})
 public class ProductReservationApiControllerTest {
 	@Autowired
-	private ProductReservationApiController productReservationApiController;
+	private ProductReservationRestController productReservationRestController;
 
 	private MockMvc mockMvc;
 
 	@Before
 	public void setUp() {
-		this.mockMvc = MockMvcBuilders.standaloneSetup(productReservationApiController).build();
+		this.mockMvc = MockMvcBuilders.standaloneSetup(productReservationRestController).build();
 	}
 
 	@Test
 	public void notNullTest() {
 		assertThat(mockMvc).isNotNull();
-		assertThat(productReservationApiController).isNotNull();
+		assertThat(productReservationRestController).isNotNull();
 	}
 
 	@Transactional
@@ -52,8 +52,9 @@ public class ProductReservationApiControllerTest {
 				.param("form_date", "2021.1.1")
 				.param("form_prices",
 					"[{\"productPriceId\":\"1\",\"count\":\"2\"},{\"productPriceId\":\"2\",\"count\":\"3\"},{\"productPriceId\":\"3\",\"count\":\"1\"}]")
+
 				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk());				
+				.andExpect(status().isOk());
 
 		} catch (Exception e) {
 			e.printStackTrace();

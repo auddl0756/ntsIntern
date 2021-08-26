@@ -38,12 +38,13 @@ public class ReservationProductServiceTest {
 		sampleReservationParam.setReservationDate("2021.1.1");
 		sampleReservationParam.setCancelFlag(false);
 		sampleReservationParam.setReservationPrices(Collections.emptyList());
+		sampleReservationParam.setCreateDate("2021.1.1");
+		sampleReservationParam.setModifyDate("2021.1.1");
 
-		int affectedRowCount = reservationProductService.save(sampleReservationParam);
+		reservationProductService.save(sampleReservationParam);
 
-		System.out.println(affectedRowCount);
+		//아직 어떠한 검사도 하지 않고 있음
 
-		assertThat(affectedRowCount).isGreaterThan(-1);
 	}
 
 }

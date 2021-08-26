@@ -26,6 +26,7 @@ ng\:form {
 	position: absolute;
 }
 </style>
+
 <!--<base href="/">-->
 <base href=".">
 <!--[if IE]>
@@ -49,6 +50,8 @@ ng\:form {
 	content="telephone=no, address=no, email=no">
 <title translate="CM-NBOOKING">네이버 예약</title>
 <link rel="stylesheet" href="/css/bookinglogin.css">
+<link href="/css/validation.css" rel="stylesheet">
+
 </head>
 <body class="biz  ko">
 
@@ -72,7 +75,7 @@ ng\:form {
 			<!---->
 			<div>
 				<form name="confirm_form" class="ng-pristine ng-valid" id="form1"
-					action="/api/reservations" method="get">
+					action="/reservations" method="get">
 					<h2 class="login_header_sub border_bottom">
 						<span translate="CM-NON_MEMBER_BK_CONFIRMATION">비회원 예약확인</span>
 					</h2>
@@ -83,7 +86,13 @@ ng\:form {
 							class="login_input ng-pristine ng-untouched ng-valid ng-empty"
 							id="resrv_id" name="resrv_email" aria-invalid="false"
 							placeholder="crong@naver.com" title="예매자이메일">
+						
+						<div>
+							<span class="invalid" style="display: none">올바른 형식의 이메일을 입력하세요</span>
+						</div>
 					</div>
+					
+					
 					<button type="submit" form="form1" class="login_btn confirm">
 						<span translate="CM-MY_BOOKING_CHECK">내 예약 확인</span>
 					</button>
