@@ -12,12 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nts.intern.reserve.dto.reserve.ReservationPrice;
 
 public class ReservationArgumentInterceptor extends HandlerInterceptorAdapter {
 
-	private static final Pattern TEL_PATTERN = Pattern.compile("^\\d{3}-\\d{4}-\\d{4}$");
+	private static final Pattern TEL_PATTERN = Pattern.compile("\\d{3}-\\d{4}-\\d{4}");
 	private static final Pattern EMAIL_PATTERN = Pattern.compile("\\w+@\\w+\\.\\w+");
 	private static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -38,7 +39,7 @@ public class ReservationArgumentInterceptor extends HandlerInterceptorAdapter {
 			String[] value = entry.getValue();
 
 			if (key.equals("form_prices")) {
-				isValid &= ticketCount(value);
+				isValid &= ticketCount(value[0]);
 			}
 
 			if (key.equals("tel")) {
@@ -69,15 +70,19 @@ public class ReservationArgumentInterceptor extends HandlerInterceptorAdapter {
 		return matcher.find();
 	}
 
-	public boolean ticketCount(String[] tickets) {
+	public boolean ticketCount(String tickets) {
 		int totalCount = 0;
 
 		try {
-			for (String ticket : tickets) {
-				ReservationPrice price = objectMapper.readValue(ticket, ReservationPrice.class);
+			List<ReservationPrice> reservationPrices = objectMapper.readValue(tickets,
+				new TypeReference<List<ReservationPrice>>() {});
+
+			for (ReservationPrice price : reservationPrices) {
 				totalCount += price.getCount();
 			}
 		} catch (IOException ioException) {
+			System.err.println("전달받은 가격 정보에 파싱할 수 없는 데이터가 있음");
+			ioException.printStackTrace();
 			return false;
 		}
 

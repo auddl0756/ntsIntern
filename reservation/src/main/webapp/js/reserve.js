@@ -219,7 +219,6 @@ class BookingForm {
 		reservationButton.addEventListener("click", BookingForm.submitReservationForm);
 		reservationButton.addEventListener("mouseover", BookingForm.validateAgreeButton);
 		reservationButton.addEventListener("mouseover", BookingForm.validateSubmitButton);
-
 	}
 
 	bookingMessageEvent() {
@@ -245,7 +244,7 @@ class BookingForm {
 			errorMsg.style.display = "none";
 		}
 
-		isChecked ^= true;
+		isChecked != true;
 	}
 
 	viewTermsEvent() {
@@ -281,12 +280,13 @@ class BookingForm {
 
 	static validateName() {
 		const inputTag = document.querySelector("[name='name']");
+		const name = inputTag.value;
 
-		let isValid = true;
+		const regExprKoreanName = /^[ㄱ-ㅎㅏ-ㅣ가-힣]/;
+		const regExprEnglishName = /^[a-zA-Z]/; // 영어
 
-		if (inputTag.value.length === 0) {
-			isValid = false;
-		}
+		let isValid = (regExprKoreanName).test(name);
+		isValid ||= (regExprEnglishName).test(name);
 
 		const wrapper = inputTag.closest(".inline_form");
 		const errorMsg = wrapper.querySelector(".invalid");
@@ -388,11 +388,11 @@ class BookingForm {
 			let info = {};
 			info.productPriceId = button.querySelector(".count_control_product_price_id").value;
 			info.count = button.querySelector(".count_control_input").value;
-			
-			if(info.count==0){
+
+			if (info.count == 0) {
 				continue;
 			}
-			
+
 			priceInfos.push(info);
 		}
 
@@ -404,13 +404,13 @@ class BookingForm {
 
 		if (BookingForm.validateForm() && BookingForm.validateAgreeButton()) {
 			formSubmitButton.classList.remove("disable");
-			
+
 			const errorMsg = document.querySelector("#by_wrong_request");
-			
-			if(errorMsg !==null){
-				errorMsg.style.display="none";
+
+			if (errorMsg !== null) {
+				errorMsg.style.display = "none";
 			}
-			
+
 			return true;
 		} else {
 			formSubmitButton.classList.add("disable");

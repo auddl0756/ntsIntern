@@ -79,10 +79,10 @@
 									</label>
 									<div class="inline_control">
 										<input type="text" name="name" id="name" class="text"
-											placeholder="네이버" maxlength="17" required>
+											placeholder="한글 또는 영문 이름을 입력하세요" minlength="1" maxlength="17" required>
 									</div>
 									<div>
-										<span class="invalid" style="display: none">이름을 입력하세요</span>
+										<span class="invalid" style="display: none">올바른 이름을 입력하세요</span>
 									</div>
 								</div>
 								<div class="inline_form">
