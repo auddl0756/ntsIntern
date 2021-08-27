@@ -5,15 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nts.intern.reserve.service.reviewWrite.ProductDescriptionService;
+import com.nts.intern.reserve.dto.reviewWrite.ReviewWriteInitDto;
+import com.nts.intern.reserve.service.reviewWrite.ReviewWriteService;
 
 @RestController
 public class ReviewWriteApiController {
 	@Autowired
-	private ProductDescriptionService productDescriptionService;
+	private ReviewWriteService reviewWriteService;
 	
 	@GetMapping("/api/productDescription/{reservationInfoId}")
-	public String getProductDescription(@PathVariable int reservationInfoId) {
-		return productDescriptionService.findById(reservationInfoId);
+	public ReviewWriteInitDto getProductDescription(@PathVariable int reservationInfoId) {
+		return reviewWriteService.findById(reservationInfoId);
 	}
 }
