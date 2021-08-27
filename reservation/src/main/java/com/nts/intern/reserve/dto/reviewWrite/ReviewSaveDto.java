@@ -16,7 +16,7 @@ import lombok.ToString;
 public class ReviewSaveDto {
 	private int reservationInfoId;
 	private int productId;
-	private int score;
+	private double score;
 	private String comment;
 	private String fileName;
 	private String saveFileName;

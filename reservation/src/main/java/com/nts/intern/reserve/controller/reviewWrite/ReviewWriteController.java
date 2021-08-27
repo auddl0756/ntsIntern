@@ -36,7 +36,7 @@ public class ReviewWriteController {
 	public String makeComment(@PathVariable int reservationInfoId,
 		@RequestParam("form_comment") String comment,
 		@RequestParam("form_productId") int productId,
-		@RequestParam("form_score") int score,
+		@RequestParam("form_score") double score,
 		@RequestParam("file") MultipartFile file,
 		@RequestParam("form_email") String email) {
 
