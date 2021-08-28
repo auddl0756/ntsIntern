@@ -23,7 +23,7 @@ public class ReservationResponseDto {
 	private String productDescription;
 	private String productEvent;
 	
-	private boolean cancleYn;
+	private boolean cancelYn;
 	private String reservationCreateDate;
 	private String reservationModifyDate;
 	private int displayInfoId;

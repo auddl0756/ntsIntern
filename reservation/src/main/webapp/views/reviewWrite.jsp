@@ -43,7 +43,7 @@
 						class="fn fn-backward1"></i>
 					</a>
 					<h2>
-						<span class="title">클림트 인사이드</span>
+						<span class="title"></span>
 					</h2>
 				</div>
 				<!-- 리뷰 별점 -->
@@ -88,8 +88,9 @@
 							<label class="btn_upload" for="reviewImageFileOpenInput">
 								<i class="fn fn-image1" aria-hidden="true"></i> <span
 								class="text_add_photo">사진 추가</span>
-							</label> <input type="file" class="hidden_input"
-								id="reviewImageFileOpenInput" accept="image/*" multiple>
+							</label> 
+							<input type="file" class="hidden_input"
+								id="reviewImageFileOpenInput" name="file" accept="image/*" multiple>
 							<div class="guide_review">
 								<span>0</span>/400 <span>(최소5자이상)</span>
 							</div>
@@ -101,6 +102,7 @@
 							<input type="hidden" id="form_comment" name="form_comment" value="">
 							<input type="hidden" id="form_productId" name="form_productId" value="">
 							<input type="hidden" id="form_score" name="form_score" value="">
+							<input type="hidden" id="form_email" name="form_email" value=${sessionScope.email} >
 						</form>
 						
 					</div>

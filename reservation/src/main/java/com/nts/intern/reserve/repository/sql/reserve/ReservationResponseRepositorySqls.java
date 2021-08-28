@@ -23,10 +23,10 @@ public class ReservationResponseRepositorySqls {
 		"reservation_tel AS reservationTelephone," + 
 		"reservation_email AS reservationEmail," + 
 		"reservation_date AS reservationDate," + 
-		"cancel_flag AS cancleYn," + 
+		"cancel_flag AS cancelYn," + 
 		"ri.create_date AS reservationCreateDate," + 
 		"ri.modify_date AS reservationModifyDate," + 
-		"SUM(rip.count*pp.price) AS totalPrice " + 
+		"SUM(rip.count * pp.price) AS totalPrice " + 
 		
 		"FROM reservation_info ri " + 
 		"JOIN reservation_info_price rip ON ri.id = rip.reservation_info_id " + 

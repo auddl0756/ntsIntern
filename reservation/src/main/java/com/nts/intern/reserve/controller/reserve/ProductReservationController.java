@@ -24,7 +24,7 @@ public class ProductReservationController {
 	private ReservationProductService reservationProductService;
 
 	private static ObjectMapper objectMapper = new ObjectMapper();
-	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 	@PostMapping("/api/reservations")
 	public String makeReservation(

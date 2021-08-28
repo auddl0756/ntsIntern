@@ -135,11 +135,12 @@ class ReviewWrite {
 	}
 
 	static setFormHiddenData() {
-		ReviewWrite.form.action = `api/reservations/${ReviewWrite.reservationInfoId}/comments`;
+		ReviewWrite.form.action = `/api/reservations/${ReviewWrite.reservationInfoId}/comments`;
 
 		ReviewWrite.form['form_comment'].value = ReviewWrite.textArea.value;
 		ReviewWrite.form['form_productId'].value = ReviewWrite.productId;
 		ReviewWrite.form['form_score'].value = Rating.ratingScore.innerText;
+
 	}
 
 	static submitEvent() {
@@ -150,11 +151,9 @@ class ReviewWrite {
 		} else {
 			ReviewWrite.errorMsg.style.display = "none";
 
-			//submit
 			ReviewWrite.setFormHiddenData();
+
 			ReviewWrite.form.submit();
 		}
 	}
-
-
 }

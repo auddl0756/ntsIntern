@@ -12,7 +12,7 @@ import com.nts.intern.reserve.service.reviewWrite.ReviewWriteService;
 public class ReviewWriteApiController {
 	@Autowired
 	private ReviewWriteService reviewWriteService;
-	
+
 	@GetMapping("/api/productDescription/{reservationInfoId}")
 	public ReviewWriteInitDto getProductDescription(@PathVariable int reservationInfoId) {
 		return reviewWriteService.findById(reservationInfoId);
