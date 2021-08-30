@@ -1,5 +1,9 @@
 package com.nts.intern.reserve.dto.reserve;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -22,7 +26,7 @@ public class ReservationResponseDto {
 	private String productContent;
 	private String productDescription;
 	private String productEvent;
-	
+
 	private boolean cancelYn;
 	private String reservationCreateDate;
 	private String reservationModifyDate;
@@ -33,6 +37,27 @@ public class ReservationResponseDto {
 	private int reservationInfoId;
 	private String reservationName;
 	private String reservationTelephone;
-	
+
 	private int totalPrice;
+
+	@Getter(AccessLevel.NONE)
+	private ReservationType type;
+
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.0");
+
+	public ReservationType getType() {
+		if (this.cancelYn) {
+			return ReservationType.CANCELED;
+		}
+
+		LocalDateTime nowTime = LocalDateTime.now();
+		LocalDateTime reservationDate = LocalDateTime.parse(this.getReservationDate(), FORMATTER);
+
+		if (nowTime.compareTo(reservationDate) <= 0) {
+			return ReservationType.CONFIRMED;
+		} else {
+			return ReservationType.USED;
+		}
+	}
+
 }
