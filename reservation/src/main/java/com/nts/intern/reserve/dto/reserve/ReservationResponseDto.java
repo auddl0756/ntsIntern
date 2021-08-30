@@ -51,13 +51,12 @@ public class ReservationResponseDto {
 		}
 
 		LocalDateTime nowTime = LocalDateTime.now();
-		LocalDateTime reservationDate = LocalDateTime.parse(this.getReservationDate(), FORMATTER);
+		LocalDateTime reservationDate = LocalDateTime.parse(this.reservationDate, FORMATTER);
 
-		if (nowTime.compareTo(reservationDate) <= 0) {
-			return ReservationType.CONFIRMED;
-		} else {
+		if (nowTime.isAfter(reservationDate)) {
 			return ReservationType.USED;
+		} else {
+			return ReservationType.CONFIRMED;
 		}
 	}
-
 }

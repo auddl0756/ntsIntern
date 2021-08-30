@@ -28,10 +28,10 @@
 		</c:if>
 
 		<header class="header_tit">
-				<%@include file="header.jsp"%>
+			<%@include file="header.jsp"%>
 		</header>
-		
-	</div>
+		</div>
+
 	<div class="ct">
 		<div class="wrap_review_list">
 			<div class="review_header">
@@ -69,6 +69,7 @@
 	</div>
 	<hr>
 	</div>
+
 	<footer>
 		<div class="gototop">
 			<a href="#" class="lnk_top"> <span class="lnk_top_text">TOP</span>

@@ -28,12 +28,15 @@
 				<c:if test="${!empty email}">
 					<div class="header">
 				</c:if>
-
+					
+				
 				<header class="header_tit">
 					<%@include file="header.jsp"%>
 				</header>
+				</div>
+				
 			</header>
-		</div>
+			</div>
 		<div class="ct">
 			<div class="ct_wrap">
 				<div class="top_title">
