@@ -25,11 +25,11 @@ public class ReservationArgumentInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 		throws Exception {
-
+		
 		if (request.getRequestURI().equals("/api/reservations") == false) {
 			return true;
 		}
-
+		
 		Map<String, String[]> map = request.getParameterMap();
 
 		boolean isValid = true;

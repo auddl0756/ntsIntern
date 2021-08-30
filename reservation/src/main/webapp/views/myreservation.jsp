@@ -2,14 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:forEach var="info" items="${reservationInfo}">
-	<c:if test="${info.cancleYn}">
-		<c:set var="canceledCount" value="${canceledCount + 1}" />
-	</c:if>
-</c:forEach>
-
-<c:set var="reservedCount" value="${totalReservationCount-canceledCount}" />
-
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -44,11 +36,11 @@
 						</li>
 						<li class="item"><a href="#" class="link_summary_board">
 								<i class="spr_book2 ico_book_ss"></i> <em class="tit">이용예정</em>
-								<span class="figure" id="beforeCount">${reservedCount}</span>
+								<span class="figure" id="beforeCount">${confirmedCount}</span>
 						</a></li>
 						<li class="item"><a href="#" class="link_summary_board">
 								<i class="spr_book2 ico_check"></i> <em class="tit">이용완료</em> <span
-								class="figure">0</span>
+								class="figure">${usedCount}</span>
 						</a></li>
 						<li class="item"><a href="#" class="link_summary_board">
 								<i class="spr_book2 ico_back"></i> <em class="tit">취소·환불</em> <span
@@ -86,66 +78,63 @@
 									<div class="right"></div>
 								</div>
 
-							</div> <c:forEach items="${reservationInfo}" var="dto"
+							</div> <c:forEach items="${confirmedReservation}" var="dto"
 								varStatus="status">
-								<c:set var="cancleYn" value="${dto.cancleYn}" scope="page" />
+								<article class="card_item">
+									<a href="#" class="link_booking_details">
+										<div class="card_body">
+											<div class="left"></div>
+											<div class="middle">
+												<div class="card_detail">
+													<em class="booking_number">No.${status.count}</em>
+													<h4 class="tit">${dto.productDescription}</h4>
+													<ul class="detail">
+														<li class="item"><span class="item_tit">일정</span> <em
+															class="item_dsc" id="reservation_date"
+															data-reservation_date=${dto.reservationDate}>
+																${dto.reservationDate}</em></li>
+														<li class="item"><span class="item_tit">장소</span> <em
+															class="item_dsc"> ${dto.placeName}</em></li>
+														<li class="item"><span class="item_tit">업체
+																홈페이지</span> <em class="item_dsc"> ${dto.homepage}</em></li>
+														<li class="item"><span class="item_tit">업체
+																전화번호</span> <em class="item_dsc"> ${dto.telephone}</em></li>
+														<li class="item"><span class="item_tit">예약일</span> <em
+															class="item_dsc"> ${dto.reservationDate}</em></li>
+														<li class="reservation_info_id"
+															data-reservation_info_id=${dto.reservationInfoId}></li>
 
-								<c:if test="${cancleYn eq false}">
-									<article class="card_item">
-										<a href="#" class="link_booking_details">
-											<div class="card_body">
-												<div class="left"></div>
-												<div class="middle">
-													<div class="card_detail">
-														<em class="booking_number">No.${status.count}</em>
-														<h4 class="tit">${dto.productDescription}</h4>
-														<ul class="detail">
-															<li class="item"><span class="item_tit">일정</span> <em
-																class="item_dsc" id="reservation_date"
-																data-reservation_date=${dto.reservationDate}>
-																	${dto.reservationDate}</em></li>
-															<li class="item"><span class="item_tit">장소</span> <em
-																class="item_dsc"> ${dto.placeName}</em></li>
-															<li class="item"><span class="item_tit">업체 홈페이지</span> <em
-																class="item_dsc"> ${dto.homepage}</em></li>
-															<li class="item"><span class="item_tit">업체 전화번호</span> <em
-																class="item_dsc"> ${dto.telephone}</em></li>
-															<li class="item"><span class="item_tit">예약일</span> <em
-																class="item_dsc"> ${dto.reservationDate}</em></li>
-															<li class="reservation_info_id"
-																data-reservation_info_id=${dto.reservationInfoId}></li>
-
-														</ul>
-														<div class="price_summary">
-															<span class="price_tit">결제 예정금액</span> <em
-																class="price_amount"> <span>${dto.totalPrice}</span>
-																<span class="unit">원</span>
-															</em>
-														</div>
-														<!-- [D] 예약 신청중, 예약 확정 만 취소가능, 취소 버튼 클릭 시 취소 팝업 활성화 -->
-														<div class="booking_cancel">
-															<button class="btn">
-																<span>취소</span>
-															</button>
-														</div>
-
+													</ul>
+													<div class="price_summary">
+														<span class="price_tit">결제 예정금액</span> <em
+															class="price_amount"> <span>${dto.totalPrice}</span>
+															<span class="unit">원</span>
+														</em>
 													</div>
+													<!-- [D] 예약 신청중, 예약 확정 만 취소가능, 취소 버튼 클릭 시 취소 팝업 활성화 -->
+													<div class="booking_cancel">
+														<button class="btn">
+															<span>취소</span>
+														</button>
+													</div>
+
 												</div>
-												<div class="right"></div>
 											</div>
-											<div class="card_footer">
-												<div class="left"></div>
-												<div class="middle"></div>
-												<div class="right"></div>
-											</div>
-										</a> <a href="#" class="fn fn-share1 naver-splugin btn_goto_share"
-											title="공유하기"></a>
-									</article>
-								</c:if>
+											<div class="right"></div>
+										</div>
+										<div class="card_footer">
+											<div class="left"></div>
+											<div class="middle"></div>
+											<div class="right"></div>
+										</div>
+									</a> <a href="#" class="fn fn-share1 naver-splugin btn_goto_share"
+										title="공유하기"></a>
+								</article>
 							</c:forEach>
 						</li>
 
-						<li class="card used">
+
+						<li class="card used" id="card_used">
 							<div class="link_booking_details">
 								<div class="card_header">
 									<div class="left"></div>
@@ -156,10 +145,62 @@
 									</div>
 									<div class="right"></div>
 								</div>
-							</div>
+							</div> <c:forEach items="${usedReservation}" var="dto"
+								varStatus="status">
+								<article class="card_item">
+									<a href="#" class="link_booking_details">
+										<div class="card_body">
+											<div class="left"></div>
+											<div class="middle">
+												<div class="card_detail">
+													<em class="booking_number">No.0000000</em>
+													<h4 class="tit">서비스명/상품명</h4>
+													<ul class="detail">
+														<li class="item"><span class="item_tit">일정</span> <em
+															class="item_dsc" id="reservation_date"
+															data-reservation_date=${dto.reservationDate}>
+																${dto.reservationDate}</em></li>
+														<li class="item"><span class="item_tit">장소</span> <em
+															class="item_dsc"> ${dto.placeName}</em></li>
+														<li class="item"><span class="item_tit">업체
+																홈페이지</span> <em class="item_dsc"> ${dto.homepage}</em></li>
+														<li class="item"><span class="item_tit">업체
+																전화번호</span> <em class="item_dsc"> ${dto.telephone}</em></li>
+														<li class="item"><span class="item_tit">예약일</span> <em
+															class="item_dsc"> ${dto.reservationDate}</em></li>
+														<li class="reservation_info_id"
+															data-reservation_info_id=${dto.reservationInfoId}></li>
+													</ul>
 
+													<div class="price_summary">
+														<span class="price_tit">결제 예정금액</span> <em
+															class="price_amount"> <span>${dto.totalPrice}</span>
+															<span class="unit">원</span>
+														</em>
+													</div>
+
+													<div class="booking_cancel">
+														<a
+															href="/reviewWrite/${dto.reservationInfoId}">
+															<button class="btn disabled">
+																<span>예매자 리뷰 남기기</span>
+															</button>
+														</a>
+													</div>
+												</div>
+											</div>
+											<div class="right"></div>
+										</div>
+										<div class="card_footer">
+											<div class="left"></div>
+											<div class="middle"></div>
+											<div class="right"></div>
+										</div>
+									</a>
+								</article>
+							</c:forEach>
 						</li>
-
+						
 						<li class="card used cancel">
 							<div class="link_booking_details">
 								<div class="card_header">
@@ -171,49 +212,46 @@
 									</div>
 									<div class="right"></div>
 								</div>
-							</div> <c:forEach items="${reservationInfo}" var="dto"
+							</div> <c:forEach items="${canceledReservation}" var="dto"
 								varStatus="status">
-
-								<c:if test="${dto.cancleYn}">
-									<article class="card_item">
-										<a href="#" class="link_booking_details">
-											<div class="card_body">
-												<div class="left"></div>
-												<div class="middle">
-													<div class="card_detail">
-														<em class="booking_number">No.${status.count}</em>
-														<h4 class="tit">${dto.productDescription}</h4>
-														<ul class="detail">
-															<li class="item"><span class="item_tit">일정</span> <em
-																class="item_dsc"> ${dto.reservationDate}</em></li>
-															<li class="item"><span class="item_tit">장소</span> <em
-																class="item_dsc"> ${dto.placeName}</em></li>
-															<li class="item"><span class="item_tit">업체 홈페이지</span> <em
-																class="item_dsc"> ${dto.homepage}</em></li>
-															<li class="item"><span class="item_tit">업체 전화번호</span> <em
-																class="item_dsc"> ${dto.telephone}</em></li>
-															<li class="item"><span class="item_tit">취소일</span> <em
-																class="item_dsc"> ${dto.reservationModifyDate}</em></li>
-														</ul>
-														<div class="price_summary">
-															<span class="price_tit">결제 예정금액</span> <em
-																class="price_amount"> <span>${dto.totalPrice}</span>
-																<span class="unit">원</span>
-															</em>
-														</div>
+								<article class="card_item">
+									<a href="#" class="link_booking_details">
+										<div class="card_body">
+											<div class="left"></div>
+											<div class="middle">
+												<div class="card_detail">
+													<em class="booking_number">No.${status.count}</em>
+													<h4 class="tit">${dto.productDescription}</h4>
+													<ul class="detail">
+														<li class="item"><span class="item_tit">일정</span> <em
+															class="item_dsc"> ${dto.reservationDate}</em></li>
+														<li class="item"><span class="item_tit">장소</span> <em
+															class="item_dsc"> ${dto.placeName}</em></li>
+														<li class="item"><span class="item_tit">업체
+																홈페이지</span> <em class="item_dsc"> ${dto.homepage}</em></li>
+														<li class="item"><span class="item_tit">업체
+																전화번호</span> <em class="item_dsc"> ${dto.telephone}</em></li>
+														<li class="item"><span class="item_tit">취소일</span> <em
+															class="item_dsc"> ${dto.reservationModifyDate}</em></li>
+													</ul>
+													<div class="price_summary">
+														<span class="price_tit">결제 예정금액</span> <em
+															class="price_amount"> <span>${dto.totalPrice}</span>
+															<span class="unit">원</span>
+														</em>
 													</div>
 												</div>
-												<div class="right"></div>
 											</div>
-											<div class="card_footer">
-												<div class="left"></div>
-												<div class="middle"></div>
-												<div class="right"></div>
-											</div>
-										</a> <a href="#" class="fn fn-share1 naver-splugin btn_goto_share"
-											title="공유하기"></a>
-									</article>
-								</c:if>
+											<div class="right"></div>
+										</div>
+										<div class="card_footer">
+											<div class="left"></div>
+											<div class="middle"></div>
+											<div class="right"></div>
+										</div>
+									</a> <a href="#" class="fn fn-share1 naver-splugin btn_goto_share"
+										title="공유하기"></a>
+								</article>
 							</c:forEach>
 
 						</li>
