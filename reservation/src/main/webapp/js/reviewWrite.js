@@ -132,6 +132,7 @@ class ReviewWrite {
 	static deleteThumbNailEvent() {
 		ReviewWrite.thumbNailTemplateWrapper.style.display = "none";
 		ReviewWrite.thumbNailTemplate.src = "";
+		ReviewWrite.image.value = "";
 	}
 
 	static setFormHiddenData() {

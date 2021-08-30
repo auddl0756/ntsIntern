@@ -40,17 +40,7 @@ public class ReviewWriteController {
 		@RequestParam("file") MultipartFile file,
 		@RequestParam("form_email") String email) {
 
-		try (
-			FileOutputStream fileOutputStream = new FileOutputStream(uploadedFileUrl + file.getOriginalFilename());
-			InputStream inputStream = file.getInputStream();) {
-
-			byte[] buffer = new byte[ONE_KB];
-			for (int readCount = 0; readCount != -1; readCount = inputStream.read(buffer)) {
-				fileOutputStream.write(buffer, 0, readCount);
-			}
-		} catch (IOException iOException) {
-			iOException.printStackTrace();
-		}
+		saveFile(file);
 
 		ReviewSaveDto dto = ReviewSaveDto.builder()
 			.reservationInfoId(reservationInfoId)
@@ -68,5 +58,19 @@ public class ReviewWriteController {
 		reviewWriteService.saveComment(dto);
 
 		return "redirect:/reservations?resrv_email=" + email;
+	}
+
+	public void saveFile(MultipartFile file) {
+		try (
+			FileOutputStream fileOutputStream = new FileOutputStream(uploadedFileUrl + file.getOriginalFilename());
+			InputStream inputStream = file.getInputStream();) {
+
+			byte[] buffer = new byte[ONE_KB];
+			for (int readCount = 0; readCount != -1; readCount = inputStream.read(buffer)) {
+				fileOutputStream.write(buffer, 0, readCount);
+			}
+		} catch (IOException iOException) {
+			iOException.printStackTrace();
+		}
 	}
 }
