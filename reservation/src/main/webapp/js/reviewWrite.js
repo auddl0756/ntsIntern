@@ -91,17 +91,17 @@ class ReviewWrite {
 		ReviewWrite.thumbNailTemplate = document.querySelector(".item_thumb");
 		ReviewWrite.image = document.querySelector("#reviewImageFileOpenInput");
 		ReviewWrite.thumbNailDeleteButton = document.querySelector(".spr_book.ico_del");
-		
+
 		ReviewWrite.addEventListeners();
 	}
 
 
 	static addEventListeners() {
 		ReviewWrite.textAreaWrapper.addEventListener("click", ReviewWrite.clickTextArea);
-		
+
 		ReviewWrite.textArea.addEventListener("blur", ReviewWrite.resetTextArea);
 		ReviewWrite.textArea.addEventListener("keyup", ReviewWrite.checkTextLengthEvent);
-		
+
 		ReviewWrite.submitButton.addEventListener("click", ReviewWrite.submitEvent);
 		ReviewWrite.image.addEventListener("change", ReviewWrite.createThumbNailEvent);
 		ReviewWrite.thumbNailDeleteButton.addEventListener("click", ReviewWrite.deleteThumbNailEvent);
@@ -111,9 +111,9 @@ class ReviewWrite {
 		ReviewWrite.textAreaWrapper.classList.add("hide");
 		ReviewWrite.textArea.focus();
 	}
-	
-	static resetTextArea(){
-		if(parseInt(ReviewWrite.nowTextLengthArea.innerText)===0){
+
+	static resetTextArea() {
+		if (parseInt(ReviewWrite.nowTextLengthArea.innerText) === 0) {
 			ReviewWrite.textAreaWrapper.classList.remove("hide");
 		}
 	}
@@ -153,12 +153,11 @@ class ReviewWrite {
 		if (textLength < 5 || textLength > 400) {
 			ReviewWrite.errorMsg.style.display = "block";
 			return;
-		} else {
-			ReviewWrite.errorMsg.style.display = "none";
-
-			ReviewWrite.setFormHiddenData();
-
-			ReviewWrite.form.submit();
 		}
+
+		ReviewWrite.errorMsg.style.display = "none";
+		
+		ReviewWrite.setFormHiddenData();
+		ReviewWrite.form.submit();
 	}
 }
