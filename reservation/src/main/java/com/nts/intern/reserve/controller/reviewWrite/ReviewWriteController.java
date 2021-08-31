@@ -1,9 +1,5 @@
 package com.nts.intern.reserve.controller.reviewWrite;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -17,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nts.intern.reserve.dto.reviewWrite.ReviewSaveDto;
 import com.nts.intern.reserve.service.reviewWrite.ReviewWriteService;
+import com.nts.intern.reserve.service.util.FileLoadService;
 
 @Controller
 public class ReviewWriteController {
@@ -26,6 +23,9 @@ public class ReviewWriteController {
 
 	@Autowired
 	private ReviewWriteService reviewWriteService;
+
+	@Autowired
+	FileLoadService fileLoadService;
 
 	@GetMapping("/reviewWrite/{reservationInfoId}")
 	public String reviewWritePage(@PathVariable int reservationInfoId) {
@@ -40,7 +40,7 @@ public class ReviewWriteController {
 		@RequestParam("file") MultipartFile file,
 		@RequestParam("form_email") String email) {
 
-		saveFile(file);
+		fileLoadService.saveFile(file, uploadedFileUrl);
 
 		ReviewSaveDto dto = ReviewSaveDto.builder()
 			.reservationInfoId(reservationInfoId)
@@ -58,19 +58,5 @@ public class ReviewWriteController {
 		reviewWriteService.saveComment(dto);
 
 		return "redirect:/reservations?resrv_email=" + email;
-	}
-
-	public void saveFile(MultipartFile file) {
-		try (
-			FileOutputStream fileOutputStream = new FileOutputStream(uploadedFileUrl + file.getOriginalFilename());
-			InputStream inputStream = file.getInputStream();) {
-
-			byte[] buffer = new byte[ONE_KB];
-			for (int readCount = 0; readCount != -1; readCount = inputStream.read(buffer)) {
-				fileOutputStream.write(buffer, 0, readCount);
-			}
-		} catch (IOException iOException) {
-			iOException.printStackTrace();
-		}
 	}
 }
