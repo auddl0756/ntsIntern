@@ -88,7 +88,7 @@ let detailObj = {
 		let bindTemplate = Handlebars.compile(template);
 
 		let resultHTML = bindTemplate(productImages[0]);
-
+		
 		let targetHTML = document.querySelector(".visual_img.detail_swipe");
 
 		targetHTML.innerHTML = resultHTML;
@@ -112,7 +112,8 @@ let detailObj = {
 		for (let iter = 0; iter < 3; iter++) {
 			targetHTML.appendChild(targetHTML.children[0].cloneNode(true));
 		}
-
+		console.log(etcImages);
+		
 		targetHTML.children[0].style.backgroundImage = "url('/" + etcImages[0].saveFileName + "')";
 		targetHTML.children[2].style.backgroundImage = "url('/" + etcImages[0].saveFileName + "')";
 
@@ -140,7 +141,7 @@ let detailObj = {
 		detailObj.detailData.comments = detailObj.preprocessComments(comments, productDescription);
 
 		let idx = commentArea.childElementCount;
-
+		
 		for (let count = 0; count < 3; count++) {
 			if (idx + count >= comments.length) {
 				break;

@@ -68,7 +68,7 @@ class TitleArea {
 		let thumbNail = document.querySelector(".img_thumb");
 		let saveFileName = this.productData.saveFileName;
 
-		thumbNail.src = "/" + saveFileName;
+		thumbNail.src = "/downloadByFileName?saveFileName=" + saveFileName;
 		thumbNail.style.width = "414px";
 		thumbNail.style.height = "414px";
 

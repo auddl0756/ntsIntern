@@ -199,7 +199,7 @@
 
 
 	<script type="myTemplate" id="titleArea">
-        <li class="item" style="background-image: url('/{{saveFileName}}'); width:414px; height:414px; background-size:414px 414px; "> <img alt="타이틀 배경이미지" class="img_thumb" "> <span class="img_bg"></span>
+        <li class="item" style="background-image: url('/downloadByFileName?saveFileName={{saveFileName}}'); width:414px; height:414px; background-size:414px 414px; "> <img alt="타이틀 배경이미지" class="img_thumb" "> <span class="img_bg"></span>
             <div class="visual_txt">
                 <div class="visual_txt_inn">
                     <h2 class="visual_txt_tit"> <span></span> </h2>
@@ -215,7 +215,7 @@
                 <div class="thumb_area">
                     <a class="thumb" title="이미지 크게 보기"> <img
                         width="90" height="90" class="img_vertical_top"
-                        src="/{{commentImages}}" alt="리뷰이미지">
+                        src="/downloadCommentImage/{{commentId}}" alt="리뷰이미지">
                     </a> <span class="img_count" style="display: none;">1</span>
                 </div>
                 <h4 class="resoc_name">{{productDescription}}</h4>
