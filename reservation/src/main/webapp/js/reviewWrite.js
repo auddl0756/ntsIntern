@@ -33,14 +33,11 @@ async function initReviewWritePage() {
 
 	let initData = await getInitData(reservationInfoId, {});
 
-	console.log(initData);
-
 	const title = document.querySelector(".title");
 	title.innerText = initData.productDescription;
 
 	let rating = new Rating();
 	let reviewWrite = new ReviewWrite(reservationInfoId, initData.productId);
-
 }
 
 class Rating {
@@ -95,23 +92,30 @@ class ReviewWrite {
 		ReviewWrite.image = document.querySelector("#reviewImageFileOpenInput");
 		ReviewWrite.thumbNailDeleteButton = document.querySelector(".spr_book.ico_del");
 
-
 		ReviewWrite.addEventListeners();
 	}
 
 
 	static addEventListeners() {
 		ReviewWrite.textAreaWrapper.addEventListener("click", ReviewWrite.clickTextArea);
+
+		ReviewWrite.textArea.addEventListener("blur", ReviewWrite.resetTextArea);
 		ReviewWrite.textArea.addEventListener("keyup", ReviewWrite.checkTextLengthEvent);
+
 		ReviewWrite.submitButton.addEventListener("click", ReviewWrite.submitEvent);
 		ReviewWrite.image.addEventListener("change", ReviewWrite.createThumbNailEvent);
 		ReviewWrite.thumbNailDeleteButton.addEventListener("click", ReviewWrite.deleteThumbNailEvent);
-
 	}
 
 	static clickTextArea() {
 		ReviewWrite.textAreaWrapper.classList.add("hide");
 		ReviewWrite.textArea.focus();
+	}
+
+	static resetTextArea() {
+		if (parseInt(ReviewWrite.nowTextLengthArea.innerText) === 0) {
+			ReviewWrite.textAreaWrapper.classList.remove("hide");
+		}
 	}
 
 	static checkTextLengthEvent() {
@@ -149,12 +153,11 @@ class ReviewWrite {
 		if (textLength < 5 || textLength > 400) {
 			ReviewWrite.errorMsg.style.display = "block";
 			return;
-		} else {
-			ReviewWrite.errorMsg.style.display = "none";
-
-			ReviewWrite.setFormHiddenData();
-
-			ReviewWrite.form.submit();
 		}
+
+		ReviewWrite.errorMsg.style.display = "none";
+		
+		ReviewWrite.setFormHiddenData();
+		ReviewWrite.form.submit();
 	}
 }

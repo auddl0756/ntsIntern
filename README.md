@@ -25,6 +25,10 @@
 ## 스프링 컨트롤러 파라미터
 [여러 방법](https://velog.io/@younghwan24/Spring-Controller-Parameter)
 
+## Logging
+[spring 4.xx 공식 문서 logging overview](https://docs.spring.io/spring-framework/docs/4.3.12.RELEASE/spring-framework-reference/htmlsingle/#overview-logging)
+
+[logback 완벽 정리](https://goddaehee.tistory.com/206)
 # 프론트엔드
 
 [무한 슬라이딩](https://takeknowledge.tistory.com/34)
