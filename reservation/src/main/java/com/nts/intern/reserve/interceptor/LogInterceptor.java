@@ -24,7 +24,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 			})
 			.collect(Collectors.joining(","));
 
-		logger.info("=== 호출 메서드 : {}", handler.toString() + " ===");
+		logger.info("=== 호출. 메서드 : {}", handler.toString() + " ===");
 		logger.info("	파라미터  : {{}} ", params);
 
 		return true;
@@ -37,7 +37,7 @@ public class LogInterceptor extends HandlerInterceptorAdapter {
 		if (modelAndView == null) {
 			logger.info("=== 종료. 리턴한 view는 없습니다. ===");
 		} else {
-			logger.info("=== 종료. {}를  view로 사용합니다. ===", modelAndView.getViewName());
+			logger.info("=== 종료. view : {} ===", modelAndView.getViewName());
 		}
 	}
 }
